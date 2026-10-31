@@ -30,7 +30,7 @@ Este documento define como a sala de aula avalia e treina o conhecimento: tipos 
 
 ### Notas por tipo
 
-- **`codigo`**: a primeira versão roda só JavaScript e Python. JavaScript roda num Web Worker com tempo limite (2 s); Python roda com Pyodide, carregado sob demanda. Os testes ficam no próprio JSON (`testes`), cada um com entrada, saída esperada e se é visível ao aluno. Testes ocultos evitam "programar para o teste". Nota = testes passados / total.
+- **`codigo`**: roda no navegador, num Web Worker por linguagem, com tempo limite de 5 s: Python (Pyodide), JavaScript, TypeScript (tipos removidos com Sucrase), C/C++ (JSCPP), SQL (SQLite via sql.js) e HTML/CSS (iframe). Tudo é carregado sob demanda. Os testes ficam na própria questão (`testes`), cada um com as entradas (uma linha por `input()`/`prompt()`/`scanf`), a saída esperada e se é visível ao aluno; testes ocultos evitam "programar para o teste". A resposta só é aceita quando **todos** os testes passam, a **indentação** segue o padrão da linguagem (4 espaços em Python e C, 2 em JS/TS, sem TAB) e o código usa o que `usa` exige. Erros aparecem marcados na linha do editor e explicados em português. Implementação: `src/lib/execucao/` e `src/components/IdeCodigo.tsx`.
 - **`resposta_aberta`**: depois de responder, o aluno vê a **resposta modelo** e a **rubrica** (critérios com peso) e marca quais critérios cumpriu. A nota é a soma dos pesos marcados. Se no futuro houver integração com a API do Claude, a mesma rubrica serve de instrução para a correção automática; a autoavaliação continua como alternativa offline.
 - **`prever_saida`**: normalizar espaços nas pontas e quebras de linha finais antes de comparar.
 - **`preencher_lacuna`**: normalizar caixa, acentos e espaços; aceitar qualquer item de `aceitas`.
@@ -65,7 +65,7 @@ Campos específicos:
 - `preencher_lacuna`: `aceitas: [string]`.
 - `ordenar`: `itens: [{ id, texto }]` na ordem correta (a interface embaralha).
 - `prever_saida`: `midia.codigo` obrigatório e `saida_esperada: string`.
-- `codigo`: `linguagem`, `assinatura`, `codigo_inicial`, `testes: [{ entrada, esperado, visivel }]`, `solucao_referencia`.
+- `codigo`: `linguagem`, `codigo_inicial`, `usa`, `indentacao`, `preparo` (SQL), `testes: [{ entrada | entradas, esperado | saida, chamada, verifica, descricao, visivel }]`, `solucao`.
 - `resposta_aberta`: `resposta_modelo`, `rubrica: [{ criterio, peso }]` (pesos somam 1).
 - `flashcard`: `frente`, `verso`.
 

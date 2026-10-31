@@ -1,15 +1,20 @@
-import { createContext, useContext } from 'react';
+import { createContext, lazy, Suspense, useContext, useState } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Quiz from './Quiz';
 import Flashcard from './Flashcard';
 import Diagrama from './Diagrama';
+import { normalizarLinguagem, type Linguagem } from '../lib/execucao/linguagens';
+
+const IdeCodigo = lazy(() => import('./IdeCodigo'));
 
 /**
  * Renderiza uma aula. Blocos de código especiais:
  *   ```quiz      -> pergunta (YAML, formato em docs/curriculo/modelo-de-aula.md)
  *   ```pergunta  -> pergunta aberta com resposta revelável (YAML)
  *   ```mermaid   -> diagrama (fluxograma, sequência, estados...)
+ * Blocos de linguagens executáveis (python, javascript, typescript, c, cpp, sql, html)
+ * ganham o botão "Experimentar", que abre o exemplo na IDE da aula.
  */
 const AulaAtual = createContext('');
 
@@ -21,10 +26,33 @@ function Codigo({ className, children }: { className?: string; children?: React.
   if (lang === 'pergunta') return <Flashcard yaml={conteudo} />;
   if (lang === 'mermaid') return <Diagrama codigo={conteudo} />;
   if (!className) return <code>{children}</code>;
+  const executavel = normalizarLinguagem(lang);
+  if (executavel) return <BlocoExecutavel linguagem={executavel} lang={lang!} codigo={conteudo} />;
   return (
     <pre className="bloco-codigo">
       <span className="lang">{lang}</span>
       <code>{conteudo}</code>
+    </pre>
+  );
+}
+
+function BlocoExecutavel({ linguagem, lang, codigo }: { linguagem: Linguagem; lang: string; codigo: string }) {
+  const [aberto, setAberto] = useState(false);
+  if (aberto) {
+    return (
+      <Suspense fallback={<p className="dica">Carregando o editor…</p>}>
+        <div className="ide-solta">
+          <IdeCodigo linguagem={linguagem} codigoInicial={codigo} />
+          <button className="link" onClick={() => setAberto(false)}>Fechar editor</button>
+        </div>
+      </Suspense>
+    );
+  }
+  return (
+    <pre className="bloco-codigo">
+      <span className="lang">{lang}</span>
+      <button className="experimentar" onClick={() => setAberto(true)} title="Abrir este código no editor e executar">▶ Experimentar</button>
+      <code>{codigo}</code>
     </pre>
   );
 }

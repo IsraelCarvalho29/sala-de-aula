@@ -49,4 +49,4 @@ dificuldade: 1              # 1 a 3
 ```
 
 Para `resposta_curta`, `resposta` traz uma resposta-modelo e `palavras_chave` lista os termos que uma boa resposta deve conter.
-Para `codigo`, inclua `assinatura`, `testes` (entrada → saída esperada) e `dica`.
+Para `codigo`, inclua `linguagem`, `testes` (entrada → saída esperada, com pelo menos um teste oculto), `usa` (o que o código precisa usar), `dica` e `solucao`. O formato completo está no [README](../../README.md#desafios-de-código-corrigidos-automaticamente). Blocos de código de linguagens executáveis no texto da aula ganham automaticamente o botão "Experimentar".
