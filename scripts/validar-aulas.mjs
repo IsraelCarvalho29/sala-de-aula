@@ -290,7 +290,7 @@ for (const d of comInicial) {
         const r = respIni[m++];
         ok = !r.erro && normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);
       } else if (d.ling === 'html') {
-        if (!navegador) { ok = false; break; }
+        if (!navegador) { passa = false; break; }
         const pg = await navegador.newPage();
         await pg.setContent(d.q.codigo_inicial);
         ok = await pg.evaluate((exp) => { try { return !!(0, eval)(exp); } catch { return false; } }, t.verifica);
