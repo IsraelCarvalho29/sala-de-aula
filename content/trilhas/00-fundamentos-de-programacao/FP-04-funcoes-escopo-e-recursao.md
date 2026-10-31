@@ -194,7 +194,7 @@ def soma_digitos(n):
 print(soma_digitos(2026))   # 2 + 0 + 2 + 6 = 10
 ```
 
-Fibonacci recursivo (bonito, mas lento: cada chamada faz duas, e o número de chamadas explode; em AL-08 você vai ver como resolver isso com programação dinâmica):
+Fibonacci recursivo (bonito, mas lento: cada chamada faz duas, e o número de chamadas explode; em AL-09 você vai ver como resolver isso com programação dinâmica):
 
 ```python
 def fib(n):

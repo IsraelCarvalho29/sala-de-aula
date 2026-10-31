@@ -133,16 +133,34 @@ import json, sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, ${JSON.stringify(join(raiz, 'src/lib/execucao'))})
 import corretor
+import signal
+
+
+class TempoEsgotado(BaseException):
+    pass
+
+
+def estourou(*_):
+    raise TempoEsgotado("passou de 5 segundos")
+
+
+signal.signal(signal.SIGALRM, estourou)
 pedidos = json.load(sys.stdin)
 saida = []
 for p in pedidos:
     if p["acao"] == "analisar":
         saida.append(corretor.analisar(p))
     else:
-        saida.append(corretor.executar(p))
+        signal.setitimer(signal.ITIMER_REAL, 5)   # mesmo limite do app
+        try:
+            saida.append(corretor.executar(p))
+        except TempoEsgotado as e:
+            saida.append({"saida": "", "retorno": None, "erro": {"tipo": "Tempo esgotado", "mensagem": str(e)}})
+        finally:
+            signal.setitimer(signal.ITIMER_REAL, 0)
 sys.__stdout__.write(json.dumps(saida))
 `);
-  const r = spawnSync('python3', ['-I', script], { input: JSON.stringify(lote), encoding: 'utf8', timeout: 120000, maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync('python3', ['-I', script], { input: JSON.stringify(lote), encoding: 'utf8', timeout: 900000, maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) throw new Error(`python3 falhou: ${r.stderr}`);
   return JSON.parse(r.stdout);
 }
@@ -272,7 +290,7 @@ for (const d of comInicial) {
         const r = respIni[m++];
         ok = !r.erro && normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);
       } else if (d.ling === 'html') {
-        if (!navegador) { ok = false; break; }
+        if (!navegador) { passa = false; break; }
         const pg = await navegador.newPage();
         await pg.setContent(d.q.codigo_inicial);
         ok = await pg.evaluate((exp) => { try { return !!(0, eval)(exp); } catch { return false; } }, t.verifica);

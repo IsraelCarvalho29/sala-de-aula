@@ -253,6 +253,84 @@ explicacao: "A versão ingênua testa todos os pares em O(n²). Guardando os nú
 dificuldade: 2
 ```
 
+```quiz
+id: ED-01-q9
+tipo: codigo
+linguagem: python
+pergunta: |
+  **De O(n²) para O(n).** A função abaixo diz se a lista tem algum valor repetido, mas compara todos os pares: O(n²). Reescreva em **O(n)**. O teste oculto usa 200 mil números, e a versão O(n²) estoura o tempo limite de 5 segundos.
+codigo_inicial: |
+  def tem_repetido(nums):
+      for i in range(len(nums)):
+          for j in range(i + 1, len(nums)):
+              if nums[i] == nums[j]:
+                  return True
+      return False
+usa: [def, set, return]
+testes:
+  - chamada: "tem_repetido([3, 1, 4, 1, 5])"
+    saida: "True"
+  - chamada: "tem_repetido([1, 2, 3])"
+    saida: "False"
+  - chamada: "tem_repetido([])"
+    saida: "False"
+  - chamada: "tem_repetido(list(range(200000)))"
+    visivel: false
+    saida: "False"
+  - chamada: "tem_repetido(list(range(200000)) + [199999])"
+    visivel: false
+    saida: "True"
+dica: "Troque memória por tempo: guarde os números já vistos num set, em que 'x in vistos' é O(1) em média. Ou compare len(set(nums)) com len(nums)."
+solucao: |
+  def tem_repetido(nums):
+      vistos = set()
+      for x in nums:
+          if x in vistos:
+              return True
+          vistos.add(x)
+      return False
+explicacao: "Com 200 mil números, a versão de pares faz até ~20 bilhões de comparações; a do set faz 200 mil consultas O(1). É o truque mais usado para sair de O(n²): usar O(n) de memória extra para não repetir trabalho."
+dificuldade: 2
+```
+
+```quiz
+id: ED-01-q10
+tipo: codigo
+linguagem: python
+pergunta: |
+  **Contando passos de um algoritmo logarítmico.** Escreva `passos(n)` que devolve quantas vezes o corpo do laço abaixo executa para um `n >= 1`, **sem rodar o laço** (use uma conta, não um while):
+
+  ```python
+  while n > 1:
+      n = n // 2
+  ```
+
+  Por exemplo, para `n = 8` o corpo roda 3 vezes (8 → 4 → 2 → 1).
+codigo_inicial: |
+  def passos(n):
+      pass
+usa: [def, return, bit_length]
+testes:
+  - chamada: "passos(8)"
+    saida: "3"
+  - chamada: "passos(1)"
+    saida: "0"
+  - chamada: "passos(10)"
+    saida: "3"
+  - chamada: "passos(1000000)"
+    visivel: false
+    saida: "19"
+  - chamada: "passos(2 ** 100)"
+    visivel: false
+    saida: "100"
+dica: "O número de divisões inteiras por 2 até chegar a 1 é o piso de log₂ n. Com inteiros, n.bit_length() é o número de bits de n (MD-04); o piso de log₂ n é n.bit_length() - 1, sem nenhum erro de float."
+solucao: |
+  def passos(n):
+      return n.bit_length() - 1
+explicacao: "Dividir por 2 é tirar o último bit (deslocar à direita, MD-04). Um número com b bits precisa de b − 1 deslocamentos para virar 1. Por isso um laço que divide por 2 é O(log n): um milhão de itens dão só 19 voltas. math.log2 também funcionaria para números pequenos, mas o float perde precisão com números enormes."
+dificuldade: 2
+```
+
 ## Resumo
 
 - Big-O mede **como o custo cresce** com a entrada, ignorando constantes e termos menores.

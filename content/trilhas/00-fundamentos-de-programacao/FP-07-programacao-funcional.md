@@ -125,8 +125,9 @@ Em JavaScript, a **arrow function**: `const dobro = x => x * 2;`
 Em Python, as **compreensões** costumam ser mais legíveis que `map`/`filter` com lambda, e fazem a mesma coisa:
 
 ```python
-[x * 10 for x in nums if x % 2 == 0]                         # compreensão
-list(map(lambda x: x * 10, filter(lambda x: x % 2 == 0, nums)))   # equivalente
+nums = [3, 8, 1, 6, 5]
+print([x * 10 for x in nums if x % 2 == 0])                              # compreensão
+print(list(map(lambda x: x * 10, filter(lambda x: x % 2 == 0, nums))))   # equivalente
 ```
 
 ### Closures

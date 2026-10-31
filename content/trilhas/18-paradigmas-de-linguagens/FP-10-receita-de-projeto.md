@@ -52,25 +52,25 @@ Problema: "calcular quanto um cliente paga de estacionamento: R$ 5 pela primeira
 
 **1. Assinatura** (que tipos entram e saem). Em Python, com **anotações de tipo**:
 
-```python
+```text
 def preco_estacionamento(minutos: int) -> int:
 ```
 
 **2. Propósito** (uma frase, em docstring):
 
-```python
+```text
     """Devolve o preço em reais para `minutos` de permanência."""
 ```
 
 **3. Esboço (stub)**: um corpo que devolve um valor do tipo certo, mesmo que errado. Assim o arquivo já roda e os testes já podem ser escritos.
 
-```python
+```text
     return 0
 ```
 
 **4. Exemplos**, **antes** do código, cobrindo os casos típicos e as **bordas**:
 
-```python
+```text
 assert preco_estacionamento(30) == 5      # menos de 1 hora: só a primeira
 assert preco_estacionamento(60) == 5      # borda: exatamente 1 hora
 assert preco_estacionamento(61) == 8      # 1 minuto a mais: conta 2ª hora
@@ -81,7 +81,7 @@ Escrever os exemplos obriga você a **entender o problema**. Se não consegue ca
 
 **5. Modelo** (template): o esqueleto que o **tipo do dado** sugere. Um número com faixas pede um `if`; uma lista pede um `for` com acumulador; um texto pede percorrer caracteres ou `split`. Exemplo de modelo para "função que recebe uma lista":
 
-```python
+```text
 def f(lista: list) -> ...:
     resultado = ...              # valor inicial do acumulador
     for item in lista:

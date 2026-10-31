@@ -67,7 +67,7 @@ volta │  i  │ soma antes │ soma depois
 
 ### if, elif, else
 
-```python
+```text
 if condição_1:
     bloco 1          # roda se condição_1 for True
 elif condição_2:
@@ -83,7 +83,7 @@ else:
 
 ### while
 
-```python
+```text
 while condição:
     bloco            # repete enquanto a condição for True
 ```
@@ -94,7 +94,7 @@ Use `while` quando **não se sabe quantas voltas** serão: ler até o usuário d
 
 ### for e range
 
-```python
+```text
 for variável in sequência:
     bloco            # roda uma vez para cada item, com a variável valendo aquele item
 ```

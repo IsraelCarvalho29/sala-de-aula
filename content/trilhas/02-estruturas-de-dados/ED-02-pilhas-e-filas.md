@@ -291,6 +291,97 @@ explicacao: "Despejar a pilha de entrada na de saída inverte a ordem, transform
 dificuldade: 3
 ```
 
+```quiz
+id: ED-02-q8
+tipo: codigo
+linguagem: python
+pergunta: |
+  **Calculadora com pilha (notação polonesa reversa).** Na notação polonesa reversa, o operador vem depois dos operandos: `3 4 + 2 *` significa (3 + 4) × 2. Escreva `calcular(expr)` que recebe os itens separados por espaço e devolve o resultado como `int`. Operadores: `+`, `-`, `*` e `/` (divisão inteira, com `//`).
+codigo_inicial: |
+  def calcular(expr):
+      pilha = []
+      return 0
+usa: [def, split, append, pop, return]
+testes:
+  - chamada: "calcular('3 4 + 2 *')"
+    saida: "14"
+  - chamada: "calcular('5 1 2 + 4 * + 3 -')"
+    saida: "14"
+  - chamada: "calcular('42')"
+    saida: "42"
+  - chamada: "calcular('10 3 -')"
+    visivel: false
+    saida: "7"
+  - chamada: "calcular('2 3 4 * + 20 5 / -')"
+    visivel: false
+    saida: "10"
+dica: "Percorra expr.split(). Número: empilhe int(item). Operador: desempilhe b (o de cima) e depois a, calcule a OP b e empilhe o resultado. No fim, a resposta é o único item da pilha. Atenção à ordem em - e /."
+solucao: |
+  def calcular(expr):
+      pilha = []
+      for item in expr.split():
+          if item in "+-*/":
+              b = pilha.pop()
+              a = pilha.pop()
+              if item == "+":
+                  pilha.append(a + b)
+              elif item == "-":
+                  pilha.append(a - b)
+              elif item == "*":
+                  pilha.append(a * b)
+              else:
+                  pilha.append(a // b)
+          else:
+              pilha.append(int(item))
+      return pilha.pop()
+explicacao: "A pilha guarda os operandos esperando um operador. O primeiro pop é o operando da direita: em '10 3 -', b = 3 e a = 10, então 10 − 3. Calculadoras HP e a máquina virtual da JVM e do Python avaliam expressões exatamente assim."
+dificuldade: 2
+```
+
+```quiz
+id: ED-02-q9
+tipo: codigo
+linguagem: python
+pergunta: |
+  **Rodízio com fila (round-robin).** Um processador atende tarefas em rodízio: cada tarefa `(nome, tempo)` roda no máximo `quantum` unidades de tempo; se ainda faltar, volta para o **fim da fila** com o tempo restante. Escreva `ordem_de_termino(tarefas, quantum)` que devolve a lista dos nomes na ordem em que **terminam**. Use `collections.deque`.
+codigo_inicial: |
+  from collections import deque
+
+
+  def ordem_de_termino(tarefas, quantum):
+      fila = deque(tarefas)
+      terminadas = []
+      return terminadas
+usa: [def, while, popleft, append, return]
+testes:
+  - chamada: "ordem_de_termino([('A', 3), ('B', 1), ('C', 2)], 2)"
+    saida: "['B', 'C', 'A']"
+  - chamada: "ordem_de_termino([('A', 5)], 2)"
+    saida: "['A']"
+  - chamada: "ordem_de_termino([], 3)"
+    saida: "[]"
+  - chamada: "ordem_de_termino([('P1', 4), ('P2', 4), ('P3', 1), ('P4', 7)], 3)"
+    visivel: false
+    saida: "['P3', 'P1', 'P2', 'P4']"
+dica: "Enquanto a fila tiver itens: nome, tempo = fila.popleft(). Se tempo <= quantum, a tarefa termina (append do nome em terminadas). Senão, fila.append((nome, tempo - quantum))."
+solucao: |
+  from collections import deque
+
+
+  def ordem_de_termino(tarefas, quantum):
+      fila = deque(tarefas)
+      terminadas = []
+      while fila:
+          nome, tempo = fila.popleft()
+          if tempo <= quantum:
+              terminadas.append(nome)
+          else:
+              fila.append((nome, tempo - quantum))
+      return terminadas
+explicacao: "A fila garante justiça: ninguém espera mais que uma volta inteira. É o escalonador round-robin dos sistemas operacionais (SO-03). Com deque, popleft e append são O(1); com list.pop(0) cada retirada seria O(n)."
+dificuldade: 2
+```
+
 ## Resumo
 
 - **Pilha = LIFO** (push/pop no topo); **fila = FIFO** (entra no fim, sai da frente).

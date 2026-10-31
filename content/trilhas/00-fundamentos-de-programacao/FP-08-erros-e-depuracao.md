@@ -74,6 +74,7 @@ ZeroDivisionError: division by zero           ← O QUÊ: tipo e mensagem. Comec
 ### try / except / else / finally
 
 ```python
+texto = input("Número: ")
 try:
     # código que PODE dar erro
     n = int(texto)

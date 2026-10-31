@@ -95,6 +95,8 @@ mista = [1, "dois", 3.0, True]   # pode misturar tipos (mas raramente é boa ide
 ### Percorrendo
 
 ```python
+notas = [7.5, 9.0, 6.0]
+
 for nota in notas:                  # cada elemento
     print(nota)
 
@@ -108,9 +110,12 @@ for i in range(len(notas)):         # só as posições (útil para trocar valor
 **Compreensão de lista**: uma forma curta de criar uma lista a partir de outra.
 
 ```python
+notas = [7.5, 9.0, 6.0]
+nomes = ["ana", "bia"]
 quadrados = [x ** 2 for x in range(5)]            # [0, 1, 4, 9, 16]
-aprovados = [n for n in notas if n >= 7]          # filtra
-nomes_maiusc = [nome.upper() for nome in nomes]   # transforma
+aprovados = [n for n in notas if n >= 7]          # filtra: [7.5, 9.0]
+nomes_maiusc = [nome.upper() for nome in nomes]   # transforma: ['ANA', 'BIA']
+print(quadrados, aprovados, nomes_maiusc)
 ```
 
 ### Strings
