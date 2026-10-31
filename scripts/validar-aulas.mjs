@@ -258,6 +258,38 @@ for (const d of desafios.filter((x) => x.ling !== 'python')) {
     }
   }
 }
+/* O código inicial não pode passar nos testes: senão o aluno acerta sem escrever nada. */
+const comInicial = desafios.filter((d) => d.q.codigo_inicial?.trim());
+const pyIni = comInicial.filter((d) => d.ling === 'python');
+const respIni = rodarPython(pyIni.flatMap((d) => d.testes.map((t) => ({ acao: 'executar', codigo: d.q.codigo_inicial, entradas: t.entradas, chamada: t.chamada }))));
+let m = 0;
+for (const d of comInicial) {
+  let passa = true;
+  for (const t of d.testes) {
+    let ok = false;
+    try {
+      if (d.ling === 'python') {
+        const r = respIni[m++];
+        ok = !r.erro && normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);
+      } else if (d.ling === 'html') {
+        if (!navegador) { ok = false; break; }
+        const pg = await navegador.newPage();
+        await pg.setContent(d.q.codigo_inicial);
+        ok = await pg.evaluate((exp) => { try { return !!(0, eval)(exp); } catch { return false; } }, t.verifica);
+        await pg.close();
+      } else {
+        const r = d.ling === 'sql' ? await rodarSQL(d.q.codigo_inicial, d.q.preparo)
+          : d.ling === 'c' || d.ling === 'cpp' ? rodarC(d.q.codigo_inicial, t)
+          : await rodarJS(d.q.codigo_inicial, t, d.ling === 'typescript');
+        ok = normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);
+      }
+    } catch {
+      ok = false;
+    }
+    passa &&= ok;
+  }
+  if (passa) falhar(d.ref, 'o codigo_inicial já passa em todos os testes');
+}
 await navegador?.close();
 
 const nAulas = aulas.filter((a) => !filtro || a.caminho.includes(filtro)).length;
