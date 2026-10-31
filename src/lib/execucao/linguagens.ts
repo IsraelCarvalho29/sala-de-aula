@@ -38,6 +38,22 @@ const APELIDOS: Record<string, Linguagem> = {
   html: 'html',
 };
 
+/** Como reconhecer, no código, que o programa lê a entrada (para mostrar o campo de entradas só quando precisa). */
+const LE_ENTRADA: Partial<Record<Linguagem, RegExp>> = {
+  python: /\binput\s*\(/,
+  javascript: /\bprompt\s*\(/,
+  typescript: /\bprompt\s*\(/,
+  c: /\b(scanf|getchar|fgets|gets)\s*\(/,
+  cpp: /\bcin\b|\b(scanf|getline|getchar)\s*\(/,
+};
+
+export const codigoLeEntrada = (linguagem: Linguagem, codigo: string) => !!LE_ENTRADA[linguagem]?.test(codigo);
+
+/** O texto do campo de entradas parece código (ex.: o aluno escreveu o programa no lugar errado)? */
+export function pareceCodigo(texto: string) {
+  return /\b(print|input|console\.log|printf|scanf|def|return|import|SELECT)\b|\w+\s*\(.*\)|^\s*\w+\s*=[^=]/im.test(texto);
+}
+
 export function normalizarLinguagem(nome?: string): Linguagem | undefined {
   return nome ? APELIDOS[nome.toLowerCase()] : undefined;
 }

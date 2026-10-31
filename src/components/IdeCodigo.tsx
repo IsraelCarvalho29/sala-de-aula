@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import EditorCodigo, { type EditorCodigoRef, type MarcaErro } from './EditorCodigo';
 import {
-  analisar, executar, LINGUAGENS, normalizarSaida, preparar, useEstadoRuntime,
+  analisar, codigoLeEntrada, executar, LINGUAGENS, pareceCodigo, normalizarSaida, preparar, useEstadoRuntime,
   type ErroCodigo, type Linguagem, type ResultadoExecucao,
 } from '../lib/execucao';
 
@@ -72,7 +72,9 @@ export default function IdeCodigo({ linguagem, codigoInicial, chaveRascunho, pre
   const [verSolucao, setVerSolucao] = useState(false);
   const [htmlDoc, setHtmlDoc] = useState('');
   const estado = useEstadoRuntime(linguagem);
-  const temEntrada = !!info.leitura;
+  // o campo de entradas só aparece quando o código chama input()/prompt()/scanf
+  const temEntrada = !!info.leitura && codigoLeEntrada(linguagem, codigo);
+  const entradaPareceCodigo = temEntrada && pareceCodigo(entrada);
 
   // carrega o runtime quando a IDE aparece na tela, para a primeira execução ser rápida
   useEffect(() => {
@@ -205,7 +207,7 @@ export default function IdeCodigo({ linguagem, codigoInicial, chaveRascunho, pre
   return (
     <div className="ide" ref={caixa}>
       <div className="ide-topo">
-        <span className="ide-arquivo">{info.arquivo}</span>
+        <span className="ide-arquivo">✏️ Escreva o código aqui · {info.arquivo}</span>
         <span className={`ide-status ${estado}`}>{status}</span>
       </div>
 
@@ -213,9 +215,16 @@ export default function IdeCodigo({ linguagem, codigoInicial, chaveRascunho, pre
 
       {temEntrada && (
         <label className="ide-entrada">
-          <span>Entrada do programa: uma linha para cada {info.leitura}</span>
+          <span>
+            ⌨️ <strong>O que a pessoa digita</strong> quando o programa chama {info.leitura}: um valor por linha. Não é código.
+          </span>
           <textarea rows={Math.max(2, entrada.split('\n').length)} value={entrada} spellCheck={false}
-            onChange={(e) => setEntrada(e.target.value)} placeholder={`O que você digitaria quando o programa chamar ${info.leitura}`} />
+            onChange={(e) => setEntrada(e.target.value)} placeholder="ex.: 26" />
+          {entradaPareceCodigo && (
+            <span className="ide-aviso">
+              ⚠️ Isso parece código. O código vai no editor acima; aqui ficam só os valores que o {info.leitura} vai ler (por exemplo, uma idade).
+            </span>
+          )}
         </label>
       )}
 

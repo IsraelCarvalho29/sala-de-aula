@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { indentLess, indentMore, indentWithTab } from '@codemirror/commands';
 import { HighlightStyle, indentUnit, syntaxHighlighting } from '@codemirror/language';
 import { python } from '@codemirror/lang-python';
@@ -54,6 +54,7 @@ const tema = EditorView.theme({
   '.cm-activeLineGutter': { backgroundColor: 'var(--brand-soft)', color: 'var(--text)' },
   '.cm-cursor': { borderLeftColor: 'var(--brand)', borderLeftWidth: '2px' },
   '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection': { backgroundColor: 'color-mix(in srgb, var(--brand) 35%, transparent) !important' },
+  '.cm-placeholder': { color: 'var(--text-muted)', fontStyle: 'italic' },
   '.cm-tooltip': { backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' },
   '.cm-tooltip-autocomplete ul li[aria-selected]': { backgroundColor: 'var(--brand)', color: '#fff' },
   '.cm-lintRange-error': { backgroundImage: 'none', textDecoration: 'underline wavy var(--st-error)', textUnderlineOffset: '3px' },
@@ -128,6 +129,9 @@ const EditorCodigo = forwardRef<EditorCodigoRef, Props>(function EditorCodigo({ 
             indentWithTab,
           ]),
           syntaxHighlighting(destaque),
+          // no celular a linha quebra em vez de rolar para o lado
+          EditorView.lineWrapping,
+          placeholder('Toque aqui e escreva seu código…'),
           tema,
           lintGutter(),
           verificarAoDigitar(linguagem),
