@@ -99,7 +99,8 @@ linguagem: python          # python | javascript | typescript | c | cpp | sql | 
 pergunta: "Leia a idade e imprima ..."
 codigo_inicial: |          # opcional: o que já aparece no editor
   # escreva aqui
-usa: [input, int]          # funções, palavras-chave (if, for, while, def, return, f-string) ou cláusulas SQL
+usa: [input, int]          # funções, palavras-chave (if, for, while, def, return, break, continue, class,
+                           # lambda, try, raise, with, import, f-string, list-comprehension) ou cláusulas SQL
 testes:
   - entrada: "26"          # uma linha por input()/prompt()/scanf; várias: entradas: ["Ana", "2000"]
     saida: |               # o que o programa imprime (o texto da pergunta do input não conta)

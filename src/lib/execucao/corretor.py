@@ -142,6 +142,15 @@ ESTRUTURAS = {
     "def": ast.FunctionDef,
     "return": ast.Return,
     "f-string": ast.JoinedStr,
+    "break": ast.Break,
+    "continue": ast.Continue,
+    "class": ast.ClassDef,
+    "lambda": ast.Lambda,
+    "try": ast.Try,
+    "raise": ast.Raise,
+    "with": ast.With,
+    "import": (ast.Import, ast.ImportFrom),
+    "list-comprehension": (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp),
 }
 
 

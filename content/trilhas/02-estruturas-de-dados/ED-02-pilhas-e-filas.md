@@ -223,16 +223,48 @@ dificuldade: 2
 ```quiz
 id: ED-02-q7
 tipo: codigo
-pergunta: "Implemente uma fila usando apenas duas pilhas (listas usadas só com append e pop do final). `dequeue` deve ter custo O(1) amortizado."
-assinatura: "class FilaDuasPilhas: enqueue(x), dequeue() -> int"
-testes:
-  - entrada: "enqueue(1); enqueue(2); dequeue(); enqueue(3); dequeue(); dequeue()"
-    saida: "1, 2, 3"
-dica: "Uma pilha recebe as entradas. Quando a pilha de saída estiver vazia, despeje toda a pilha de entrada nela: a ordem se inverte."
-resposta: |
+linguagem: python
+pergunta: |
+  Implemente uma fila usando apenas duas pilhas (listas usadas só com `append` e `pop()` do final). `dequeue` deve ter custo O(1) amortizado e lançar `IndexError` se a fila estiver vazia.
+
+  A função `usar_fila` já está pronta e é ela que os testes chamam: cada número é um `enqueue` e cada `"sai"` é um `dequeue`. Ela devolve a lista do que saiu.
+codigo_inicial: |
   class FilaDuasPilhas:
       def __init__(self):
-          self.entrada, self.saida = [], []
+          self.entrada = []
+          self.saida = []
+
+      def enqueue(self, x):
+          pass
+
+      def dequeue(self):
+          pass
+
+
+  # não mude esta função: é ela que os testes usam
+  def usar_fila(fila, operacoes):
+      saiu = []
+      for op in operacoes:
+          if op == "sai":
+              saiu.append(fila.dequeue())
+          else:
+              fila.enqueue(op)
+      return saiu
+usa: [append, pop]
+testes:
+  - chamada: "usar_fila(FilaDuasPilhas(), [1, 2, 'sai', 3, 'sai', 'sai'])"
+    saida: "[1, 2, 3]"
+  - chamada: "usar_fila(FilaDuasPilhas(), [10, 'sai', 20, 30, 40, 'sai', 'sai'])"
+    saida: "[10, 20, 30]"
+  - chamada: "usar_fila(FilaDuasPilhas(), [7, 8, 9, 'sai', 1, 'sai', 'sai', 'sai'])"
+    visivel: false
+    saida: "[7, 8, 9, 1]"
+dica: "Uma pilha recebe as entradas. Quando a pilha de saída estiver vazia, despeje toda a pilha de entrada nela: a ordem se inverte."
+solucao: |
+  class FilaDuasPilhas:
+      def __init__(self):
+          self.entrada = []
+          self.saida = []
 
       def enqueue(self, x):
           self.entrada.append(x)
@@ -244,6 +276,17 @@ resposta: |
           if not self.saida:
               raise IndexError("fila vazia")
           return self.saida.pop()
+
+
+  # não mude esta função: é ela que os testes usam
+  def usar_fila(fila, operacoes):
+      saiu = []
+      for op in operacoes:
+          if op == "sai":
+              saiu.append(fila.dequeue())
+          else:
+              fila.enqueue(op)
+      return saiu
 explicacao: "Despejar a pilha de entrada na de saída inverte a ordem, transformando LIFO em FIFO. Cada elemento é movido no máximo uma vez de uma pilha para a outra, então o custo total de n operações é O(n), ou seja, O(1) amortizado por operação."
 dificuldade: 3
 ```

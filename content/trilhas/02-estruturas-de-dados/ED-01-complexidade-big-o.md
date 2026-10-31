@@ -221,19 +221,27 @@ dificuldade: 2
 ```quiz
 id: ED-01-q8
 tipo: codigo
-pergunta: "Escreva `soma_par_alvo(nums, alvo)` que retorna True se existirem dois números distintos (posições diferentes) cuja soma é `alvo`. Meta: O(n) de tempo."
-assinatura: "def soma_par_alvo(nums: list[int], alvo: int) -> bool"
+linguagem: python
+pergunta: "Escreva `soma_par_alvo(nums, alvo)` que **retorna** True se existirem dois números em posições diferentes cuja soma é `alvo`, e False caso contrário. Meta: O(n) de tempo (um laço só)."
+codigo_inicial: |
+  def soma_par_alvo(nums, alvo):
+      # escreva aqui
+      return False
+usa: [def, for, return]
 testes:
-  - entrada: "([2, 7, 11, 15], 9)"
+  - chamada: "soma_par_alvo([2, 7, 11, 15], 9)"
     saida: "True"
-  - entrada: "([3, 3], 6)"
+  - chamada: "soma_par_alvo([3, 3], 6)"
     saida: "True"
-  - entrada: "([3], 6)"
+  - chamada: "soma_par_alvo([3], 6)"
     saida: "False"
-  - entrada: "([1, 2, 3], 7)"
+  - chamada: "soma_par_alvo([1, 2, 3], 7)"
     saida: "False"
+  - chamada: "soma_par_alvo([5, -2, 8, 4], 2)"
+    visivel: false
+    saida: "True"
 dica: "Para cada número x, o que você precisa ter visto antes? Guarde os vistos em um set."
-resposta: |
+solucao: |
   def soma_par_alvo(nums, alvo):
       vistos = set()
       for x in nums:
