@@ -130,6 +130,7 @@ function rodarPython(lote) {
   const script = join(pasta, 'rodar.py');
   writeFileSync(script, `
 import json, sys
+sys.dont_write_bytecode = True
 sys.path.insert(0, ${JSON.stringify(join(raiz, 'src/lib/execucao'))})
 import corretor
 pedidos = json.load(sys.stdin)
