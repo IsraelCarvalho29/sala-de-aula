@@ -206,6 +206,13 @@ Percurso por nível com uma fila:
 from collections import deque
 
 
+class No:
+    def __init__(self, valor, esq=None, dir=None):
+        self.valor = valor
+        self.esq = esq
+        self.dir = dir
+
+
 def por_nivel(raiz):
     if raiz is None:
         return []
@@ -221,6 +228,7 @@ def por_nivel(raiz):
     return saida
 
 
+raiz = No(50, No(30, No(20), No(40)), No(70, No(60), No(80)))
 print(por_nivel(raiz))   # [50, 30, 70, 20, 40, 60, 80]
 ```
 

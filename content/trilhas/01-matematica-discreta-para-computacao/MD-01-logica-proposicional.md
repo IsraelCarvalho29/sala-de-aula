@@ -124,8 +124,11 @@ De Morgan em português: "não (chove **e** venta)" é o mesmo que "não chove *
 **Curto-circuito**: o Python avalia `and` e `or` da esquerda para a direita e **para assim que sabe a resposta**. Em `a and b`, se `a` é falso, `b` nem é avaliado. Isso é usado para proteger contas:
 
 ```python
+total = 50
+divisor = 0
 if divisor != 0 and total / divisor > 10:   # sem o curto-circuito, dividiria por zero
-    ...
+    print("média alta")
+print("sem erro: a divisão nem foi calculada")
 ```
 
 **Operadores bit a bit** (`&`, `|`, `^`, `~`) aplicam a mesma tabela a cada bit de um número (MD-04): `0b1100 & 0b1010 == 0b1000`. Não confunda com `and`/`or`, que trabalham com o valor inteiro como verdadeiro ou falso.

@@ -21,6 +21,7 @@ npm install
 npm run dev       # abre em http://localhost:5173
 npm run build     # gera o site estático em dist/
 npm run preview   # serve o dist/ para conferir o build
+npm run validar   # confere as aulas e roda a solução de cada desafio contra os testes
 ```
 
 Para estudar no celular com o servidor de desenvolvimento, rode `npm run dev -- --host` e abra no celular o endereço de rede que aparece no terminal (os dois aparelhos precisam estar na mesma rede Wi-Fi).
@@ -41,6 +42,7 @@ docs/
   avaliacao/                especificação do sistema de perguntas, schema e banco inicial
   design/                   protótipo da identidade visual e dos componentes visuais
 scripts/gerar-trilhas.mjs   gera os _trilha.md a partir de docs/curriculo/curriculo.md
+scripts/validar-aulas.mjs   confere as aulas (npm run validar, também roda no CI)
 src/
   lib/conteudo.ts           lê content/ em tempo de build e monta trilhas e módulos
   lib/progresso.ts          progresso no localStorage
@@ -55,6 +57,11 @@ src/
 1. Crie `content/trilhas/<trilha>/<CÓDIGO>-<nome>.md`, por exemplo `content/trilhas/02-estruturas-de-dados/ED-03-listas-ligadas.md`.
 2. Use o front matter e as seções do [modelo de aula](docs/curriculo/modelo-de-aula.md). O `codigo` precisa ser o mesmo do currículo: é ele que liga a aula ao módulo planejado e guarda o progresso.
 3. Rode `npm run dev` e abra a trilha. O módulo deixa de aparecer como "em breve".
+4. Rode `npm run validar`. Ele confere o front matter e as perguntas e executa a `solucao` de cada desafio contra os `testes` (com o limite de 5 s do app), além de exigir um teste oculto e garantir que o `codigo_inicial` não passa sozinho. Precisa de `python3`; desafios em HTML só são conferidos com o Playwright instalado.
+
+Exemplos de código na aula com cerca de linguagem executável (` ```python `, ` ```javascript `...) ganham o botão "Experimentar". Para trechos que não rodam sozinhos (moldes com `...`, métodos soltos), use ` ```text `.
+
+O C do navegador (JSCPP) ainda não aceita `scanf("%d", &v[i])` direto num elemento de vetor: leia numa variável auxiliar e copie.
 
 Front matter mínimo:
 

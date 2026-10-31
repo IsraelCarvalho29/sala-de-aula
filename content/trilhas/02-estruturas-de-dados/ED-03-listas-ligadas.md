@@ -111,7 +111,7 @@ Na prática, arrays costumam ser mais rápidos para quase tudo por causa da cach
 
 ### Percorrer: o padrão fundamental
 
-```python
+```text
 atual = cabeca
 while atual is not None:
     ... atual.valor ...

@@ -97,7 +97,7 @@ print(c1.titular, c1._saldo)   # Ana 150
 
 O objeto deve proteger seu estado: em vez de qualquer código mexer em `conta._saldo` diretamente, as mudanças passam por **métodos que validam**.
 
-```python
+```text
 def sacar(self, valor):
     if valor <= 0 or valor > self._saldo:
         raise ValueError("saque inválido")
@@ -106,7 +106,7 @@ def sacar(self, valor):
 
 Em Python, o `_` na frente (`_saldo`) é uma **convenção** de "uso interno, não mexa" (Java e C# têm `private` de verdade). Para expor um valor só para leitura, use `@property`:
 
-```python
+```text
 @property
 def saldo(self):
     return self._saldo     # c1.saldo funciona, c1.saldo = 10 dá erro
@@ -129,7 +129,7 @@ Métodos com dois sublinhados dos dois lados ensinam o Python a usar seus objeto
 
 Uma **subclasse** herda atributos e métodos da **superclasse** e pode **acrescentar** ou **sobrescrever** comportamentos.
 
-```python
+```text
 class ContaPoupanca(Conta):              # ContaPoupanca é uma Conta
     def __init__(self, titular, saldo=0, taxa=0.005):
         super().__init__(titular, saldo)  # reaproveita o construtor da mãe
@@ -147,7 +147,7 @@ Use herança só quando a relação é **"é um"** de verdade (uma poupança **�
 
 "Muitas formas": objetos de classes diferentes respondem à **mesma mensagem** (mesmo nome de método), cada um do seu jeito. O código que usa não precisa de `if tipo == ...`:
 
-```python
+```text
 for forma in [Circulo(1), Retangulo(2, 3), Quadrado(2)]:
     print(forma.area())    # cada classe calcula a sua área
 ```
