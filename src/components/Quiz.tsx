@@ -1,14 +1,31 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { parse } from 'yaml';
 import { registrarResposta, useProgresso } from '../lib/progresso';
 import { MarkdownSimples } from './Markdown';
+import { normalizarLinguagem } from '../lib/execucao/linguagens';
+import type { Desafio, Teste } from './IdeCodigo';
+
+// o editor e os executores só são baixados quando a aula tem desafio de código
+const IdeCodigo = lazy(() => import('./IdeCodigo'));
 
 /**
  * Pergunta embutida na aula. Formato (docs/curriculo/modelo-de-aula.md):
  *   id, tipo, pergunta, opcoes, resposta, explicacao, dificuldade, palavras_chave, dica
  * Tipos: multipla_escolha | verdadeiro_falso | resposta_curta | prever_saida | codigo
  * Os tipos abertos usam autoavaliação: o aluno escreve, vê a resposta modelo e diz se acertou.
+ * `codigo` com `testes` abre a IDE e é corrigido automaticamente (ver docs/avaliacao/especificacao-quiz.md).
  */
+interface TesteYaml {
+  entrada?: string | number | (string | number)[];
+  entradas?: (string | number)[];
+  saida?: string | number;
+  esperado?: string | number;
+  chamada?: string;
+  verifica?: string;
+  descricao?: string;
+  visivel?: boolean;
+}
+
 interface DadosQuiz {
   id?: string;
   tipo?: string;
@@ -20,6 +37,14 @@ interface DadosQuiz {
   palavras_chave?: string[];
   dica?: string;
   dificuldade?: number;
+  // desafio de código
+  linguagem?: string;
+  codigo_inicial?: string;
+  testes?: TesteYaml[];
+  usa?: string[];
+  indentacao?: boolean;
+  preparo?: string;
+  solucao?: string;
 }
 
 const ROTULO: Record<string, string> = {
@@ -41,7 +66,13 @@ export default function Quiz({ yaml, idPadrao }: { yaml: string; idPadrao: strin
   const tipo = q.tipo ?? (typeof q.resposta === 'boolean' ? 'verdadeiro_falso' : 'multipla_escolha');
   return (
     <QuizCartao q={q} id={id} tipo={tipo}>
-      {tipo === 'multipla_escolha' || tipo === 'verdadeiro_falso' ? <Fechada q={q} id={id} tipo={tipo} /> : <Aberta q={q} id={id} />}
+      {tipo === 'multipla_escolha' || tipo === 'verdadeiro_falso' ? (
+        <Fechada q={q} id={id} tipo={tipo} />
+      ) : tipo === 'codigo' && q.testes?.length ? (
+        <DesafioCodigo q={q} id={id} />
+      ) : (
+        <Aberta q={q} id={id} />
+      )}
     </QuizCartao>
   );
 }
@@ -86,6 +117,44 @@ function Fechada({ q, id, tipo }: { q: DadosQuiz; id: string; tipo: string }) {
       </div>
       {respondeu && (
         <Feedback ok={escolha === certa} explicacao={q.explicacao} onRefazer={() => setEscolha(null)} />
+      )}
+    </>
+  );
+}
+
+function converterTeste(t: TesteYaml): Teste {
+  const bruto = t.entradas ?? t.entrada ?? [];
+  const entradas = Array.isArray(bruto) ? bruto.map(String) : String(bruto).split('\n');
+  return {
+    entradas,
+    esperado: String(t.esperado ?? t.saida ?? ''),
+    chamada: t.chamada,
+    verifica: t.verifica,
+    descricao: t.descricao,
+    visivel: t.visivel !== false,
+  };
+}
+
+function DesafioCodigo({ q, id }: { q: DadosQuiz; id: string }) {
+  const [verDica, setVerDica] = useState(false);
+  const [resultado, setResultado] = useState<boolean | null>(null);
+  const linguagem = normalizarLinguagem(q.linguagem) ?? 'python';
+  const desafio: Desafio = {
+    testes: (q.testes ?? []).map(converterTeste),
+    usa: q.usa,
+    indentacao: q.indentacao,
+    solucao: q.solucao ?? (typeof q.resposta === 'string' ? q.resposta : undefined),
+  };
+  return (
+    <>
+      {q.dica && (verDica ? <p className="dica">💡 {q.dica}</p> : <button className="link" onClick={() => setVerDica(true)}>Mostrar dica</button>)}
+      <Suspense fallback={<p className="dica">Carregando o editor…</p>}>
+        <IdeCodigo linguagem={linguagem} codigoInicial={q.codigo_inicial ?? ''} chaveRascunho={id} preparo={q.preparo}
+          desafio={desafio}
+          onVerificado={(ok) => { setResultado(ok); registrarResposta(id, ok); }} />
+      </Suspense>
+      {resultado && q.explicacao && (
+        <div className="feedback ok"><MarkdownSimples texto={q.explicacao} /></div>
       )}
     </>
   );
