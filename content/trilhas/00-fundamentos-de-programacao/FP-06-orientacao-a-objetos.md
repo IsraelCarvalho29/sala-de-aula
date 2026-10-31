@@ -26,7 +26,7 @@ tags: [fundamentos, poo, classes, objetos, heranca, polimorfismo, encapsulamento
 
 ## Por que isso importa
 
-Até aqui, dados (variáveis, listas) e comportamento (funções) viviam separados. Em sistemas grandes isso vira bagunça: qual função pode mexer no saldo da conta? Quem garante que ele nunca fica negativo? A **programação orientada a objetos (POO)** junta dados e comportamento num mesmo lugar, o **objeto**, e define quem pode fazer o quê com ele. É o paradigma dominante em Java, C#, Kotlin e muito presente em Python, TypeScript e nos frameworks web. Também é a base dos padrões de projeto (ES-04) e do SOLID (ES-03).
+Até aqui, dados (variáveis, listas) e comportamento (funções) viviam separados. Em sistemas grandes isso vira bagunça: qual função pode mexer no saldo da conta? Quem garante que ele nunca fica negativo? A **programação orientada a objetos (POO)** junta dados e comportamento num mesmo lugar, o **objeto**, e define quem pode fazer o quê com ele. É o paradigma dominante em Java, C#, Kotlin e muito presente em Python, TypeScript e nos frameworks web. Também é a base dos princípios SOLID (ES-04) e dos padrões de projeto (ES-05).
 
 ## Intuição
 
@@ -629,5 +629,5 @@ dificuldade: 2
 
 ## Para ir além
 
-- Mais adiante: ES-03 Princípios SOLID e ES-04 Padrões de projeto aprofundam como desenhar boas classes.
+- Mais adiante: ES-04 Princípios SOLID e ES-05 Padrões de projeto aprofundam como desenhar boas classes.
 - **Próximo módulo**: FP-07 Programação funcional, o "outro lado" da moeda.

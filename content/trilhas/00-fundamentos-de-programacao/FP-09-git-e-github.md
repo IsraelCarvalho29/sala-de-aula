@@ -293,7 +293,7 @@ solucao: |
           if linha not in antes:
               resultado.append("+ " + linha)
       return resultado
-explicacao: "Uma linha alterada aparece como uma removida e uma adicionada, exatamente como no git diff. O diff de verdade é mais esperto: usa o algoritmo de maior subsequência comum (programação dinâmica, AL-08) para respeitar a ordem e as linhas repetidas."
+explicacao: "Uma linha alterada aparece como uma removida e uma adicionada, exatamente como no git diff. O diff de verdade é mais esperto: usa o algoritmo de maior subsequência comum (programação dinâmica, AL-09) para respeitar a ordem e as linhas repetidas."
 dificuldade: 2
 ```
 
