@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sala de aula · Identidade visual e protótipos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0f1220; --surface:#171b2e; --surface-2:#1f2440; --border:#2c3358;
+  --text:#e7e9f5; --text-muted:#9aa0c3;
+  --brand:#7c6cff; --brand-soft:rgba(124,108,255,.16);
+  /* estados de visualização (semânticos) */
+  --st-default:#3a4170; --st-active:#ffb547; --st-compare:#4cc9f0;
+  --st-discard:#2a2f4d; --st-success:#3ddc97; --st-error:#ff6b7a;
+  --ptr-lo:#4cc9f0; --ptr-mid:#ffb547; --ptr-hi:#f472b6;
+  --font-ui:"Inter",system-ui,sans-serif; --font-code:"JetBrains Mono",ui-monospace,monospace;
+  --r-sm:6px; --r-md:10px; --r-lg:16px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --dur-fast:150ms; --dur-step:400ms; --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f6f7fb; --surface:#ffffff; --surface-2:#eef0f8; --border:#d9dcec;
+    --text:#161a30; --text-muted:#5b6185; --brand:#5b4bff; --brand-soft:rgba(91,75,255,.10);
+    --st-default:#c9cde6; --st-active:#f59e0b; --st-compare:#0891b2;
+    --st-discard:#eceef6; --st-success:#10b981; --st-error:#e11d48;
+    --ptr-lo:#0891b2; --ptr-mid:#d97706; --ptr-hi:#db2777;
+  }
+}
+@media (prefers-reduced-motion: reduce){ :root{ --dur-step:0ms; --dur-fast:0ms; } }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--font-ui)}
+.wrap{max-width:1080px;margin:0 auto;padding:var(--sp-6) var(--sp-4) var(--sp-7)}
+h1{font-size:30px;line-height:1.2;margin:0 0 var(--sp-2)}
+h2{font-size:22px;margin:var(--sp-7) 0 var(--sp-2)}
+h3{font-size:16px;margin:0 0 var(--sp-2)}
+p.lead{color:var(--text-muted);margin:0 0 var(--sp-5);max-width:720px}
+code,.mono,.code{font-family:var(--font-code);font-variant-ligatures:none !important}
+.eyebrow{font:600 12px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+nav.tabs{display:flex;gap:var(--sp-2);flex-wrap:wrap;margin:var(--sp-5) 0}
+nav.tabs a{padding:8px 14px;border-radius:999px;border:1px solid var(--border);color:var(--text);text-decoration:none;font-weight:500;font-size:14px}
+nav.tabs a.on{background:var(--brand);border-color:var(--brand);color:#fff}
+section.view{display:none} section.view.on{display:block}
+
+/* ============ GUIA ============ */
+.grid{display:grid;gap:var(--sp-3);grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.swatch{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.swatch i{display:block;height:56px}
+.swatch div{padding:var(--sp-2) var(--sp-3);font-size:13px}
+.swatch small{display:block;color:var(--text-muted);font-family:var(--font-code);font-size:11px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--sp-5)}
+.anatomy{display:grid;gap:var(--sp-3);grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.anatomy .card{padding:var(--sp-4)}
+.anatomy .card p{margin:0;color:var(--text-muted);font-size:14px}
+.tag{display:inline-block;font:600 11px/1 var(--font-code);padding:4px 7px;border-radius:var(--r-sm);background:var(--brand-soft);color:var(--brand);margin-bottom:var(--sp-2)}
+ul.rules{padding-left:18px;margin:0} ul.rules li{margin:4px 0}
+
+/* ============ COMPONENTE: VisualStep ============ */
+.vs{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.vs-head{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-3);padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.vs-head h3{margin:0}
+.vs-body{display:grid;grid-template-columns:1fr 360px}
+@media (max-width:820px){.vs-body{grid-template-columns:1fr}}
+.vs-stage{padding:var(--sp-6) var(--sp-4);min-height:220px;display:flex;flex-direction:column;justify-content:center;gap:var(--sp-4);border-right:1px solid var(--border)}
+.vs-side{display:flex;flex-direction:column}
+.vs-side > div{padding:var(--sp-4) var(--sp-4);border-bottom:1px solid var(--border)}
+.vs-side .label{font:600 11px/1 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-2)}
+.code{font:12.5px/1.7 var(--font-code);margin:0;white-space:pre;overflow-x:auto}
+.code span{display:block;padding:0 6px;border-radius:4px;border-left:3px solid transparent}
+.code span.hl{background:var(--brand-soft);border-left-color:var(--brand)}
+.vars{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.var{font:13px var(--font-code);background:var(--surface-2);border-radius:var(--r-sm);padding:4px 8px}
+.var b{font-weight:600}
+.narr{padding:var(--sp-4) var(--sp-5);border-top:1px solid var(--border);background:var(--surface-2);min-height:64px}
+.narr .step-n{font:600 12px var(--font-code);color:var(--brand);margin-right:var(--sp-2)}
+.controls{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-top:1px solid var(--border);flex-wrap:wrap}
+button{font:500 14px var(--font-ui);color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 12px;cursor:pointer;transition:background var(--dur-fast)}
+button:hover:not(:disabled){border-color:var(--brand)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+button:disabled{opacity:.4;cursor:default}
+button.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.progress{flex:1;min-width:120px;height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--brand);transition:width var(--dur-step) var(--ease)}
+.speed{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted)}
+input[type=text],input[type=number]{font:14px var(--font-code);background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 10px}
+
+/* array cells */
+.arr{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.cell{width:42px;text-align:center;position:relative}
+.cell .box{height:42px;display:grid;place-items:center;border-radius:var(--r-sm);background:var(--st-default);font:600 16px var(--font-code);color:var(--text);transition:all var(--dur-step) var(--ease);border:2px solid transparent}
+.cell .idx{font:11px var(--font-code);color:var(--text-muted);margin-top:4px}
+.cell.discard .box{background:var(--st-discard);color:var(--text-muted);opacity:.55}
+.cell.active .box{background:var(--st-active);color:#1b1300;transform:translateY(-6px)}
+.cell.found .box{background:var(--st-success);color:#04261a;transform:translateY(-6px) scale(1.08)}
+.cell .ptrs{height:20px;display:flex;gap:2px;justify-content:center;margin-top:2px}
+.ptr{font:600 10px var(--font-code);padding:1px 4px;border-radius:4px;color:#0b0d18}
+.ptr.lo{background:var(--ptr-lo)} .ptr.mid{background:var(--ptr-mid)} .ptr.hi{background:var(--ptr-hi)}
+.legend{display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--text-muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+
+/* quiz de previsão */
+.predict{border:1px dashed var(--brand);border-radius:var(--r-md);padding:var(--sp-3) var(--sp-4);background:var(--brand-soft)}
+.predict .opts{display:flex;gap:var(--sp-2);flex-wrap:wrap;margin-top:var(--sp-2)}
+.fb{margin-top:var(--sp-2);font-size:14px;font-weight:500}
+.fb.ok{color:var(--st-success)} .fb.bad{color:var(--st-error)}
+button.ok{background:var(--st-success);border-color:var(--st-success);color:#04261a}
+button.bad{background:var(--st-error);border-color:var(--st-error);color:#fff}
+
+/* pilha / fila */
+.ds-wrap{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)}
+@media (max-width:640px){.ds-wrap{grid-template-columns:1fr}}
+.ds{background:var(--surface-2);border-radius:var(--r-md);padding:var(--sp-4);min-height:300px;display:flex;flex-direction:column}
+.ds h4{margin:0 0 4px;font-size:15px}
+.ds .hint{font-size:12px;color:var(--text-muted);margin-bottom:var(--sp-3)}
+.stack{flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:4px;border:2px solid var(--border);border-top:none;border-radius:0 0 var(--r-md) var(--r-md);padding:6px;min-height:200px;width:140px;margin:0 auto}
+.queue{flex:1;display:flex;align-items:center;gap:4px;border:2px solid var(--border);border-left:none;border-right:none;padding:6px;min-height:72px;margin:auto 0;overflow:hidden}
+.item{font:600 15px var(--font-code);background:var(--st-default);border-radius:var(--r-sm);padding:10px 0;width:100%;text-align:center;animation:pop-in var(--dur-step) var(--ease)}
+.queue .item{width:52px;flex:none}
+.item.top{background:var(--st-active);color:#1b1300}
+.item.out{animation:pop-out var(--dur-step) var(--ease) forwards}
+@keyframes pop-in{from{opacity:0;transform:translateY(-16px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes pop-out{to{opacity:0;transform:translateX(40px) scale(.8)}}
+.ends{display:flex;justify-content:space-between;font:11px var(--font-code);color:var(--text-muted);margin-top:4px}
+.ds .btns{display:flex;gap:var(--sp-2);margin-top:var(--sp-3);flex-wrap:wrap}
+.log{font:12px var(--font-code);color:var(--text-muted);margin-top:var(--sp-2);min-height:18px}
+
+/* quiz card */
+.quiz{margin-top:var(--sp-5)}
+.quiz .q{font-weight:600;margin-bottom:var(--sp-3)}
+.quiz .opt{display:block;width:100%;text-align:left;margin-bottom:var(--sp-2);padding:10px 14px}
+.quiz .expl{margin-top:var(--sp-3);padding:var(--sp-3) var(--sp-4);border-radius:var(--r-md);background:var(--surface-2);font-size:14px;display:none}
+.quiz .expl.show{display:block}
+.quiz .meta{display:flex;justify-content:space-between;color:var(--text-muted);font-size:13px;margin-bottom:var(--sp-3)}
+
+/* ============ MOBILE ============ */
+button{touch-action:manipulation}
+.side-tabs{display:none}
+.qlabel{display:none;font:11px var(--font-code);color:var(--text-muted);text-align:center;margin:2px 0}
+.m-only{display:none}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:var(--sp-4) var(--sp-3) var(--sp-7)}
+  h1{font-size:24px} h2{font-size:19px;margin-top:var(--sp-6)}
+  p.lead{font-size:15px}
+  nav.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:var(--sp-4) calc(-1*var(--sp-3));padding:0 var(--sp-3);position:sticky;top:0;z-index:5;background:var(--bg);padding-block:var(--sp-2)}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs a{white-space:nowrap;flex:none}
+  .card{padding:var(--sp-4)}
+  /* VisualStep vira coluna: palco → narração → controles fixos → painéis */
+  .vs{display:flex;flex-direction:column;border-radius:var(--r-md);overflow:visible}
+  .vs-head{padding:var(--sp-3) var(--sp-4)}
+  .vs-head form{width:100%}
+  .vs-head input[type=number]{flex:1;min-width:0}
+  .vs-body{display:contents}
+  .vs-stage{order:1;border-right:none;padding:var(--sp-5) var(--sp-3) var(--sp-4);min-height:0;touch-action:pan-y}
+  .narr{order:2;padding:var(--sp-3) var(--sp-4);font-size:15px;min-height:88px}
+  .controls{order:3;position:sticky;bottom:0;z-index:4;background:var(--surface);display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp-2);padding:var(--sp-2) var(--sp-3) calc(var(--sp-2) + env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(0,0,0,.12)}
+  .controls .progress{grid-column:1/-1;grid-row:1;height:4px}
+  .controls button{min-height:44px;padding:0;font-size:18px}
+  .controls .speed{display:none}
+  .vs-side{order:4;border-top:1px solid var(--border)}
+  .side-tabs{display:flex;gap:4px;padding:var(--sp-2) var(--sp-3) 0 !important;border-bottom:none !important}
+  .side-tabs button{flex:1;min-height:40px;font-size:13px}
+  .side-tabs button.on{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+  .vs-side > [data-pane]{display:none;border-bottom:none}
+  .vs-side > [data-pane].on{display:block}
+  .vs-side .label{display:none}
+  .m-only{display:inline}
+  .d-only{display:none}
+  /* array cabe numa linha só */
+  .arr{flex-wrap:nowrap;gap:3px}
+  .cell{flex:1 1 0;min-width:0;max-width:42px}
+  .cell .box{height:auto;aspect-ratio:1;font-size:clamp(11px,3.4vw,15px)}
+  .cell .idx{font-size:10px}
+  .ptr{font-size:9px;padding:1px 2px}
+  .legend{gap:var(--sp-2) var(--sp-3);font-size:11px}
+  .predict .opts button{min-width:56px;min-height:44px;font-size:16px}
+  /* pilha e fila continuam lado a lado para comparar */
+  .ds-wrap{grid-template-columns:1fr 1fr;gap:var(--sp-2)}
+  .vs .ds-pad{padding:var(--sp-3) !important}
+  .ds{padding:var(--sp-3);min-height:0}
+  .ds .hint{font-size:11px;line-height:1.4}
+  .stack{width:100%;min-height:236px}
+  .queue{flex-direction:column;justify-content:flex-start;border:2px solid var(--border);border-top:none;border-bottom:none;min-height:236px;padding:6px}
+  .queue .item{width:100%}
+  .ends{display:none}
+  .qlabel{display:block}
+  .ds .btns{display:grid;grid-template-columns:1fr;gap:6px}
+  .ds .btns button{min-height:44px;font-family:var(--font-code);font-size:13px}
+  .log{font-size:11px;min-height:32px}
+  .vs-head > div{width:100%;display:grid !important;grid-template-columns:1fr 1fr}
+  .vs-head > div button{min-height:44px}
+  .quiz .opt{min-height:48px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Sala de aula · Design</div>
+  <h1>Identidade visual e explicações interativas</h1>
+  <p class="lead">Um guia de estilo e um padrão de componente reutilizável (<b>VisualStep</b>) para explicar algoritmos e estruturas de dados passo a passo, com dois protótipos funcionando.</p>
+
+  <nav class="tabs" aria-label="Seções">
+    <a href="#guia" data-v="guia">Guia visual</a>
+    <a href="#busca-binaria" data-v="busca-binaria">Protótipo 1 · Busca binária</a>
+    <a href="#pilha-fila" data-v="pilha-fila">Protótipo 2 · Pilha e fila</a>
+  </nav>
+
+  <!-- ================= GUIA ================= -->
+  <section class="view" id="v-guia">
+    <h2>Princípios</h2>
+    <div class="card"><ul class="rules">
+      <li><b>Uma ideia por passo.</b> Cada passo muda uma coisa na tela e tem uma frase explicando o porquê.</li>
+      <li><b>Cor é estado, nunca enfeite.</b> As cores de visualização têm significado fixo em todas as aulas.</li>
+      <li><b>Código e desenho andam juntos.</b> A linha do pseudocódigo em execução fica destacada ao lado da animação.</li>
+      <li><b>Prever antes de ver.</b> Em pontos-chave, o aluno responde o que vai acontecer antes de avançar.</li>
+      <li><b>O aluno controla o tempo.</b> Sempre há voltar, avançar, reproduzir e velocidade. Respeita "reduzir movimento".</li>
+    </ul></div>
+
+    <h2>Cores da interface</h2>
+    <div class="grid" id="ui-colors"></div>
+
+    <h2>Cores de estado (visualizações)</h2>
+    <div class="grid" id="st-colors"></div>
+
+    <h2>Tipografia</h2>
+    <div class="card">
+      <div style="font-size:30px;font-weight:700">Inter 700 · Títulos</div>
+      <div style="font-size:16px">Inter 400 · Texto corrido e narração dos passos</div>
+      <div class="mono" style="font-size:14px;margin-top:8px">JetBrains Mono · código, índices, variáveis: <b>mid = (lo + hi) // 2</b></div>
+      <p style="color:var(--text-muted);font-size:13px;margin:12px 0 0">Escala: 30 / 22 / 16 / 15 / 13 / 11 px. Espaçamento em múltiplos de 4 (4, 8, 12, 16, 24, 32, 48). Raios 6 / 10 / 16. Duração de passo 400 ms.</p>
+    </div>
+
+    <h2>Anatomia do componente VisualStep</h2>
+    <p class="lead">Todo visual de algoritmo usa a mesma estrutura. Só o <b>palco</b> muda entre aulas; o resto é reaproveitado.</p>
+    <div class="anatomy">
+      <div class="card"><span class="tag">1 · Cabeçalho</span><h3>Título e entrada</h3><p>Nome do conceito e campo para o aluno mudar os dados de entrada.</p></div>
+      <div class="card"><span class="tag">2 · Palco</span><h3>Desenho do estado</h3><p>Array, pilha, grafo ou árvore, colorido pelos estados semânticos, com legenda.</p></div>
+      <div class="card"><span class="tag">3 · Pseudocódigo</span><h3>Linha atual</h3><p>Destaque na linha que gerou o passo, para ligar o desenho ao código.</p></div>
+      <div class="card"><span class="tag">4 · Variáveis</span><h3>Estado interno</h3><p>Valores atuais (lo, mid, hi, topo…) em fonte mono.</p></div>
+      <div class="card"><span class="tag">5 · Narração</span><h3>O porquê</h3><p>Uma ou duas frases por passo, em linguagem simples.</p></div>
+      <div class="card"><span class="tag">6 · Controles</span><h3>Tempo do aluno</h3><p>⏮ ◀ ▶ ⏭, reproduzir/pausar, velocidade e barra de progresso. Atalhos: ← → espaço.</p></div>
+      <div class="card"><span class="tag">7 · Previsão</span><h3>Pergunta no meio</h3><p>Em passos marcados, o avanço trava até o aluno arriscar uma resposta.</p></div>
+      <div class="card"><span class="tag">8 · Quiz final</span><h3>Fixação</h3><p>Perguntas de múltipla escolha com explicação do erro e do acerto.</p></div>
+    </div>
+
+    <h2>Versão mobile</h2>
+    <p class="lead">O mesmo componente se reorganiza abaixo de 640 px. Nada é removido, só reordenado para caber na mão e no polegar.</p>
+    <div class="anatomy">
+      <div class="card"><span class="tag">Ordem</span><h3>Palco primeiro</h3><p>Palco → narração → controles → painéis. Desenho e explicação ficam juntos na tela.</p></div>
+      <div class="card"><span class="tag">Controles</span><h3>Barra fixa no rodapé</h3><p>Fica presa embaixo enquanto a aula está visível. Botões de 44 px, ao alcance do polegar.</p></div>
+      <div class="card"><span class="tag">Gesto</span><h3>Deslizar para avançar</h3><p>Arrastar o palco para a esquerda avança, para a direita volta. No desktop, as setas do teclado.</p></div>
+      <div class="card"><span class="tag">Painéis</span><h3>Abas compactas</h3><p>Código, Variáveis e Custo viram abas, em vez de uma coluna lateral longa.</p></div>
+      <div class="card"><span class="tag">Palco</span><h3>Uma linha só</h3><p>Arrays encolhem para caber sem quebrar linha. Comparações (pilha × fila) continuam lado a lado.</p></div>
+      <div class="card"><span class="tag">Navegação</span><h3>Abas roláveis</h3><p>As abas do topo rolam na horizontal e ficam fixas. Quiz com alvos de toque de 48 px.</p></div>
+    </div>
+
+    <h2>Formato de dados de um passo</h2>
+    <div class="card"><pre class="code" style="white-space:pre-wrap">{
+  state:   { ... },        // o que o palco desenha
+  line:    3,              // linha destacada do pseudocódigo
+  vars:    { lo: 0, mid: 4, hi: 9 },
+  text:    "Comparamos a[4] = 23 com o alvo 31…",
+  predict: {               // opcional: trava o avanço
+    q: "Qual será o próximo mid?",
+    options: [6, 7, 5], answer: 7, why: "…"
+  }
+}</pre>
+    <p style="color:var(--text-muted);font-size:14px;margin:12px 0 0">O algoritmo roda uma vez e gera a lista de passos. O componente só navega por ela, então voltar e avançar é trivial e qualquer aula nova é só uma função geradora + um palco.</p></div>
+  </section>
+
+  <!-- ================= PROTÓTIPO 1 ================= -->
+  <section class="view" id="v-busca-binaria">
+    <div class="vs" id="bs">
+      <div class="vs-head">
+        <h3>Busca binária</h3>
+        <form id="bs-form" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label class="speed" for="bs-target">Alvo</label>
+          <input id="bs-target" type="number" value="61" style="width:80px">
+          <button type="submit">Reiniciar</button>
+          <button type="button" id="bs-rand">Novo array</button>
+        </form>
+      </div>
+      <div class="vs-body">
+        <div class="vs-stage">
+          <div class="arr" id="bs-arr"></div>
+          <div class="legend">
+            <span style="--c:var(--st-default)">no intervalo</span>
+            <span style="--c:var(--st-active)">comparando</span>
+            <span style="--c:var(--st-discard)">descartado</span>
+            <span style="--c:var(--st-success)">encontrado</span>
+          </div>
+          <div class="predict" id="bs-predict" hidden></div>
+        </div>
+        <div class="vs-side">
+          <div class="side-tabs" role="tablist"><button class="on" data-t="code">Código</button><button data-t="vars">Variáveis</button><button data-t="cost">Custo</button></div>
+          <div data-pane="code" class="on"><div class="label">Pseudocódigo</div><pre class="code" id="bs-code"></pre></div>
+          <div data-pane="vars"><div class="label">Variáveis</div><div class="vars" id="bs-vars"></div></div>
+          <div data-pane="cost"><div class="label">Custo</div><div class="mono" id="bs-cost" style="font-size:13px"></div></div>
+        </div>
+      </div>
+      <div class="narr" id="bs-narr"></div>
+      <div class="controls">
+        <button id="bs-first" aria-label="Primeiro passo">⏮</button>
+        <button id="bs-prev" aria-label="Passo anterior">◀</button>
+        <button id="bs-play" class="primary" aria-label="Reproduzir">▶<span class="d-only"> Reproduzir</span></button>
+        <button id="bs-next" aria-label="Próximo passo">▶|</button>
+        <button id="bs-last" aria-label="Último passo">⏭</button>
+        <div class="progress"><i id="bs-prog"></i></div>
+        <label class="speed">Velocidade <input id="bs-speed" type="range" min="1" max="4" value="2"></label>
+      </div>
+    </div>
+
+    <div class="card quiz" id="quiz-bs"></div>
+  </section>
+
+  <!-- ================= PROTÓTIPO 2 ================= -->
+  <section class="view" id="v-pilha-fila">
+    <div class="vs">
+      <div class="vs-head">
+        <h3>Pilha (LIFO) × Fila (FIFO)</h3>
+        <div style="display:flex;gap:8px">
+          <button id="ds-both" class="primary">Inserir nas duas</button>
+          <button id="ds-remove-both">Remover das duas</button>
+        </div>
+      </div>
+      <div class="ds-pad" style="padding:var(--sp-5)">
+        <div class="ds-wrap">
+          <div class="ds">
+            <h4>Pilha</h4><div class="hint">Último a entrar, primeiro a sair. Mexe só no <b>topo</b>.</div>
+            <div class="stack" id="stack"></div>
+            <div class="btns"><button id="push">push()</button><button id="pop">pop()</button></div>
+            <div class="log" id="stack-log"></div>
+          </div>
+          <div class="ds">
+            <h4>Fila</h4><div class="hint">Primeiro a entrar, primeiro a sair. Entra no <b>fim</b>, sai do <b>início</b>.</div>
+            <div class="qlabel">↑ início (sai daqui)</div>
+            <div class="queue" id="queue"></div>
+            <div class="qlabel">↑ fim (entra aqui)</div>
+            <div class="ends"><span>← início (sai)</span><span>fim (entra) ←</span></div>
+            <div class="btns"><button id="enq">enqueue()</button><button id="deq">dequeue()</button></div>
+            <div class="log" id="queue-log"></div>
+          </div>
+        </div>
+      </div>
+      <div class="narr" id="ds-narr">Clique em <b>Inserir nas duas</b> algumas vezes e depois em <b>Remover das duas</b>. Repare que a mesma sequência de entrada sai em ordens diferentes.</div>
+    </div>
+
+    <div class="card quiz" id="quiz-ds"></div>
+  </section>
+</div>
+
+<script>
+/* ---------- roteamento por hash ---------- */
+const views=["guia","busca-binaria","pilha-fila"];
+function route(){const v=views.includes(location.hash.slice(1))?location.hash.slice(1):"guia";
+  document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));}
+addEventListener("hashchange",route); route();
+
+/* ---------- guia: amostras de cor ---------- */
+const css=getComputedStyle(document.documentElement);
+function swatches(el,list){document.getElementById(el).innerHTML=list.map(([v,n,u])=>
+  `<div class="swatch"><i style="background:var(${v})"></i><div>${n}<small>${v}</small><small>${u}</small></div></div>`).join("");}
+swatches("ui-colors",[["--bg","Fundo","página"],["--surface","Superfície","cartões"],["--surface-2","Superfície 2","painéis internos"],["--border","Borda","divisões"],["--brand","Marca","ações, foco, destaque"],["--text-muted","Texto secundário","rótulos"]]);
+swatches("st-colors",[["--st-default","Padrão","elemento em jogo"],["--st-active","Ativo","sendo comparado/movido"],["--st-compare","Comparação","segundo elemento"],["--st-discard","Descartado","fora do intervalo"],["--st-success","Sucesso","encontrado/ordenado"],["--st-error","Erro","resposta errada, conflito"],["--ptr-lo","Ponteiro lo","esquerda"],["--ptr-mid","Ponteiro mid","meio"],["--ptr-hi","Ponteiro hi","direita"]]);
+
+/* ---------- motor genérico VisualStep ---------- */
+function VisualStep({id,codeLines,render}){
+  const $=s=>document.getElementById(id+"-"+s);
+  let steps=[],i=0,timer=null,answered=new Set();
+  $("code").innerHTML=codeLines.map(l=>`<span>${l.replace(/</g,"&lt;")}</span>`).join("");
+  const locked=()=>steps[i]&&steps[i].predict&&!answered.has(i);
+  function show(){
+    const s=steps[i];
+    render(s);
+    [...$("code").children].forEach((el,k)=>el.classList.toggle("hl",k===s.line));
+    $("vars").innerHTML=Object.entries(s.vars||{}).map(([k,v])=>`<span class="var">${k} = <b>${v}</b></span>`).join("");
+    $("narr").innerHTML=`<span class="step-n">${i+1}/${steps.length}</span>${s.text}`;
+    $("prog").style.width=((i+1)/steps.length*100)+"%";
+    $("first").disabled=$("prev").disabled=i===0;
+    $("next").disabled=$("last").disabled=i===steps.length-1||locked();
+    renderPredict(s);
+  }
+  function renderPredict(s){
+    const box=$("predict");
+    if(!s.predict){box.hidden=true;return;}
+    box.hidden=false;
+    const p=s.predict, done=answered.has(i);
+    box.innerHTML=`<b>Antes de avançar:</b> ${p.q}<div class="opts">${p.options.map(o=>`<button data-o="${o}" ${done?"disabled":""}>${o}</button>`).join("")}</div><div class="fb" aria-live="polite"></div>`;
+    box.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      const ok=String(p.answer)===b.dataset.o;
+      b.classList.add(ok?"ok":"bad");
+      const fb=box.querySelector(".fb");
+      fb.className="fb "+(ok?"ok":"bad");
+      fb.textContent=(ok?"Isso! ":"Quase. ")+p.why;
+      if(ok){answered.add(i);box.querySelectorAll("button").forEach(x=>x.disabled=true);
+        $("next").disabled=$("last").disabled=i===steps.length-1;}
+    });
+  }
+  const go=n=>{n=Math.max(0,Math.min(steps.length-1,n));
+    if(n>i){for(let k=i;k<n;k++)if(steps[k].predict&&!answered.has(k)){n=k;break;}}
+    i=n;show();};
+  function stop(){clearInterval(timer);timer=null;$("play").innerHTML='▶<span class="d-only"> Reproduzir</span>';}
+  $("first").onclick=()=>{stop();go(0)}; $("prev").onclick=()=>{stop();go(i-1)};
+  $("next").onclick=()=>{stop();go(i+1)}; $("last").onclick=()=>{stop();go(steps.length-1)};
+  $("play").onclick=()=>{ if(timer){stop();return;}
+    if(i===steps.length-1)go(0);
+    $("play").innerHTML='⏸<span class="d-only"> Pausar</span>';
+    timer=setInterval(()=>{ if(i>=steps.length-1||locked()){stop();return;} go(i+1); },1600/ +$("speed").value);
+  };
+  document.addEventListener("keydown",e=>{
+    if(!document.getElementById(id).offsetParent||e.target.tagName==="INPUT")return;
+    if(e.key==="ArrowRight"){e.preventDefault();$("next").click();}
+    if(e.key==="ArrowLeft"){e.preventDefault();$("prev").click();}
+    if(e.key===" "){e.preventDefault();$("play").click();}
+  });
+  const root=document.getElementById(id);
+  root.querySelectorAll(".side-tabs button").forEach(b=>b.onclick=()=>{
+    root.querySelectorAll(".side-tabs button").forEach(x=>x.classList.toggle("on",x===b));
+    root.querySelectorAll("[data-pane]").forEach(x=>x.classList.toggle("on",x.dataset.pane===b.dataset.t));});
+  /* gesto: deslizar no palco avança/volta */
+  let x0=null,y0=0;const stage=root.querySelector(".vs-stage");
+  stage.addEventListener("touchstart",e=>{if(e.target.closest("button"))return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
+  stage.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+    if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.5)(dx<0?$("next"):$("prev")).click();});
+  return {load(s){stop();steps=s;i=0;answered=new Set();show();}};
+}
+
+/* ---------- Protótipo 1: busca binária ---------- */
+const BS_CODE=["lo, hi = 0, len(a) - 1","while lo <= hi:","    mid = (lo + hi) // 2","    if a[mid] == alvo: return mid","    if a[mid] < alvo: lo = mid + 1","    else: hi = mid - 1","return -1"];
+function binarySteps(a,t){
+  const S=[];let lo=0,hi=a.length-1,cmp=0;
+  const snap=(line,text,extra={})=>S.push({line,text,lo,hi,mid:extra.mid,found:extra.found,cmp,vars:{lo,hi,...(extra.mid!=null?{mid:extra.mid}:{}),alvo:t},predict:extra.predict});
+  snap(0,`O array está <b>ordenado</b>. Começamos com o intervalo inteiro: lo = 0 e hi = ${hi}. Procuramos <b>${t}</b>.`);
+  while(lo<=hi){
+    snap(1,`lo (${lo}) ≤ hi (${hi}), então ainda há onde procurar.`);
+    const mid=Math.floor((lo+hi)/2);
+    snap(2,`O meio do intervalo é (${lo} + ${hi}) // 2 = <b>${mid}</b>.`,{mid});
+    cmp++;
+    if(a[mid]===t){snap(3,`a[${mid}] = ${a[mid]} é o alvo. Encontrado em <b>${cmp}</b> comparação(ões), sem olhar o array todo.`,{mid,found:true});return S;}
+    if(a[mid]<t){
+      const nlo=mid+1, nmid=nlo<=hi?Math.floor((nlo+hi)/2):null;
+      const pred=nmid!=null?{q:`a[${mid}] = ${a[mid]} é menor que ${t}. Qual índice será o próximo mid?`,options:shuffle([nmid,mid,Math.max(0,nmid-1)===nmid?nmid+1:nmid-1].filter((v,k,arr)=>arr.indexOf(v)===k)),answer:nmid,why:`Descartamos tudo até ${mid}, então lo = ${nlo} e o novo meio é (${nlo} + ${hi}) // 2 = ${nmid}.`}:null;
+      snap(4,`a[${mid}] = ${a[mid]} &lt; ${t}. Como o array é ordenado, o alvo só pode estar <b>à direita</b>. Descartamos a metade esquerda: lo = ${nlo}.`,{mid,predict:pred});
+      lo=nlo;
+    }else{
+      const nhi=mid-1, nmid=lo<=nhi?Math.floor((lo+nhi)/2):null;
+      const pred=nmid!=null?{q:`a[${mid}] = ${a[mid]} é maior que ${t}. Qual índice será o próximo mid?`,options:shuffle([nmid,mid,nmid+1].filter((v,k,arr)=>arr.indexOf(v)===k)),answer:nmid,why:`Descartamos tudo a partir de ${mid}, então hi = ${nhi} e o novo meio é (${lo} + ${nhi}) // 2 = ${nmid}.`}:null;
+      snap(5,`a[${mid}] = ${a[mid]} &gt; ${t}. O alvo só pode estar <b>à esquerda</b>. Descartamos a metade direita: hi = ${nhi}.`,{mid,predict:pred});
+      hi=nhi;
+    }
+  }
+  snap(6,`lo (${lo}) passou de hi (${hi}): o intervalo ficou vazio, então <b>${t} não está no array</b>. Mesmo assim foram só ${cmp} comparações.`);
+  return S;
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let bsArr=[3,8,12,17,23,31,38,42,56,61,77,90];
+const bs=VisualStep({id:"bs",codeLines:BS_CODE,render(s){
+  document.getElementById("bs-arr").innerHTML=bsArr.map((v,k)=>{
+    const out=k<s.lo||k>s.hi, cls=s.found&&k===s.mid?"found":k===s.mid?"active":out?"discard":"";
+    const p=(k===s.lo&&s.lo<=s.hi?'<span class="ptr lo">lo</span>':"")+(k===s.mid?'<span class="ptr mid">mid</span>':"")+(k===s.hi&&s.lo<=s.hi?'<span class="ptr hi">hi</span>':"");
+    return `<div class="cell ${cls}"><div class="box">${v}</div><div class="idx">${k}</div><div class="ptrs">${p}</div></div>`;}).join("");
+  const n=bsArr.length;
+  document.getElementById("bs-cost").innerHTML=`comparações: <b>${s.cmp}</b><br>busca linear: até ${n}<br>busca binária: até ⌈log₂(${n}+1)⌉ = ${Math.ceil(Math.log2(n+1))}`;
+}});
+function bsRun(){bs.load(binarySteps(bsArr,+document.getElementById("bs-target").value));}
+document.getElementById("bs-form").onsubmit=e=>{e.preventDefault();bsRun();};
+document.getElementById("bs-rand").onclick=()=>{const set=new Set();while(set.size<12)set.add(1+Math.floor(Math.random()*99));
+  bsArr=[...set].sort((a,b)=>a-b);document.getElementById("bs-target").value=bsArr[Math.floor(Math.random()*12)];bsRun();};
+bsRun();
+
+/* ---------- Quiz genérico ---------- */
+function Quiz(el,qs){
+  const box=document.getElementById(el);let k=0,score=0;
+  function draw(){
+    if(k>=qs.length){box.innerHTML=`<div class="eyebrow">Fixação</div><h3 style="margin-top:8px">Você acertou ${score} de ${qs.length}</h3><button class="primary" id="${el}-again">Refazer</button>`;
+      document.getElementById(el+"-again").onclick=()=>{k=0;score=0;draw();};return;}
+    const q=qs[k];
+    box.innerHTML=`<div class="meta"><span class="eyebrow">Fixação</span><span>${k+1} de ${qs.length}</span></div><div class="q">${q.q}</div>${q.o.map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join("")}<div class="expl" aria-live="polite"></div><div style="text-align:right;margin-top:8px"><button class="primary" id="${el}-nx" hidden>Próxima →</button></div>`;
+    box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j, ok=j===q.a; if(ok)score++;
+      box.querySelectorAll(".opt").forEach((x,m)=>{x.disabled=true;if(m===q.a)x.classList.add("ok");});
+      if(!ok)b.classList.add("bad");
+      const ex=box.querySelector(".expl");ex.classList.add("show");ex.innerHTML=(ok?"<b>Correto.</b> ":"<b>Não exatamente.</b> ")+q.e;
+      const nx=document.getElementById(el+"-nx");nx.hidden=false;nx.onclick=()=>{k++;draw();};
+    });
+  }
+  draw();
+}
+Quiz("quiz-bs",[
+  {q:"Qual é a pré-condição para usar busca binária?",o:["O array não pode ter repetidos","O array precisa estar ordenado","O array precisa ter tamanho potência de 2","O alvo precisa existir no array"],a:1,e:"Sem ordenação, descartar uma metade não é seguro: o alvo poderia estar em qualquer lugar."},
+  {q:"Num array ordenado com 1.000.000 de elementos, quantas comparações a busca binária faz no pior caso, aproximadamente?",o:["1.000.000","500.000","1.000","20"],a:3,e:"Cada comparação corta o intervalo pela metade: log₂(1.000.000) ≈ 20. Complexidade O(log n)."},
+  {q:"Se a[mid] < alvo, o que acontece?",o:["hi = mid - 1","lo = mid + 1","lo = mid","Retorna -1"],a:1,e:"O alvo só pode estar à direita de mid, e o próprio mid já foi descartado, por isso mid + 1."}
+]);
+
+/* ---------- Protótipo 2: pilha e fila ---------- */
+let stack=[],queue=[],nextVal=1;
+const narr=document.getElementById("ds-narr");
+function drawDS(anim){
+  document.getElementById("stack").innerHTML=stack.map((v,k)=>`<div class="item ${k===stack.length-1?"top":""}">${v}</div>`).join("");
+  document.getElementById("queue").innerHTML=queue.map((v,k)=>`<div class="item ${k===0?"top":""}">${v}</div>`).join("");
+}
+function animOut(sel,cb){const el=document.querySelector(sel);if(!el){cb();return;}el.classList.add("out");setTimeout(cb,parseInt(css.getPropertyValue("--dur-step"))||0);}
+const slog=t=>document.getElementById("stack-log").textContent=t, qlog=t=>document.getElementById("queue-log").textContent=t;
+function push(v){if(stack.length>=6){slog("pilha cheia no protótipo (máx. 6)");return false;}stack.push(v);drawDS();slog(`push(${v}) → topo = ${v}`);return true;}
+function enq(v){if(queue.length>=6){qlog("fila cheia no protótipo (máx. 6)");return false;}queue.push(v);drawDS();qlog(`enqueue(${v}) → fim = ${v}`);return true;}
+function pop(){if(!stack.length){slog("pop() em pilha vazia: erro de underflow");return;}
+  animOut("#stack .item:last-child",()=>{const v=stack.pop();drawDS();slog(`pop() → ${v}`);});}
+function deq(){if(!queue.length){qlog("dequeue() em fila vazia: erro");return;}
+  animOut("#queue .item:first-child",()=>{const v=queue.shift();drawDS();qlog(`dequeue() → ${v}`);});}
+document.getElementById("push").onclick=()=>{if(push(nextVal))nextVal++;};
+document.getElementById("enq").onclick=()=>{if(enq(nextVal))nextVal++;};
+document.getElementById("pop").onclick=pop;
+document.getElementById("deq").onclick=deq;
+document.getElementById("ds-both").onclick=()=>{if(stack.length>=6||queue.length>=6)return;push(nextVal);enq(nextVal);
+  narr.innerHTML=`Inserimos <b>${nextVal}</b> nas duas. Na pilha ele fica no <b>topo</b>; na fila, no <b>fim</b> da linha.`;nextVal++;};
+document.getElementById("ds-remove-both").onclick=()=>{
+  if(!stack.length&&!queue.length){narr.innerHTML="As duas estão vazias. Insira alguns valores primeiro.";return;}
+  const s=stack[stack.length-1],q=queue[0];pop();deq();
+  narr.innerHTML=s===q?`Os dois saíram com <b>${s}</b>: com um só elemento, topo e início coincidem.`:`A pilha devolveu <b>${s}</b> (o mais novo) e a fila devolveu <b>${q}</b> (o mais antigo). Essa é toda a diferença entre LIFO e FIFO.`;};
+drawDS();
+Quiz("quiz-ds",[
+  {q:"Você faz push(1), push(2), push(3) e depois pop(). O que sai?",o:["1","2","3","Erro"],a:2,e:"Pilha é LIFO: o último a entrar (3) é o primeiro a sair."},
+  {q:"Qual estrutura o navegador usa para o botão Voltar?",o:["Fila","Pilha","Árvore","Hash"],a:1,e:"Cada página visitada é empilhada; Voltar desempilha a mais recente."},
+  {q:"Qual estrutura uma busca em largura (BFS) usa para decidir o próximo nó?",o:["Pilha","Fila","Array ordenado","Nenhuma"],a:1,e:"BFS visita na ordem em que descobriu (FIFO). Trocando por pilha você tem DFS."}
+]);
+</script>
+</body>
+</html>

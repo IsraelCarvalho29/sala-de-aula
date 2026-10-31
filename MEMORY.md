@@ -1,0 +1,46 @@
+# Memória do projeto
+
+Registro vivo das decisões e do estado do projeto. Atualize sempre que uma decisão mudar ou uma etapa terminar.
+
+## Objetivo
+
+Sala de aula web para o Israel estudar Ciência da Computação, Engenharia de Software e desenvolvimento, com explicações visuais e técnicas e perguntas e respostas para treinar. Precisa funcionar bem no **desktop e no celular**.
+
+## Aluno
+
+- Nível atual: **iniciante**. O currículo tem um "Caminho do Israel" de 5 a 7 horas por semana ([curriculo.md](docs/curriculo/curriculo.md#caminho-do-israel-nível-iniciante)).
+- Idioma de todo o conteúdo e da interface: **português do Brasil**.
+
+## Decisões
+
+| Data | Decisão | Por quê |
+|---|---|---|
+| 2026-10-31 | Vite + React + TypeScript, site estático | Simples de rodar e publicar (GitHub Pages), sem servidor |
+| 2026-10-31 | Conteúdo em arquivos Markdown em `content/trilhas/` | Fácil de escrever e revisar em PR; versionado junto com o código |
+| 2026-10-31 | Hierarquia **trilha → módulo**, uma aula por módulo, identificada pelo código (ex.: `ED-01`) | Segue o currículo; o código é a chave de progresso e de pré-requisitos |
+| 2026-10-31 | `_trilha.md` gerado a partir de `docs/curriculo/curriculo.md` | Uma fonte da verdade para a lista de módulos; módulos sem aula aparecem como "em breve" |
+| 2026-10-31 | Perguntas em blocos ` ```quiz ` (YAML) dentro da aula | Formato definido no modelo de aula; o enunciado pode ter código |
+| 2026-10-31 | Progresso no `localStorage`, com exportar/importar JSON | Sem login nem backend por enquanto |
+| 2026-10-31 | Diagramas em Mermaid, carregado sob demanda | Diagramas em texto; não pesa nas páginas sem diagrama |
+| 2026-10-31 | Tokens visuais do protótipo de design, tema claro/escuro pelo sistema, breakpoint mobile em 640px | Versão mobile pedida pelo Israel |
+| 2026-10-31 | Rotas com `#` (HashRouter) e `base: './'` | Funciona no GitHub Pages em qualquer subpasta |
+
+## Estado atual
+
+- App base pronto: início com as trilhas, página da trilha com todos os módulos, página da aula com objetivos, pré-requisitos, perguntas, "para aprofundar" e botão de concluir.
+- Perguntas funcionando: múltipla escolha, verdadeiro ou falso e tipos abertos com autoavaliação (resposta curta, prever saída, código).
+- 19 trilhas geradas do currículo; 3 aulas escritas: FP-01, ED-01, ED-02.
+- CI de build em PRs e workflow de publicação no GitHub Pages (precisa ativar em Settings → Pages → Source: GitHub Actions).
+
+## Próximos passos
+
+1. Escrever as próximas aulas do Caminho do Israel (FP-02 em diante).
+2. Componente de explicação visual passo a passo (`VisualStep`, ver `docs/design/prototipo-visual.html`) e um bloco Markdown para usá-lo nas aulas.
+3. Modo de treino com o banco de questões (`docs/avaliacao/banco-inicial.json`) e repetição espaçada (`docs/avaliacao/revisao.js`).
+4. Bloquear módulos até os pré-requisitos estarem dominados (≥ 80% no quiz), como pede o modo iniciante.
+5. Desafios de código executados no navegador (JavaScript em Web Worker, Python com Pyodide).
+6. PWA para estudar offline no celular.
+
+## Onde está cada coisa
+
+Ver a seção Estrutura do [README](README.md#estrutura) e a divisão de papéis em [TEAM.md](TEAM.md).

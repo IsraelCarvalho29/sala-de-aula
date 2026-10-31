@@ -1,0 +1,1021 @@
+{
+  "versao_formato": 1,
+  "gerado_em": "2026-10-31",
+  "trilhas": {
+    "algoritmos": "Algoritmos",
+    "estruturas-de-dados": "Estruturas de dados",
+    "sistemas-operacionais": "Sistemas operacionais",
+    "redes": "Redes de computadores",
+    "banco-de-dados": "Banco de dados",
+    "engenharia-de-software": "Engenharia de software"
+  },
+  "questoes": [
+    {
+      "versao": 1,
+      "tags": [
+        "big-o",
+        "busca"
+      ],
+      "tempo_estimado_s": 30,
+      "id": "alg-001",
+      "trilha": "algoritmos",
+      "topico": "complexidade",
+      "tipo": "multipla_escolha",
+      "dificuldade": 1,
+      "bloom": "lembrar",
+      "enunciado": "Qual é a complexidade de tempo da **busca binária** em um vetor ordenado de *n* elementos, no pior caso?",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "O(1)",
+          "correta": false,
+          "feedback": "O(1) seria acesso direto por índice. A busca binária precisa ir descartando metades até achar o elemento."
+        },
+        {
+          "id": "b",
+          "texto": "O(log n)",
+          "correta": true,
+          "feedback": "Correto: a cada passo metade do intervalo é descartada."
+        },
+        {
+          "id": "c",
+          "texto": "O(n)",
+          "correta": false,
+          "feedback": "O(n) é a busca linear, que olha elemento por elemento. A binária aproveita a ordenação para pular metades."
+        },
+        {
+          "id": "d",
+          "texto": "O(n log n)",
+          "correta": false,
+          "feedback": "O(n log n) é típico de ordenação eficiente (merge sort). Confundir buscar com ordenar é um erro comum."
+        }
+      ],
+      "explicacao": "A cada comparação a busca binária descarta metade dos candidatos: n, n/2, n/4, ... até 1. O número de divisões por 2 até chegar a 1 é log₂ n, portanto O(log n). Com 1 milhão de elementos são no máximo cerca de 20 comparações.",
+      "referencias": [
+        {
+          "titulo": "Aula: Notação Big-O",
+          "url": "/aulas/big-o"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "big-o",
+        "loops"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "alg-002",
+      "trilha": "algoritmos",
+      "topico": "complexidade",
+      "tipo": "prever_saida",
+      "dificuldade": 2,
+      "bloom": "aplicar",
+      "enunciado": "O que este programa imprime?",
+      "midia": {
+        "codigo": {
+          "linguagem": "python",
+          "fonte": "contador = 0\nfor i in range(4):\n    for j in range(i):\n        contador += 1\nprint(contador)"
+        }
+      },
+      "saida_esperada": "6",
+      "dica": "Some quantas vezes o laço interno roda para i = 0, 1, 2 e 3.",
+      "explicacao": "O laço interno roda `i` vezes: 0 + 1 + 2 + 3 = 6. Em geral, para `range(n)` o total é n(n−1)/2, que cresce como O(n²). Esse padrão (laço interno dependente do externo) aparece em bubble sort e insertion sort.",
+      "referencias": [
+        {
+          "titulo": "Aula: Notação Big-O",
+          "url": "/aulas/big-o"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "merge-sort",
+        "divisao-e-conquista"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "alg-003",
+      "trilha": "algoritmos",
+      "topico": "ordenacao",
+      "tipo": "ordenar",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Coloque na ordem correta os passos do **merge sort** aplicado a um vetor.",
+      "itens": [
+        {
+          "id": "1",
+          "texto": "Se o vetor tem 0 ou 1 elemento, devolva-o (caso base)"
+        },
+        {
+          "id": "2",
+          "texto": "Divida o vetor em duas metades"
+        },
+        {
+          "id": "3",
+          "texto": "Ordene recursivamente cada metade"
+        },
+        {
+          "id": "4",
+          "texto": "Intercale (merge) as duas metades ordenadas em um único vetor"
+        }
+      ],
+      "explicacao": "Merge sort é o exemplo clássico de **divisão e conquista**: dividir, resolver os subproblemas recursivamente e combinar. O caso base vem primeiro para a recursão parar. A intercalação percorre as duas metades com dois ponteiros, custo O(n) por nível, e há log n níveis: O(n log n) total.",
+      "midia": {
+        "mermaid": "graph TD\n  A[38 27 43 3] --> B[38 27]\n  A --> C[43 3]\n  B --> D[27 38]\n  C --> E[3 43]\n  D --> F[3 27 38 43]\n  E --> F"
+      },
+      "referencias": [
+        {
+          "titulo": "Aula: Algoritmos de ordenação",
+          "url": "/aulas/ordenacao"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "busca-binaria",
+        "codigo"
+      ],
+      "tempo_estimado_s": 600,
+      "id": "alg-004",
+      "trilha": "algoritmos",
+      "topico": "busca",
+      "tipo": "codigo",
+      "dificuldade": 3,
+      "bloom": "aplicar",
+      "enunciado": "Implemente `busca_binaria(v, alvo)` que devolve o **índice** de `alvo` no vetor ordenado `v`, ou `-1` se não existir. Não use `index` nem `in`.",
+      "linguagem": "python",
+      "assinatura": "def busca_binaria(v, alvo):",
+      "codigo_inicial": "def busca_binaria(v, alvo):\n    # seu código aqui\n    pass\n",
+      "testes": [
+        {
+          "entrada": [
+            [
+              1,
+              3,
+              5,
+              7,
+              9
+            ],
+            7
+          ],
+          "esperado": 3,
+          "visivel": true
+        },
+        {
+          "entrada": [
+            [
+              1,
+              3,
+              5,
+              7,
+              9
+            ],
+            4
+          ],
+          "esperado": -1,
+          "visivel": true
+        },
+        {
+          "entrada": [
+            [],
+            1
+          ],
+          "esperado": -1,
+          "visivel": false
+        },
+        {
+          "entrada": [
+            [
+              2
+            ],
+            2
+          ],
+          "esperado": 0,
+          "visivel": false
+        },
+        {
+          "entrada": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            1
+          ],
+          "esperado": 0,
+          "visivel": false
+        },
+        {
+          "entrada": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            8
+          ],
+          "esperado": 7,
+          "visivel": false
+        }
+      ],
+      "solucao_referencia": "def busca_binaria(v, alvo):\n    ini, fim = 0, len(v) - 1\n    while ini <= fim:\n        meio = (ini + fim) // 2\n        if v[meio] == alvo:\n            return meio\n        if v[meio] < alvo:\n            ini = meio + 1\n        else:\n            fim = meio - 1\n    return -1\n",
+      "dica": "Mantenha dois índices, `ini` e `fim`, e repita enquanto `ini <= fim`.",
+      "explicacao": "Os erros mais comuns são: usar `ini < fim` (perde o caso de um único elemento), atualizar com `ini = meio` em vez de `meio + 1` (laço infinito) e esquecer o vetor vazio. Os testes ocultos cobrem exatamente essas bordas.",
+      "referencias": [
+        {
+          "titulo": "Aula: Busca",
+          "url": "/aulas/busca"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "lifo"
+      ],
+      "tempo_estimado_s": 45,
+      "id": "eds-001",
+      "trilha": "estruturas-de-dados",
+      "topico": "pilha",
+      "tipo": "multipla_escolha",
+      "dificuldade": 1,
+      "bloom": "entender",
+      "enunciado": "Em uma pilha vazia são feitas as operações `push(1)`, `push(2)`, `pop()`, `push(3)`, `pop()`. Qual elemento fica no topo?",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "1",
+          "correta": true,
+          "feedback": "Correto: o 2 e o 3 saíram nos pops, sobrando só o 1."
+        },
+        {
+          "id": "b",
+          "texto": "2",
+          "correta": false,
+          "feedback": "O 2 foi removido pelo primeiro pop, porque era o topo naquele momento (LIFO)."
+        },
+        {
+          "id": "c",
+          "texto": "3",
+          "correta": false,
+          "feedback": "O 3 entrou e saiu logo em seguida no segundo pop."
+        },
+        {
+          "id": "d",
+          "texto": "A pilha está vazia",
+          "correta": false,
+          "feedback": "Foram 3 pushes e só 2 pops, então resta um elemento."
+        }
+      ],
+      "explicacao": "Pilha é LIFO (último a entrar, primeiro a sair). Rastreando: [1] → [1,2] → pop tira 2 → [1] → [1,3] → pop tira 3 → [1]. Pilhas aparecem na pilha de chamadas de funções, no desfazer (Ctrl+Z) e na verificação de parênteses.",
+      "referencias": [
+        {
+          "titulo": "Aula: Pilhas e filas",
+          "url": "/aulas/pilhas-e-filas"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "hash-table",
+        "complexidade"
+      ],
+      "tempo_estimado_s": 30,
+      "id": "eds-002",
+      "trilha": "estruturas-de-dados",
+      "topico": "hash",
+      "tipo": "verdadeiro_falso",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Uma tabela hash garante busca em O(1) **no pior caso**.",
+      "resposta": false,
+      "feedback_verdadeiro": "Cuidado: O(1) é o caso **médio**. Com muitas colisões, todas as chaves podem cair no mesmo balde.",
+      "feedback_falso": "Correto: O(1) é o custo esperado, não garantido.",
+      "explicacao": "Se a função hash espalha mal (ou um atacante escolhe chaves que colidem), todos os elementos vão para o mesmo balde e a busca vira O(n) com encadeamento. Por isso linguagens como Python e Java usam hash com sementes aleatórias e o Java converte baldes grandes em árvores, limitando o pior caso a O(log n).",
+      "referencias": [
+        {
+          "titulo": "Aula: Tabelas hash",
+          "url": "/aulas/tabelas-hash"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "classificacao"
+      ],
+      "tempo_estimado_s": 45,
+      "id": "eds-003",
+      "trilha": "estruturas-de-dados",
+      "topico": "estruturas-lineares",
+      "tipo": "multipla_resposta",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Quais destas estruturas são **lineares** (cada elemento tem no máximo um sucessor)? Marque todas.",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "Lista ligada",
+          "correta": true,
+          "feedback": "Sim: cada nó aponta para o próximo."
+        },
+        {
+          "id": "b",
+          "texto": "Fila",
+          "correta": true,
+          "feedback": "Sim: os elementos formam uma sequência do início ao fim."
+        },
+        {
+          "id": "c",
+          "texto": "Árvore binária",
+          "correta": false,
+          "feedback": "Não: um nó pode ter dois filhos, é hierárquica."
+        },
+        {
+          "id": "d",
+          "texto": "Grafo",
+          "correta": false,
+          "feedback": "Não: um vértice pode se ligar a vários outros."
+        },
+        {
+          "id": "e",
+          "texto": "Vetor (array)",
+          "correta": true,
+          "feedback": "Sim: posições contíguas em sequência."
+        }
+      ],
+      "explicacao": "Estruturas lineares organizam dados em sequência (vetor, lista, pilha, fila). Não lineares organizam em hierarquia (árvores) ou em rede (grafos). A escolha muda o custo das operações e a forma de percorrer os dados.",
+      "referencias": [
+        {
+          "titulo": "Aula: Visão geral das estruturas de dados",
+          "url": "/aulas/estruturas-visao-geral"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "bst",
+        "percurso"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "eds-004",
+      "trilha": "estruturas-de-dados",
+      "topico": "arvores",
+      "tipo": "prever_saida",
+      "dificuldade": 3,
+      "bloom": "aplicar",
+      "enunciado": "Os valores 5, 3, 8, 1, 4 são inseridos nessa ordem numa **árvore binária de busca**. Qual é a saída do percurso **em ordem** (in-order)? Separe por espaços.",
+      "midia": {
+        "codigo": {
+          "linguagem": "python",
+          "fonte": "def em_ordem(no):\n    if no:\n        em_ordem(no.esq)\n        print(no.valor, end=' ')\n        em_ordem(no.dir)"
+        },
+        "mermaid": "graph TD\n  5 --> 3\n  5 --> 8\n  3 --> 1\n  3 --> 4"
+      },
+      "saida_esperada": "1 3 4 5 8",
+      "explicacao": "O percurso em ordem visita esquerda, raiz, direita. Numa BST isso sempre produz os valores **ordenados**, não importa a ordem de inserção. É uma forma de verificar se uma árvore é uma BST válida.",
+      "referencias": [
+        {
+          "titulo": "Aula: Árvores binárias de busca",
+          "url": "/aulas/bst"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "thread",
+        "processo"
+      ],
+      "tempo_estimado_s": 300,
+      "id": "so-001",
+      "trilha": "sistemas-operacionais",
+      "topico": "processos",
+      "tipo": "resposta_aberta",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Explique, com suas palavras, a diferença entre **processo** e **thread**. Dê um exemplo de quando usar cada um.",
+      "resposta_modelo": "Um processo é um programa em execução com seu próprio espaço de memória isolado, arquivos abertos e recursos. Uma thread é uma linha de execução dentro de um processo: threads do mesmo processo compartilham a memória e os recursos, mas cada uma tem sua própria pilha e registradores. Criar e trocar threads é mais barato, e a comunicação é direta pela memória, mas exige sincronização (locks) e um erro numa thread pode derrubar o processo todo. Exemplo: um navegador usa processos separados por aba para isolar falhas e por segurança; um servidor web usa várias threads para atender requisições em paralelo compartilhando caches.",
+      "rubrica": [
+        {
+          "criterio": "Diz que processos têm memória isolada",
+          "peso": 0.25
+        },
+        {
+          "criterio": "Diz que threads do mesmo processo compartilham memória",
+          "peso": 0.25
+        },
+        {
+          "criterio": "Menciona custo (threads mais leves) ou necessidade de sincronização",
+          "peso": 0.25
+        },
+        {
+          "criterio": "Dá um exemplo coerente para cada um",
+          "peso": 0.25
+        }
+      ],
+      "explicacao": "O ponto central é o **compartilhamento de memória**: ele torna threads rápidas para cooperar, mas também cria condições de corrida. Processos trocam desempenho por isolamento.",
+      "referencias": [
+        {
+          "titulo": "Aula: Processos e threads",
+          "url": "/aulas/processos-e-threads"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "deadlock"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "so-002",
+      "trilha": "sistemas-operacionais",
+      "topico": "concorrencia",
+      "tipo": "multipla_resposta",
+      "dificuldade": 3,
+      "bloom": "lembrar",
+      "enunciado": "Quais são as **condições de Coffman**, que precisam ocorrer ao mesmo tempo para haver deadlock? Marque todas.",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "Exclusão mútua",
+          "correta": true,
+          "feedback": "Sim: o recurso só pode ser usado por um de cada vez."
+        },
+        {
+          "id": "b",
+          "texto": "Posse e espera (hold and wait)",
+          "correta": true,
+          "feedback": "Sim: segura um recurso enquanto espera outro."
+        },
+        {
+          "id": "c",
+          "texto": "Não preempção",
+          "correta": true,
+          "feedback": "Sim: não dá para tomar o recurso à força."
+        },
+        {
+          "id": "d",
+          "texto": "Espera circular",
+          "correta": true,
+          "feedback": "Sim: A espera B, que espera A."
+        },
+        {
+          "id": "e",
+          "texto": "Starvation (inanição)",
+          "correta": false,
+          "feedback": "Não: inanição é um problema diferente, em que um processo nunca é escolhido, mesmo sem ciclo de espera."
+        }
+      ],
+      "explicacao": "As quatro condições são necessárias juntas; quebrar qualquer uma impede o deadlock. Na prática, a mais fácil de quebrar é a **espera circular**: sempre adquirir os locks numa ordem global fixa.",
+      "midia": {
+        "mermaid": "graph LR\n  T1((Thread 1)) -- segura --> R1[Lock A]\n  T1 -. espera .-> R2[Lock B]\n  T2((Thread 2)) -- segura --> R2\n  T2 -. espera .-> R1"
+      },
+      "referencias": [
+        {
+          "titulo": "Aula: Deadlocks",
+          "url": "/aulas/deadlocks"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "memoria-virtual",
+        "paginacao"
+      ],
+      "tempo_estimado_s": 40,
+      "id": "so-003",
+      "trilha": "sistemas-operacionais",
+      "topico": "memoria",
+      "tipo": "verdadeiro_falso",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Com memória virtual, dois processos podem usar o mesmo endereço virtual (por exemplo `0x400000`) apontando para posições **diferentes** da memória física.",
+      "resposta": true,
+      "feedback_verdadeiro": "Correto: cada processo tem sua própria tabela de páginas.",
+      "feedback_falso": "Na verdade é verdadeiro: o endereço virtual é traduzido por processo, então o mesmo número pode levar a quadros físicos diferentes.",
+      "explicacao": "Cada processo tem sua tabela de páginas, e a MMU traduz endereço virtual → físico usando a tabela do processo em execução. É isso que dá isolamento: um processo não consegue nem nomear a memória do outro.",
+      "referencias": [
+        {
+          "titulo": "Aula: Memória virtual",
+          "url": "/aulas/memoria-virtual"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "definicao"
+      ],
+      "tempo_estimado_s": 20,
+      "id": "so-004",
+      "trilha": "sistemas-operacionais",
+      "topico": "processos",
+      "tipo": "flashcard",
+      "dificuldade": 1,
+      "bloom": "lembrar",
+      "enunciado": "Flashcard: troca de contexto",
+      "frente": "O que é uma **troca de contexto** (context switch)?",
+      "verso": "É quando o sistema operacional pausa a execução de um processo/thread, salva seu estado (registradores, contador de programa, ponteiro de pilha) e carrega o estado de outro para executá-lo. Tem custo: tempo de salvar/restaurar e perda de cache/TLB.",
+      "explicacao": "Trocas de contexto permitem multitarefa numa CPU, mas trocas demais desperdiçam tempo. Por isso o tamanho do quantum do escalonador é um equilíbrio entre responsividade e eficiência.",
+      "referencias": [
+        {
+          "titulo": "Aula: Escalonamento",
+          "url": "/aulas/escalonamento"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "handshake"
+      ],
+      "tempo_estimado_s": 30,
+      "id": "red-001",
+      "trilha": "redes",
+      "topico": "tcp",
+      "tipo": "ordenar",
+      "dificuldade": 1,
+      "bloom": "lembrar",
+      "enunciado": "Ordene as mensagens do **three-way handshake** do TCP.",
+      "itens": [
+        {
+          "id": "1",
+          "texto": "Cliente envia SYN"
+        },
+        {
+          "id": "2",
+          "texto": "Servidor responde SYN-ACK"
+        },
+        {
+          "id": "3",
+          "texto": "Cliente envia ACK"
+        }
+      ],
+      "explicacao": "O handshake sincroniza os números de sequência dos dois lados: cada um envia seu SYN e confirma o do outro. O SYN-ACK junta o SYN do servidor com a confirmação do SYN do cliente, por isso são 3 mensagens e não 4.",
+      "midia": {
+        "mermaid": "sequenceDiagram\n  Cliente->>Servidor: SYN (seq=x)\n  Servidor->>Cliente: SYN-ACK (seq=y, ack=x+1)\n  Cliente->>Servidor: ACK (ack=y+1)"
+      },
+      "referencias": [
+        {
+          "titulo": "Aula: TCP e UDP",
+          "url": "/aulas/tcp-udp"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "protocolos"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "red-002",
+      "trilha": "redes",
+      "topico": "tcp-udp",
+      "tipo": "multipla_escolha",
+      "dificuldade": 2,
+      "bloom": "aplicar",
+      "enunciado": "Para uma chamada de vídeo em tempo real, qual protocolo de transporte costuma ser preferido e por quê?",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "TCP, porque garante que nenhum quadro seja perdido",
+          "correta": false,
+          "feedback": "A garantia de entrega do TCP retransmite pacotes perdidos, e o quadro chega atrasado demais para ser útil, travando a chamada."
+        },
+        {
+          "id": "b",
+          "texto": "UDP, porque um pacote atrasado é pior que um pacote perdido",
+          "correta": true,
+          "feedback": "Correto: em tempo real, latência baixa vale mais que entrega perfeita."
+        },
+        {
+          "id": "c",
+          "texto": "UDP, porque é criptografado por padrão",
+          "correta": false,
+          "feedback": "UDP não tem criptografia própria; ela vem de camadas acima (por exemplo SRTP/DTLS)."
+        },
+        {
+          "id": "d",
+          "texto": "HTTP, porque funciona em qualquer rede",
+          "correta": false,
+          "feedback": "HTTP é camada de aplicação, não de transporte; e o HTTP clássico roda sobre TCP."
+        }
+      ],
+      "explicacao": "O TCP entrega tudo em ordem; se um pacote se perde, os seguintes esperam a retransmissão (head-of-line blocking). Numa chamada isso vira travamento. Com UDP, a aplicação simplesmente pula o quadro perdido. É também por isso que o HTTP/3 usa QUIC, que roda sobre UDP.",
+      "referencias": [
+        {
+          "titulo": "Aula: TCP e UDP",
+          "url": "/aulas/tcp-udp"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "status-code"
+      ],
+      "tempo_estimado_s": 15,
+      "id": "red-003",
+      "trilha": "redes",
+      "topico": "http",
+      "tipo": "preencher_lacuna",
+      "dificuldade": 1,
+      "bloom": "lembrar",
+      "enunciado": "O código de status HTTP para **recurso não encontrado** é `____`.",
+      "aceitas": [
+        "404"
+      ],
+      "explicacao": "Famílias de status: 2xx sucesso (200 OK, 201 Created), 3xx redirecionamento, 4xx erro do cliente (400, 401, 403, 404), 5xx erro do servidor (500, 503). Diferença útil: 401 é 'não autenticado', 403 é 'autenticado mas sem permissão'.",
+      "referencias": [
+        {
+          "titulo": "Aula: HTTP",
+          "url": "/aulas/http"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "dns",
+        "navegador"
+      ],
+      "tempo_estimado_s": 600,
+      "id": "red-004",
+      "trilha": "redes",
+      "topico": "dns",
+      "tipo": "resposta_aberta",
+      "dificuldade": 3,
+      "bloom": "analisar",
+      "enunciado": "Você digita `https://exemplo.com` no navegador e aperta Enter. Descreva as principais etapas até a página aparecer.",
+      "resposta_modelo": "1) O navegador resolve o nome via DNS (cache do navegador, do SO, depois resolvedor recursivo, que consulta raiz, TLD .com e o servidor autoritativo) e obtém o IP. 2) Abre uma conexão TCP com o IP na porta 443 (three-way handshake). 3) Faz o handshake TLS: negocia cifras, valida o certificado e cria chaves de sessão. 4) Envia a requisição HTTP GET /. 5) O servidor responde com o HTML. 6) O navegador faz o parse do HTML, monta o DOM, baixa CSS/JS/imagens (novas requisições), monta o CSSOM, calcula layout e pinta a tela.",
+      "rubrica": [
+        {
+          "criterio": "Resolução DNS do nome para IP",
+          "peso": 0.25
+        },
+        {
+          "criterio": "Conexão TCP (e porta 443)",
+          "peso": 0.2
+        },
+        {
+          "criterio": "Handshake TLS e validação de certificado",
+          "peso": 0.2
+        },
+        {
+          "criterio": "Requisição e resposta HTTP",
+          "peso": 0.15
+        },
+        {
+          "criterio": "Renderização: DOM, recursos extras, layout e pintura",
+          "peso": 0.2
+        }
+      ],
+      "explicacao": "Essa é uma pergunta clássica de entrevista porque atravessa várias camadas (aplicação, transporte, rede, segurança, navegador). Não existe uma única resposta certa em profundidade; o importante é a ordem e não pular camadas.",
+      "referencias": [
+        {
+          "titulo": "Aula: Como a web funciona",
+          "url": "/aulas/como-a-web-funciona"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "join"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "bd-001",
+      "trilha": "banco-de-dados",
+      "topico": "sql",
+      "tipo": "multipla_escolha",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Tabela `alunos` tem 3 linhas; tabela `matriculas` tem matrículas apenas para 2 desses alunos. Quantas linhas, no mínimo, retorna `SELECT * FROM alunos a LEFT JOIN matriculas m ON m.aluno_id = a.id`?",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "2",
+          "correta": false,
+          "feedback": "Isso seria o mínimo num INNER JOIN, que descarta alunos sem matrícula."
+        },
+        {
+          "id": "b",
+          "texto": "3",
+          "correta": true,
+          "feedback": "Correto: o LEFT JOIN mantém todos os alunos; quem não tem matrícula aparece com colunas de m em NULL."
+        },
+        {
+          "id": "c",
+          "texto": "5",
+          "correta": false,
+          "feedback": "Somar linhas das duas tabelas não é o que um join faz."
+        },
+        {
+          "id": "d",
+          "texto": "6",
+          "correta": false,
+          "feedback": "3 × 2 seria um produto cartesiano (CROSS JOIN), sem condição de junção."
+        }
+      ],
+      "explicacao": "LEFT JOIN devolve todas as linhas da tabela da esquerda, combinadas com as correspondentes da direita, ou NULL quando não há correspondência. Pode retornar **mais** de 3 linhas se um aluno tiver várias matrículas, por isso a pergunta fala em mínimo.",
+      "referencias": [
+        {
+          "titulo": "Aula: Joins em SQL",
+          "url": "/aulas/sql-joins"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "acid"
+      ],
+      "tempo_estimado_s": 60,
+      "id": "bd-002",
+      "trilha": "banco-de-dados",
+      "topico": "transacoes",
+      "tipo": "multipla_escolha",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Numa transferência bancária, o débito na conta A foi feito, mas o sistema caiu antes do crédito na conta B. Qual propriedade ACID garante que o débito seja desfeito?",
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "Atomicidade",
+          "correta": true,
+          "feedback": "Correto: tudo ou nada."
+        },
+        {
+          "id": "b",
+          "texto": "Consistência",
+          "correta": false,
+          "feedback": "Consistência é sobre respeitar regras (constraints) ao fim da transação. Ela se beneficia da atomicidade, mas não é o mecanismo do 'tudo ou nada'."
+        },
+        {
+          "id": "c",
+          "texto": "Isolamento",
+          "correta": false,
+          "feedback": "Isolamento trata de transações concorrentes não enxergarem estados intermediários umas das outras."
+        },
+        {
+          "id": "d",
+          "texto": "Durabilidade",
+          "correta": false,
+          "feedback": "Durabilidade garante que o que foi **confirmado** sobrevive a quedas; aqui a transação nem foi confirmada."
+        }
+      ],
+      "explicacao": "Atomicidade: a transação é indivisível. O banco usa um log (WAL) para, ao reiniciar, desfazer transações não confirmadas e refazer as confirmadas. As quatro letras: Atomicidade, Consistência, Isolamento, Durabilidade.",
+      "referencias": [
+        {
+          "titulo": "Aula: Transações",
+          "url": "/aulas/transacoes"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "indice",
+        "b-tree"
+      ],
+      "tempo_estimado_s": 40,
+      "id": "bd-003",
+      "trilha": "banco-de-dados",
+      "topico": "indices",
+      "tipo": "verdadeiro_falso",
+      "dificuldade": 3,
+      "bloom": "avaliar",
+      "enunciado": "Criar um índice em toda coluna da tabela é uma boa prática, pois sempre acelera o banco.",
+      "resposta": false,
+      "feedback_verdadeiro": "Índices aceleram leituras, mas têm custo: cada INSERT/UPDATE/DELETE precisa atualizar todos eles, e eles ocupam espaço.",
+      "feedback_falso": "Correto: índices são uma troca, não ganho grátis.",
+      "explicacao": "Indexe colunas usadas em WHERE, JOIN e ORDER BY de consultas frequentes, de preferência com boa seletividade. Colunas com poucos valores distintos (como um booleano) raramente se beneficiam. Use `EXPLAIN` para ver se o índice é usado.",
+      "referencias": [
+        {
+          "titulo": "Aula: Índices",
+          "url": "/aulas/indices"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "group-by"
+      ],
+      "tempo_estimado_s": 30,
+      "id": "bd-004",
+      "trilha": "banco-de-dados",
+      "topico": "sql",
+      "tipo": "preencher_lacuna",
+      "dificuldade": 2,
+      "bloom": "aplicar",
+      "enunciado": "Complete para listar só os cursos com mais de 10 alunos:\n\n```sql\nSELECT curso_id, COUNT(*)\nFROM matriculas\nGROUP BY curso_id\n____ COUNT(*) > 10;\n```",
+      "aceitas": [
+        "HAVING"
+      ],
+      "explicacao": "`WHERE` filtra linhas **antes** do agrupamento; `HAVING` filtra **grupos** depois do `GROUP BY`, por isso é o único que pode usar agregações como `COUNT(*)`.",
+      "referencias": [
+        {
+          "titulo": "Aula: Agregações em SQL",
+          "url": "/aulas/sql-agregacoes"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "branch"
+      ],
+      "tempo_estimado_s": 20,
+      "id": "es-001",
+      "trilha": "engenharia-de-software",
+      "topico": "git",
+      "tipo": "preencher_lacuna",
+      "dificuldade": 1,
+      "bloom": "lembrar",
+      "enunciado": "O comando que cria o branch `feature` e já muda para ele é `git ____ -b feature`.",
+      "aceitas": [
+        "checkout"
+      ],
+      "explicacao": "`git checkout -b feature` cria e troca. A forma moderna equivalente é `git switch -c feature`. Ambos partem do commit atual (HEAD).",
+      "referencias": [
+        {
+          "titulo": "Aula: Git no dia a dia",
+          "url": "/aulas/git"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "srp",
+        "design"
+      ],
+      "tempo_estimado_s": 90,
+      "id": "es-002",
+      "trilha": "engenharia-de-software",
+      "topico": "solid",
+      "tipo": "multipla_escolha",
+      "dificuldade": 3,
+      "bloom": "analisar",
+      "enunciado": "A classe abaixo viola principalmente qual princípio SOLID?",
+      "midia": {
+        "codigo": {
+          "linguagem": "python",
+          "fonte": "class Relatorio:\n    def calcular_totais(self, vendas): ...\n    def gerar_pdf(self): ...\n    def enviar_email(self, destinatario): ...\n    def salvar_no_banco(self): ..."
+        }
+      },
+      "alternativas": [
+        {
+          "id": "a",
+          "texto": "Responsabilidade única (SRP)",
+          "correta": true,
+          "feedback": "Correto: cálculo, formatação, envio e persistência são quatro motivos diferentes para mudar."
+        },
+        {
+          "id": "b",
+          "texto": "Aberto/fechado (OCP)",
+          "correta": false,
+          "feedback": "OCP fala de estender sem modificar; o problema mais evidente aqui é o acúmulo de responsabilidades."
+        },
+        {
+          "id": "c",
+          "texto": "Substituição de Liskov (LSP)",
+          "correta": false,
+          "feedback": "LSP trata de subclasses substituírem a classe base; não há herança aqui."
+        },
+        {
+          "id": "d",
+          "texto": "Segregação de interfaces (ISP)",
+          "correta": false,
+          "feedback": "ISP é sobre clientes não dependerem de métodos que não usam; está relacionado, mas a causa raiz é a classe fazer coisas demais."
+        }
+      ],
+      "explicacao": "SRP: uma classe deve ter **um único motivo para mudar**. Se o layout do PDF mudar, ou o provedor de e-mail, ou o banco, a mesma classe é alterada. Refatoração: `CalculadoraDeTotais`, `GeradorPdf`, `EnviadorEmail` e `RepositorioRelatorio`, coordenados por um serviço.",
+      "referencias": [
+        {
+          "titulo": "Aula: Princípios SOLID",
+          "url": "/aulas/solid"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "piramide-de-testes"
+      ],
+      "tempo_estimado_s": 30,
+      "id": "es-003",
+      "trilha": "engenharia-de-software",
+      "topico": "testes",
+      "tipo": "ordenar",
+      "dificuldade": 2,
+      "bloom": "entender",
+      "enunciado": "Ordene os tipos de teste da **base para o topo da pirâmide de testes** (do que se tem mais para o que se tem menos).",
+      "itens": [
+        {
+          "id": "1",
+          "texto": "Testes unitários"
+        },
+        {
+          "id": "2",
+          "texto": "Testes de integração"
+        },
+        {
+          "id": "3",
+          "texto": "Testes ponta a ponta (E2E)"
+        }
+      ],
+      "explicacao": "Na base ficam os unitários: muitos, rápidos e baratos. No topo, os E2E: poucos, lentos e frágeis, mas que testam o sistema como o usuário vê. Inverter a pirâmide (muito E2E, pouco unitário) gera suítes lentas e instáveis.",
+      "referencias": [
+        {
+          "titulo": "Aula: Estratégia de testes",
+          "url": "/aulas/testes"
+        }
+      ]
+    },
+    {
+      "versao": 1,
+      "tags": [
+        "codigo",
+        "funcoes"
+      ],
+      "tempo_estimado_s": 480,
+      "id": "es-004",
+      "trilha": "engenharia-de-software",
+      "topico": "refatoracao",
+      "tipo": "codigo",
+      "dificuldade": 2,
+      "bloom": "aplicar",
+      "enunciado": "Implemente `contar_palavras(texto)` que devolve um objeto com a contagem de cada palavra, ignorando maiúsculas/minúsculas e pontuação (`.,!?`). Palavras são separadas por espaços.",
+      "linguagem": "javascript",
+      "assinatura": "function contar_palavras(texto)",
+      "codigo_inicial": "function contar_palavras(texto) {\n  // seu código aqui\n}\n",
+      "testes": [
+        {
+          "entrada": [
+            "O gato e o rato"
+          ],
+          "esperado": {
+            "o": 2,
+            "gato": 1,
+            "e": 1,
+            "rato": 1
+          },
+          "visivel": true
+        },
+        {
+          "entrada": [
+            "Oi! oi, OI."
+          ],
+          "esperado": {
+            "oi": 3
+          },
+          "visivel": true
+        },
+        {
+          "entrada": [
+            ""
+          ],
+          "esperado": {},
+          "visivel": false
+        },
+        {
+          "entrada": [
+            "  muitos   espacos  "
+          ],
+          "esperado": {
+            "muitos": 1,
+            "espacos": 1
+          },
+          "visivel": false
+        }
+      ],
+      "solucao_referencia": "function contar_palavras(texto) {\n  const contagem = {};\n  const palavras = texto.toLowerCase().replace(/[.,!?]/g, '').split(/\\s+/).filter(Boolean);\n  for (const p of palavras) contagem[p] = (contagem[p] ?? 0) + 1;\n  return contagem;\n}\n",
+      "dica": "Normalize primeiro (minúsculas, sem pontuação), depois divida com `split(/\\s+/)` e descarte strings vazias.",
+      "explicacao": "Separar em etapas (normalizar, dividir, contar) deixa o código legível e fácil de testar. As bordas que mais derrubam soluções são texto vazio e espaços repetidos, que geram strings vazias no `split`.",
+      "referencias": [
+        {
+          "titulo": "Aula: Código limpo",
+          "url": "/aulas/codigo-limpo"
+        }
+      ]
+    }
+  ]
+}

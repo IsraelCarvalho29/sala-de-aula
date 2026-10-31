@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "questao.schema.json",
+  "title": "Questão da sala de aula",
+  "type": "object",
+  "required": ["id", "versao", "trilha", "topico", "tipo", "dificuldade", "bloom", "enunciado", "explicacao"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z]+-[0-9]{3,}$" },
+    "versao": { "type": "integer", "minimum": 1 },
+    "trilha": { "type": "string" },
+    "topico": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "tipo": { "enum": ["multipla_escolha", "multipla_resposta", "verdadeiro_falso", "preencher_lacuna", "ordenar", "prever_saida", "codigo", "resposta_aberta", "flashcard"] },
+    "dificuldade": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "bloom": { "enum": ["lembrar", "entender", "aplicar", "analisar", "avaliar", "criar"] },
+    "enunciado": { "type": "string" },
+    "midia": {
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "object",
+          "required": ["linguagem", "fonte"],
+          "properties": { "linguagem": { "type": "string" }, "fonte": { "type": "string" } }
+        },
+        "mermaid": { "type": "string" },
+        "imagem": { "type": "string" }
+      }
+    },
+    "dica": { "type": "string" },
+    "explicacao": { "type": "string" },
+    "referencias": {
+      "type": "array",
+      "items": { "type": "object", "required": ["titulo"], "properties": { "titulo": { "type": "string" }, "url": { "type": "string" } } }
+    },
+    "tempo_estimado_s": { "type": "integer", "minimum": 5 },
+
+    "alternativas": {
+      "type": "array", "minItems": 2,
+      "items": {
+        "type": "object", "required": ["id", "texto", "correta", "feedback"],
+        "properties": { "id": { "type": "string" }, "texto": { "type": "string" }, "correta": { "type": "boolean" }, "feedback": { "type": "string" } }
+      }
+    },
+    "resposta": { "type": "boolean" },
+    "feedback_verdadeiro": { "type": "string" },
+    "feedback_falso": { "type": "string" },
+    "aceitas": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "itens": { "type": "array", "minItems": 2, "items": { "type": "object", "required": ["id", "texto"], "properties": { "id": { "type": "string" }, "texto": { "type": "string" } } } },
+    "saida_esperada": { "type": "string" },
+    "linguagem": { "enum": ["javascript", "python"] },
+    "assinatura": { "type": "string" },
+    "codigo_inicial": { "type": "string" },
+    "testes": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["entrada", "esperado"], "properties": { "entrada": { "type": "array" }, "esperado": {}, "visivel": { "type": "boolean", "default": true } } }
+    },
+    "solucao_referencia": { "type": "string" },
+    "resposta_modelo": { "type": "string" },
+    "rubrica": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["criterio", "peso"], "properties": { "criterio": { "type": "string" }, "peso": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 } } } },
+    "frente": { "type": "string" },
+    "verso": { "type": "string" }
+  },
+  "allOf": [
+    { "if": { "properties": { "tipo": { "enum": ["multipla_escolha", "multipla_resposta"] } } }, "then": { "required": ["alternativas"] } },
+    { "if": { "properties": { "tipo": { "const": "verdadeiro_falso" } } }, "then": { "required": ["resposta", "feedback_verdadeiro", "feedback_falso"] } },
+    { "if": { "properties": { "tipo": { "const": "preencher_lacuna" } } }, "then": { "required": ["aceitas"] } },
+    { "if": { "properties": { "tipo": { "const": "ordenar" } } }, "then": { "required": ["itens"] } },
+    { "if": { "properties": { "tipo": { "const": "prever_saida" } } }, "then": { "required": ["midia", "saida_esperada"] } },
+    { "if": { "properties": { "tipo": { "const": "codigo" } } }, "then": { "required": ["linguagem", "assinatura", "codigo_inicial", "testes", "solucao_referencia"] } },
+    { "if": { "properties": { "tipo": { "const": "resposta_aberta" } } }, "then": { "required": ["resposta_modelo", "rubrica"] } },
+    { "if": { "properties": { "tipo": { "const": "flashcard" } } }, "then": { "required": ["frente", "verso"] } }
+  ]
+}
