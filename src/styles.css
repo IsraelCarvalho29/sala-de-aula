@@ -136,10 +136,11 @@ textarea.resposta-aluno { width: 100%; padding: var(--sp-3); border-radius: var(
 .ide { margin: var(--sp-3) 0; display: flex; flex-direction: column; gap: var(--sp-2); }
 .ide-solta { margin: var(--sp-4) 0; padding: var(--sp-3); border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); }
 .ide-topo { display: flex; justify-content: space-between; gap: var(--sp-2); flex-wrap: wrap; font-size: .8rem; color: var(--text-muted); }
-.ide-arquivo { font-family: var(--font-code); }
+.ide-arquivo { font-weight: 600; color: var(--text); }
+.ide-aviso { color: var(--st-active); font-size: .85rem; }
 .ide-status.pronto { color: var(--st-success); }
 .ide-status.falhou { color: var(--st-error); }
-.editor { border: 1px solid var(--border); border-radius: var(--r-md); }
+.editor { border: 2px solid var(--brand); border-radius: var(--r-md); }
 .editor .cm-editor { min-height: 120px; max-height: 480px; }
 .editor .cm-scroller { overflow: auto; }
 .editor-teclas { display: none; gap: var(--sp-2); padding: var(--sp-1); border-top: 1px solid var(--border); background: var(--surface-2); border-radius: 0 0 var(--r-md) var(--r-md); }
