@@ -149,6 +149,9 @@ ESTRUTURAS = {
     "try": ast.Try,
     "raise": ast.Raise,
     "with": ast.With,
+    "match": ast.Match,
+    "case": ast.match_case,
+    "nonlocal": ast.Nonlocal,
     "import": (ast.Import, ast.ImportFrom),
     "list-comprehension": (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp),
 }
