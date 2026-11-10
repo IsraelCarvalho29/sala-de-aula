@@ -422,6 +422,28 @@ explicacao: "Cada método devolve um array novo (filter, map) ou um valor (reduc
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-07-f1
+  frente: "O que é uma **função pura**?"
+  verso: "Mesma entrada → **mesma saída**, e **sem efeitos colaterais** (não altera nada fora dela, não faz I/O)."
+- id: FP-07-f2
+  frente: "O que é **imutabilidade** na prática?"
+  verso: "Criar dados **novos** em vez de alterar os existentes: `lista + [x]` em vez de `append`, `sorted(l)` em vez de `l.sort()`."
+- id: FP-07-f3
+  frente: "O que fazem `map`, `filter` e `reduce`?"
+  verso: "`map` **transforma** cada item, `filter` **seleciona** os que passam no teste, `reduce` **combina** todos em um valor."
+- id: FP-07-f4
+  frente: "O que é uma `lambda`?"
+  verso: "Uma função **curta e anônima** escrita numa expressão: `lambda x: x * 2`. Útil como argumento, ex.: `sorted(l, key=lambda p: p.idade)`."
+- id: FP-07-f5
+  frente: "O que é uma **closure**?"
+  verso: "Uma função que **lembra as variáveis** do lugar onde foi criada, mesmo depois que a função de fora terminou."
+```
+
 ## Resumo
 
 - **Função pura**: mesma entrada → mesma saída, sem efeitos colaterais. Empurre os efeitos para as bordas do programa.

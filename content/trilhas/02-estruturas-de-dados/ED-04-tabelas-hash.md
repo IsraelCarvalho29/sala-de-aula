@@ -472,6 +472,28 @@ explicacao: "O teste oculto usa só 2 buckets para 20 chaves: muitas colisões, 
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-04-f1
+  frente: "Como uma tabela hash acha o lugar de uma chave?"
+  verso: "`índice = hash(chave) % número_de_buckets`. Busca, inserção e remoção são **O(1) na média**."
+- id: ED-04-f2
+  frente: "Quais as qualidades de uma boa função de hash?"
+  verso: "**Determinística**, **espalha bem** as chaves e é **rápida**. E as chaves devem ser **imutáveis**."
+- id: ED-04-f3
+  frente: "Quais as duas formas de tratar **colisões**?"
+  verso: "**Encadeamento** (uma lista em cada bucket) e **endereçamento aberto** (procurar outra posição livre)."
+- id: ED-04-f4
+  frente: "O que é **rehash** e quando acontece?"
+  verso: "Quando o **fator de carga** (itens/buckets) fica alto, a tabela **dobra** de tamanho e reinsere tudo. O custo amortizado continua O(1)."
+- id: ED-04-f5
+  frente: "Uma tabela hash garante O(1) no pior caso?"
+  verso: "**Não**: O(1) é a média. Se todas as chaves colidirem, a busca vira **O(n)**."
+```
+
 ## Resumo
 
 - Tabela hash: `índice = hash(chave) % buckets`; busca, inserção e remoção **O(1) na média**.

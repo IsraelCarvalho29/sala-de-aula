@@ -436,6 +436,28 @@ explicacao: "Os dois problemas (quantidade errada de partes ao desempacotar e te
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-08-f1
+  frente: "Como ler um traceback do Python?"
+  verso: "De **baixo para cima**: primeiro o tipo e a mensagem do erro, depois o último `File ... line` para achar onde quebrou."
+- id: FP-08-f2
+  frente: "Para que servem `else` e `finally` num `try`?"
+  verso: "`else` roda **só se não houve exceção**; `finally` roda **sempre**, com ou sem erro (ex.: fechar arquivo)."
+- id: FP-08-f3
+  frente: "Por que capturar `except ValueError` e não `except:` puro?"
+  verso: "Capturar o **tipo específico** trata só o erro esperado; o `except` genérico esconde bugs de verdade."
+- id: FP-08-f4
+  frente: "O que significa **falhar cedo**?"
+  verso: "Recusar dados inválidos logo na entrada com `raise ValueError(\"mensagem clara\")`, em vez de deixar o erro aparecer longe da causa."
+- id: FP-08-f5
+  frente: "Quais os passos de uma depuração com método?"
+  verso: "**Reproduzir, ler** o erro, **isolar** o trecho, formular uma **hipótese**, **testar** e **corrigir a causa** (não o sintoma)."
+```
+
 ## Resumo
 
 - Leia o traceback **de baixo para cima**: tipo e mensagem, depois o último `File ... line`.

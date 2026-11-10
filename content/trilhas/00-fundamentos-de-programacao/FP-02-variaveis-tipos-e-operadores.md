@@ -557,6 +557,28 @@ explicacao: "Number() faz o papel do int()/float() do Python. Sem ele, o + 32 ju
 dificuldade: 1
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-02-f1
+  frente: "O que `x = x + 1` faz, passo a passo?"
+  verso: "Calcula o lado **direito** primeiro (valor atual de x mais 1) e depois **liga o nome** x ao resultado. A variável guarda o valor, não a conta."
+- id: FP-02-f2
+  frente: "O que significa dizer que Python tem tipagem **dinâmica** e **forte**?"
+  verso: "Dinâmica: o tipo está no **valor**, não na variável. Forte: o Python **não mistura tipos sozinho** (`'3' + 4` dá TypeError)."
+- id: FP-02-f3
+  frente: "Para que servem `//` e `%`?"
+  verso: "`//` dá o **quociente** inteiro e `%` dá o **resto**. Juntos resolvem troco, conversão de unidades (segundos → min:s) e paridade (`n % 2 == 0`)."
+- id: FP-02-f4
+  frente: "Ordem de precedência dos operadores em Python, do mais forte ao mais fraco?"
+  verso: "`()` › `**` › `* / // %` › `+ -` › comparações › `not` › `and` › `or`. Na dúvida, use parênteses."
+- id: FP-02-f5
+  frente: "Por que `0.1 + 0.2 == 0.3` é `False`?"
+  verso: "`float` tem **erro de representação** em binário. Arredonde para mostrar, compare com tolerância (`abs(a - b) < 1e-9`) e use centavos inteiros para dinheiro."
+```
+
 ## Resumo
 
 - `=` **calcula a direita e depois liga o nome** ao resultado; a variável guarda o valor, não a conta.

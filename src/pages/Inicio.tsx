@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { aulasDaTrilha, idAula, trilhas } from '../lib/conteudo';
-import { exportarProgresso, importarProgresso, useProgresso, zerarProgresso } from '../lib/progresso';
+import { definirModoLivre, exportarProgresso, importarProgresso, useProgresso, zerarProgresso } from '../lib/progresso';
+import { useRevisoesHoje } from '../lib/treino-resumo';
 import BarraProgresso from '../components/BarraProgresso';
 
 export default function Inicio() {
   const progresso = useProgresso();
   const acertos = Object.values(progresso.quiz).filter((q) => q.acertou).length;
+  const pendentes = useRevisoesHoje();
 
   return (
     <>
@@ -16,6 +18,15 @@ export default function Inicio() {
           {Object.keys(progresso.concluidas).length} aulas concluídas · {acertos} perguntas acertadas
         </p>
       </section>
+
+      <Link to="/treino" className={pendentes ? 'chamada-treino pendente' : 'chamada-treino'}>
+        <strong>🧠 {pendentes ? `${pendentes} ${pendentes === 1 ? 'revisão' : 'revisões'} para hoje` : 'Treino'}</strong>
+        <span>
+          {pendentes
+            ? 'Revise agora o que está para esquecer: leva poucos minutos.'
+            : 'Nada vencido hoje. Pratique uma aula ou revise flashcards.'}
+        </span>
+      </Link>
 
       <div className="grade">
         {trilhas.map((t) => {
@@ -33,7 +44,11 @@ export default function Inicio() {
       </div>
 
       <details className="ferramentas">
-        <summary>Backup do progresso</summary>
+        <summary>Backup do progresso e configurações</summary>
+        <label className="opcao-linha">
+          <input type="checkbox" checked={progresso.livre} onChange={(e) => definirModoLivre(e.target.checked)} />
+          Modo livre: abrir qualquer aula sem precisar dominar os pré-requisitos (80% no quiz)
+        </label>
         <button className="botao" onClick={() => {
           const blob = new Blob([exportarProgresso()], { type: 'application/json' });
           const a = document.createElement('a');

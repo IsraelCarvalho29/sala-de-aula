@@ -186,6 +186,50 @@ textarea.resposta-aluno { width: 100%; padding: var(--sp-3); border-radius: var(
 .erro { color: var(--st-error); border: 1px dashed var(--st-error); padding: var(--sp-2); border-radius: var(--r-md); }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
+
+/* ---------- treino, flashcards e bloqueio ---------- */
+.link-treino { margin-left: auto; display: inline-flex; align-items: center; gap: var(--sp-1); font-weight: 600; min-height: var(--toque); }
+.contador { min-width: 22px; padding: 0 6px; border-radius: 999px; background: var(--st-active); color: #000; font-size: .75rem; line-height: 22px; text-align: center; }
+.chamada-treino { display: flex; flex-direction: column; gap: var(--sp-1); margin: var(--sp-5) 0 0; padding: var(--sp-4) var(--sp-5); border-radius: var(--r-lg); border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.chamada-treino span { color: var(--text-muted); font-size: .92rem; }
+.chamada-treino.pendente { border-color: var(--st-active); background: color-mix(in srgb, var(--st-active) 10%, var(--surface)); }
+.chamada-treino:hover { border-color: var(--brand); text-decoration: none; }
+.painel-treino { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); margin: var(--sp-5) 0; }
+.numero { display: flex; flex-direction: column; padding: var(--sp-3) var(--sp-4); border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); }
+.numero strong { font-size: 26px; line-height: 1.2; }
+.numero span { font-size: .8rem; color: var(--text-muted); }
+.numero.destaque { border-color: var(--st-active); }
+.numero.destaque strong { color: var(--st-active); }
+.previsao { margin: var(--sp-4) 0; font-size: .9rem; }
+.previsao-barras { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--sp-2); height: 90px; margin-top: var(--sp-2); }
+.previsao-dia { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 2px; }
+.previsao-barra { display: block; width: 100%; min-height: 2px; background: var(--brand); border-radius: 4px 4px 0 0; }
+.previsao-dia small { font-size: .7rem; line-height: 1.2; }
+.previsao-n { order: -1; }
+.opcao-linha { display: flex; gap: var(--sp-2); align-items: center; min-height: var(--toque); cursor: pointer; }
+.modos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--sp-4); margin: var(--sp-4) 0; }
+.cartao.modo { min-width: 0; }
+.cartao.modo:hover { transform: none; }
+.cartao.modo h2 { font-size: 18px; margin: 0; }
+.cartao.modo select { min-height: var(--toque); padding: 0 var(--sp-2); border-radius: var(--r-md); border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; width: 100%; min-width: 0; }
+.sessao-topo { display: flex; justify-content: space-between; color: var(--text-muted); font-size: .9rem; }
+.sessao-acoes { justify-content: flex-end; }
+.origem { margin: var(--sp-3) 0 0; font-size: .85rem; color: var(--text-muted); }
+.fim-sessao, .bloqueio { margin: var(--sp-5) 0; padding: var(--sp-5); border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
+.bloqueio ul { list-style: none; padding: 0; display: grid; gap: var(--sp-3); }
+.grande { font-size: 1.3rem; font-weight: 700; margin-top: 0; }
+.proxima-revisao { font-size: .85rem; color: var(--text-muted); }
+.cartao-flash { margin-top: var(--sp-3); }
+.cartao-frente { font-weight: 600; font-size: 1.05rem; padding: var(--sp-4); border-radius: var(--r-md); background: var(--bg); min-height: 80px; margin-bottom: var(--sp-3); }
+.cartao-verso { padding: var(--sp-3) var(--sp-4); border-left: 3px solid var(--st-success); background: color-mix(in srgb, var(--st-success) 8%, transparent); border-radius: 0 var(--r-md) var(--r-md) 0; }
+.cartao-frente p, .cartao-verso p { margin: 0 0 var(--sp-1); }
+.baralho-nav { justify-content: space-between; }
+.lista-modulos li.bloqueada > div { color: var(--text-muted); border-style: dashed; }
+.motivo-bloqueio { color: var(--st-active) !important; }
+.dominio { font: 600 12px var(--font-code); color: var(--text-muted); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); }
+.dominio.ok { color: var(--st-success); border-color: var(--st-success); }
+.dominio-aula { margin-top: var(--sp-6); padding: var(--sp-3) var(--sp-4); border: 1px solid var(--border); border-radius: var(--r-md); }
+
 /* ---------- mobile (< 640px) ---------- */
 @media (max-width: 640px) {
   body { font-size: 15.5px; }
@@ -197,6 +241,8 @@ textarea.resposta-aluno { width: 100%; padding: var(--sp-3); border-radius: var(
   .quiz, .flashcard { margin-left: calc(-1 * var(--sp-2)); margin-right: calc(-1 * var(--sp-2)); padding: var(--sp-3) var(--sp-4); }
   .bloco-codigo { margin-left: calc(-1 * var(--sp-4)); margin-right: calc(-1 * var(--sp-4)); border-radius: 0; border-left: 0; border-right: 0; font-size: 12.5px; }
   .opcoes.vf { grid-template-columns: 1fr; }
+  .painel-treino { grid-template-columns: 1fr 1fr; }
+  .modos { grid-template-columns: 1fr; }
   .navegacao { flex-direction: column; }
   .navegacao a:last-child { justify-content: flex-end; }
   /* botão de concluir fica fixo no rodapé em telas pequenas */

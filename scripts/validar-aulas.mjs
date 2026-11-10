@@ -5,6 +5,7 @@
  *   - front matter: código do módulo existe no _trilha.md, pré-requisitos existem;
  *   - perguntas (```quiz): YAML válido, id único, campos obrigatórios por tipo,
  *     índice da resposta dentro das opções;
+ *   - flashcards (```flashcards): lista YAML de { id, frente, verso }, id único;
  *   - desafios de código: roda a `solucao` contra todos os `testes` com os mesmos
  *     executores do app (corretor.py no Python, Sucrase no JS/TS, sql.js no SQL,
  *     JSCPP no C/C++) e confere indentação e `usa`. Exige pelo menos um teste oculto.
@@ -40,11 +41,12 @@ function frontMatter(texto) {
 }
 
 /** Mesmo recorte que src/components/Markdown.tsx: de ```quiz até a próxima linha só com ```. */
-function blocosQuiz(corpo) {
+function blocosQuiz(corpo, tipo = 'quiz') {
   const blocos = [];
   let atual = null;
+  const abre = new RegExp('^```' + tipo + '\\s*$');
   corpo.split('\n').forEach((l, i) => {
-    if (!atual && /^```quiz\s*$/.test(l)) atual = { linha: i + 1, linhas: [] };
+    if (!atual && abre.test(l)) atual = { linha: i + 1, linhas: [] };
     else if (atual && /^```\s*$/.test(l)) { blocos.push({ linha: atual.linha, yaml: atual.linhas.join('\n') }); atual = null; }
     else if (atual) atual.linhas.push(l);
   });
@@ -68,6 +70,7 @@ for (const trilha of readdirSync(dirTrilhas)) {
 
 const desafios = [];
 const ids = new Map();
+let nFlashcards = 0;
 for (const a of aulas) {
   if (filtro && !a.caminho.includes(filtro)) continue;
   const onde = a.caminho;
@@ -77,6 +80,24 @@ for (const a of aulas) {
   for (const p of a.meta.prerequisitos ?? []) if (!modulos.has(p)) falhar(onde, `pré-requisito inexistente: ${p}`);
   if (!a.meta.titulo) falhar(onde, 'front matter sem titulo');
   if (!a.meta.objetivos?.length) avisos.push(`${onde}: sem objetivos`);
+
+  for (const b of blocosQuiz(a.corpo, 'flashcards')) {
+    const aqui = `${onde}:${b.linha}`;
+    let lista;
+    try {
+      lista = parseYaml(b.yaml);
+    } catch (e) {
+      falhar(aqui, `YAML inválido nos flashcards: ${e.message.split('\n')[0]}`);
+      continue;
+    }
+    if (!Array.isArray(lista) || !lista.length) { falhar(aqui, 'flashcards deve ser uma lista de { id, frente, verso }'); continue; }
+    for (const c of lista) {
+      if (!c?.id) falhar(aqui, 'flashcard sem id');
+      else if (ids.has(c.id)) falhar(aqui, `id repetido ${c.id} (também em ${ids.get(c.id)})`);
+      else { ids.set(c.id, aqui); nFlashcards++; }
+      if (typeof c?.frente !== 'string' || typeof c?.verso !== 'string') falhar(`${aqui} ${c?.id ?? ''}`, 'flashcard precisa de frente e verso (texto)');
+    }
+  }
 
   for (const b of blocosQuiz(a.corpo)) {
     const aqui = `${onde}:${b.linha}`;
@@ -313,5 +334,5 @@ await navegador?.close();
 const nAulas = aulas.filter((a) => !filtro || a.caminho.includes(filtro)).length;
 avisos.forEach((a) => console.log(`aviso  ${a}`));
 erros.forEach((e) => console.log(`ERRO   ${e}`));
-console.log(`\n${nAulas} aula(s), ${ids.size} pergunta(s), ${desafios.length} desafio(s) de código, ${erros.length} erro(s).`);
+console.log(`\n${nAulas} aula(s), ${ids.size - nFlashcards} pergunta(s), ${nFlashcards} flashcard(s), ${desafios.length} desafio(s) de código, ${erros.length} erro(s).`);
 process.exit(erros.length ? 1 : 0);

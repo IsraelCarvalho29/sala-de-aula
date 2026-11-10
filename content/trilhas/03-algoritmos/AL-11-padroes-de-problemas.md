@@ -421,6 +421,28 @@ explicacao: "O ponteiro rápido i lê todos os itens; o lento k marca onde escre
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: AL-11-f1
+  frente: "Quando usar **dois ponteiros** em pontas opostas?"
+  verso: "Em lista **ordenada** para achar par com soma alvo, ou para conferir palíndromo. Cada passo descarta algo: O(n)."
+- id: AL-11-f2
+  frente: "Como funciona a **janela deslizante** de tamanho variável?"
+  verso: "Cresce à **direita** e encolhe à **esquerda** quando a janela fica inválida. O(n) amortizado."
+- id: AL-11-f3
+  frente: "Como calcular soma(a..b) com **soma de prefixo**?"
+  verso: "`pre[b + 1] − pre[a]`: O(n) para montar, **O(1)** por pergunta."
+- id: AL-11-f4
+  frente: "Como contar subarrays com soma k (mesmo com negativos)?"
+  verso: "**Prefixo + dicionário**: para cada prefixo p, some quantas vezes **p − k** já apareceu."
+- id: AL-11-f5
+  frente: "Janela deslizante serve para que tipo de trecho?"
+  verso: "Trechos **contíguos** (subarrays, substrings): entra um elemento, sai outro."
+```
+
 ## Resumo
 
 - **Dois ponteiros**: pontas opostas em lista ordenada (par com soma, palíndromo) ou rápido/lento (no lugar, merge). Cada passo descarta algo: O(n).

@@ -358,6 +358,28 @@ explicacao: "Cada dígito octal são 3 bits (r=4, w=2, x=1), e a lista TRIOS já
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: SO-08-f1
+  frente: "O que significam `/`, `~`, `.` e `..` no Linux?"
+  verso: "`/` é a **raiz**; `~` a sua pasta pessoal; `.` a pasta **atual**; `..` a pasta **de cima**."
+- id: SO-08-f2
+  frente: "Diferença entre `>`, `>>` e `|`?"
+  verso: "`>` grava num arquivo (**apagando** o que tinha); `>>` **acrescenta** no fim; `|` passa a saída para o **próximo comando**."
+- id: SO-08-f3
+  frente: "O que significa a permissão **755**?"
+  verso: "Dono: rwx (4+2+1 = 7); grupo e outros: r-x (4+1 = 5). Com r = 4, w = 2, x = 1."
+- id: SO-08-f4
+  frente: "Como descobrir o que um comando faz?"
+  verso: "`man comando` ou `comando --help`."
+- id: SO-08-f5
+  frente: "O que um script bash precisa para rodar como `./script.sh`?"
+  verso: "A primeira linha `#!/bin/bash` e permissão de execução com `chmod +x script.sh`."
+```
+
 ## Resumo
 
 - O Linux tem uma **árvore única** a partir de `/`; `~` é sua pasta, `.` a atual e `..` a de cima.

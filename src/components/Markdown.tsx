@@ -2,7 +2,8 @@ import { createContext, lazy, Suspense, useContext, useState } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Quiz from './Quiz';
-import Flashcard from './Flashcard';
+import Flashcard, { BaralhoFlashcards } from './Flashcard';
+import { parse as parseYaml } from 'yaml';
 import Diagrama from './Diagrama';
 import { normalizarLinguagem, type Linguagem } from '../lib/execucao/linguagens';
 
@@ -10,7 +11,8 @@ const IdeCodigo = lazy(() => import('./IdeCodigo'));
 
 /**
  * Renderiza uma aula. Blocos de código especiais:
- *   ```quiz      -> pergunta (YAML, formato em docs/curriculo/modelo-de-aula.md)
+ *   ```quiz       -> pergunta (YAML, formato em docs/curriculo/modelo-de-aula.md)
+ *   ```flashcards -> baralho de flashcards (lista YAML de { frente, verso }), entra na revisão espaçada
  *   ```pergunta  -> pergunta aberta com resposta revelável (YAML)
  *   ```mermaid   -> diagrama (fluxograma, sequência, estados...)
  * Blocos de linguagens executáveis (python, javascript, typescript, c, cpp, sql, html)
@@ -23,6 +25,7 @@ function Codigo({ className, children }: { className?: string; children?: React.
   const conteudo = String(children).replace(/\n$/, '');
   const lang = /language-([\w-]+)/.exec(className ?? '')?.[1];
   if (lang?.startsWith('quiz-')) return <Quiz yaml={conteudo} idPadrao={`${idAula}#${lang.slice(5)}`} />;
+  if (lang?.startsWith('flashcards-')) return <BaralhoFlashcards yaml={conteudo} idAula={idAula} inicio={Number(lang.slice(11))} />;
   if (lang === 'pergunta') return <Flashcard yaml={conteudo} />;
   if (lang === 'mermaid') return <Diagrama codigo={conteudo} />;
   if (!className) return <code>{children}</code>;
@@ -66,21 +69,35 @@ const componentes: Components = {
 
 /**
  * Prepara o texto antes do Markdown:
- * - numera os blocos ```quiz (para salvar o resultado de cada um);
+ * - numera os blocos ```quiz (para salvar o resultado de cada um) e os ```flashcards
+ *   (com quantos cartões vieram antes, para o id padrão de cada cartão);
  * - troca a cerca deles por ```` (4 crases), porque o enunciado pode conter
  *   blocos de código com ``` dentro, que fechariam o bloco cedo demais.
+ * O recorte é o mesmo de recortarBlocos (lib/banco.ts) e do validador.
  */
 function prepararQuizzes(texto: string) {
   const linhas = texto.split('\n');
   let n = 0;
-  let dentro = false;
+  let cartoes = 0;
+  let aberto: { tipo: string; linha: number } | null = null;
   for (let i = 0; i < linhas.length; i++) {
-    if (!dentro && /^```quiz\s*$/.test(linhas[i])) {
-      linhas[i] = '````quiz-' + n++;
-      dentro = true;
-    } else if (dentro && /^```\s*$/.test(linhas[i])) {
+    const abre: RegExpExecArray | false | null = !aberto && /^```(quiz|flashcards)\s*$/.exec(linhas[i]);
+    if (abre) {
+      aberto = { tipo: abre[1], linha: i };
+    } else if (aberto && /^```\s*$/.test(linhas[i])) {
+      if (aberto.tipo === 'quiz') {
+        linhas[aberto.linha] = '````quiz-' + n++;
+      } else {
+        linhas[aberto.linha] = '````flashcards-' + cartoes;
+        try {
+          const lista = parseYaml(linhas.slice(aberto.linha + 1, i).join('\n'));
+          if (Array.isArray(lista)) cartoes += lista.length;
+        } catch {
+          // o próprio baralho mostra o erro de YAML
+        }
+      }
       linhas[i] = '````';
-      dentro = false;
+      aberto = null;
     }
   }
   return linhas.join('\n');

@@ -452,6 +452,28 @@ explicacao: "O algoritmo é o mesmo em qualquer linguagem; muda a sintaxe (chave
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: AL-01-f1
+  frente: "Qual a exigência da busca binária?"
+  verso: "Dados **ordenados** e com **acesso por índice** em O(1)."
+- id: AL-01-f2
+  frente: "Complexidade da busca linear e da binária?"
+  verso: "Linear: **O(n)**. Binária: **O(log n)**."
+- id: AL-01-f3
+  frente: "Qual o modelo seguro de busca binária (intervalo fechado)?"
+  verso: "`ini, fim = 0, n - 1`; `while ini <= fim`; `meio = (ini + fim) // 2`; depois `ini = meio + 1` ou `fim = meio - 1`."
+- id: AL-01-f4
+  frente: "Como achar a **primeira ocorrência** com busca binária?"
+  verso: "Ao achar, **guarde** a posição e **continue à esquerda** (`fim = meio - 1`). Ou use `bisect_left`."
+- id: AL-01-f5
+  frente: "O que é **busca no espaço de respostas**?"
+  verso: "Fazer busca binária nos **valores possíveis da resposta**, quando a condição \"x serve?\" é **monotônica**."
+```
+
 ## Resumo
 
 - **Linear**: O(n), funciona com qualquer coleção. **Binária**: O(log n), exige dados **ordenados** com acesso por índice.

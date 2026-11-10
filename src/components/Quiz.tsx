@@ -1,6 +1,8 @@
 import { lazy, Suspense, useState } from 'react';
 import { parse } from 'yaml';
 import { registrarResposta, useProgresso } from '../lib/progresso';
+import { quandoVolta, type Autoavaliacao } from '../lib/revisao';
+import type { DadosQuiz, TesteYaml } from '../lib/banco';
 import { MarkdownSimples } from './Markdown';
 import { normalizarLinguagem } from '../lib/execucao/linguagens';
 import type { Desafio, Teste } from './IdeCodigo';
@@ -15,38 +17,6 @@ const IdeCodigo = lazy(() => import('./IdeCodigo'));
  * Os tipos abertos usam autoavaliação: o aluno escreve, vê a resposta modelo e diz se acertou.
  * `codigo` com `testes` abre a IDE e é corrigido automaticamente (ver docs/avaliacao/especificacao-quiz.md).
  */
-interface TesteYaml {
-  entrada?: string | number | (string | number)[];
-  entradas?: (string | number)[];
-  saida?: string | number;
-  esperado?: string | number;
-  chamada?: string;
-  verifica?: string;
-  descricao?: string;
-  visivel?: boolean;
-}
-
-interface DadosQuiz {
-  id?: string;
-  tipo?: string;
-  pergunta: string;
-  opcoes?: string[];
-  resposta?: number | boolean | string;
-  correta?: number; // alias antigo de `resposta`
-  explicacao?: string;
-  palavras_chave?: string[];
-  dica?: string;
-  dificuldade?: number;
-  // desafio de código
-  linguagem?: string;
-  codigo_inicial?: string;
-  testes?: TesteYaml[];
-  usa?: string[];
-  indentacao?: boolean;
-  preparo?: string;
-  solucao?: string;
-}
-
 const ROTULO: Record<string, string> = {
   multipla_escolha: 'Múltipla escolha',
   verdadeiro_falso: 'Verdadeiro ou falso',
@@ -55,26 +25,52 @@ const ROTULO: Record<string, string> = {
   codigo: 'Desafio de código',
 };
 
-export default function Quiz({ yaml, idPadrao }: { yaml: string; idPadrao: string }) {
+/** Chamado depois de cada resposta (usado pelo modo de treino para liberar o "Próxima"). */
+type AoResponder = (acertou: boolean) => void;
+
+interface Props {
+  /** bloco YAML da aula, ou `dados` já prontos (treino) */
+  yaml?: string;
+  dados?: DadosQuiz;
+  idPadrao: string;
+  /** no treino: sem "Tentar de novo", e avisa quando respondeu */
+  treino?: boolean;
+  onResponder?: AoResponder;
+}
+
+export default function Quiz({ yaml, dados, idPadrao, treino, onResponder }: Props) {
   let q: DadosQuiz;
   try {
-    q = parse(yaml);
+    q = dados ?? parse(yaml ?? '');
   } catch (e) {
     return <div className="erro">Pergunta com YAML inválido: {(e as Error).message}</div>;
   }
   const id = q.id ?? idPadrao;
   const tipo = q.tipo ?? (typeof q.resposta === 'boolean' ? 'verdadeiro_falso' : 'multipla_escolha');
+  const responder = (resultado: boolean | Autoavaliacao) => {
+    registrarResposta(id, resultado);
+    onResponder?.(resultado !== false && resultado !== 'errei');
+  };
+  const props = { q, id, tipo, treino, responder };
   return (
     <QuizCartao q={q} id={id} tipo={tipo}>
       {tipo === 'multipla_escolha' || tipo === 'verdadeiro_falso' ? (
-        <Fechada q={q} id={id} tipo={tipo} />
+        <Fechada {...props} />
       ) : tipo === 'codigo' && q.testes?.length ? (
-        <DesafioCodigo q={q} id={id} />
+        <DesafioCodigo {...props} />
       ) : (
-        <Aberta q={q} id={id} />
+        <Aberta {...props} />
       )}
     </QuizCartao>
   );
+}
+
+interface PropsTipo {
+  q: DadosQuiz;
+  id: string;
+  tipo: string;
+  treino?: boolean;
+  responder: (resultado: boolean | Autoavaliacao) => void;
 }
 
 function QuizCartao({ q, id, tipo, children }: { q: DadosQuiz; id: string; tipo: string; children: React.ReactNode }) {
@@ -92,7 +88,7 @@ function QuizCartao({ q, id, tipo, children }: { q: DadosQuiz; id: string; tipo:
   );
 }
 
-function Fechada({ q, id, tipo }: { q: DadosQuiz; id: string; tipo: string }) {
+function Fechada({ q, id, tipo, treino, responder }: PropsTipo) {
   const [escolha, setEscolha] = useState<number | null>(null);
   const opcoes = tipo === 'verdadeiro_falso' ? ['Verdadeiro', 'Falso'] : q.opcoes ?? [];
   const certa = tipo === 'verdadeiro_falso' ? (q.resposta ? 0 : 1) : Number(q.resposta ?? q.correta);
@@ -108,7 +104,7 @@ function Fechada({ q, id, tipo }: { q: DadosQuiz; id: string; tipo: string }) {
           return (
             <button key={i} className={cls} disabled={respondeu} onClick={() => {
               setEscolha(i);
-              registrarResposta(id, i === certa);
+              responder(i === certa);
             }}>
               {tipo !== 'verdadeiro_falso' && <strong>{String.fromCharCode(65 + i)}.</strong>} {op}
             </button>
@@ -116,7 +112,7 @@ function Fechada({ q, id, tipo }: { q: DadosQuiz; id: string; tipo: string }) {
         })}
       </div>
       {respondeu && (
-        <Feedback ok={escolha === certa} explicacao={q.explicacao} onRefazer={() => setEscolha(null)} />
+        <Feedback id={id} ok={escolha === certa} explicacao={q.explicacao} onRefazer={treino ? undefined : () => setEscolha(null)} />
       )}
     </>
   );
@@ -135,7 +131,7 @@ function converterTeste(t: TesteYaml): Teste {
   };
 }
 
-function DesafioCodigo({ q, id }: { q: DadosQuiz; id: string }) {
+function DesafioCodigo({ q, id, responder }: PropsTipo) {
   const [verDica, setVerDica] = useState(false);
   const [resultado, setResultado] = useState<boolean | null>(null);
   const linguagem = normalizarLinguagem(q.linguagem) ?? 'python';
@@ -151,7 +147,7 @@ function DesafioCodigo({ q, id }: { q: DadosQuiz; id: string }) {
       <Suspense fallback={<p className="dica">Carregando o editor…</p>}>
         <IdeCodigo linguagem={linguagem} codigoInicial={q.codigo_inicial ?? ''} chaveRascunho={id} preparo={q.preparo}
           desafio={desafio}
-          onVerificado={(ok) => { setResultado(ok); registrarResposta(id, ok); }} />
+          onVerificado={(ok) => { setResultado(ok); responder(ok); }} />
       </Suspense>
       {resultado && q.explicacao && (
         <div className="feedback ok"><MarkdownSimples texto={q.explicacao} /></div>
@@ -160,10 +156,10 @@ function DesafioCodigo({ q, id }: { q: DadosQuiz; id: string }) {
   );
 }
 
-function Aberta({ q, id }: { q: DadosQuiz; id: string }) {
+function Aberta({ q, id, treino, responder }: PropsTipo) {
   const [texto, setTexto] = useState('');
   const [revelado, setRevelado] = useState(false);
-  const [avaliou, setAvaliou] = useState<boolean | null>(null);
+  const [avaliou, setAvaliou] = useState<Autoavaliacao | null>(null);
   const [verDica, setVerDica] = useState(false);
   const termosUsados = (q.palavras_chave ?? []).filter((p) => texto.toLowerCase().includes(p.toLowerCase()));
 
@@ -192,14 +188,10 @@ function Aberta({ q, id }: { q: DadosQuiz; id: string }) {
             )}
           </div>
           {avaliou === null ? (
-            <div className="acoes">
-              <span>Como foi?</span>
-              <button className="botao ok" onClick={() => { setAvaliou(true); registrarResposta(id, true); }}>Acertei</button>
-              <button className="botao perigo" onClick={() => { setAvaliou(false); registrarResposta(id, false); }}>Errei</button>
-            </div>
+            <Autoavaliar onAvaliar={(a) => { setAvaliou(a); responder(a); }} />
           ) : (
-            <Feedback ok={avaliou} explicacao={q.explicacao}
-              onRefazer={() => { setRevelado(false); setAvaliou(null); setTexto(''); }} />
+            <Feedback id={id} ok={avaliou !== 'errei'} explicacao={q.explicacao}
+              onRefazer={treino ? undefined : () => { setRevelado(false); setAvaliou(null); setTexto(''); }} />
           )}
         </>
       )}
@@ -207,12 +199,39 @@ function Aberta({ q, id }: { q: DadosQuiz; id: string }) {
   );
 }
 
-function Feedback({ ok, explicacao, onRefazer }: { ok: boolean; explicacao?: string; onRefazer: () => void }) {
+const AUTOAVALIACAO: { valor: Autoavaliacao; rotulo: string; dica: string; classe: string }[] = [
+  { valor: 'errei', rotulo: 'Errei', dica: 'Volta amanhã', classe: 'botao perigo' },
+  { valor: 'dificil', rotulo: 'Difícil', dica: 'Acertei com esforço: repete o intervalo atual', classe: 'botao' },
+  { valor: 'bom', rotulo: 'Bom', dica: 'Acertei: sobe um degrau (1, 3, 7, 14, 30 dias)', classe: 'botao ok' },
+  { valor: 'facil', rotulo: 'Fácil', dica: 'Acertei sem pensar: sobe dois degraus', classe: 'botao ok' },
+];
+
+/** Botões de autoavaliação (perguntas abertas e flashcards). */
+export function Autoavaliar({ onAvaliar }: { onAvaliar: (a: Autoavaliacao) => void }) {
+  return (
+    <div className="acoes">
+      <span>Como foi?</span>
+      {AUTOAVALIACAO.map((a) => (
+        <button key={a.valor} className={a.classe} title={a.dica} onClick={() => onAvaliar(a.valor)}>{a.rotulo}</button>
+      ))}
+    </div>
+  );
+}
+
+/** "Volta em 3 dias": quando esta pergunta aparece de novo no treino. */
+export function ProximaRevisao({ id }: { id: string }) {
+  const r = useProgresso().revisao[id];
+  if (!r) return null;
+  return <p className="proxima-revisao">📅 Revisão: {quandoVolta(r)}</p>;
+}
+
+function Feedback({ id, ok, explicacao, onRefazer }: { id: string; ok: boolean; explicacao?: string; onRefazer?: () => void }) {
   return (
     <div className={ok ? 'feedback ok' : 'feedback nok'}>
       <strong>{ok ? 'Correto!' : 'Não foi dessa vez.'}</strong>
       {explicacao && <MarkdownSimples texto={explicacao} />}
-      <button className="link" onClick={onRefazer}>Tentar de novo</button>
+      <ProximaRevisao id={id} />
+      {onRefazer && <button className="link" onClick={onRefazer}>Tentar de novo</button>}
     </div>
   );
 }

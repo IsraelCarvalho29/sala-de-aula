@@ -349,6 +349,28 @@ explicacao: "[0, 1, 2, 0] é um ciclo, não um caminho simples (repete o 0). Gua
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-06-f1
+  frente: "O que diz o **lema do aperto de mãos**?"
+  verso: "A **soma dos graus** de todos os vértices é **2|E|**; por isso o número de vértices de grau ímpar é sempre par."
+- id: MD-06-f2
+  frente: "Três definições equivalentes de **árvore** (com n vértices)?"
+  verso: "Conexa e **sem ciclos** ⇔ conexa com **n − 1 arestas** ⇔ existe **um único caminho** entre cada par de vértices."
+- id: MD-06-f3
+  frente: "Quando um grafo é **bipartido**?"
+  verso: "Quando **não tem ciclo de tamanho ímpar**: aí dá para pintar os vértices com duas cores sem vizinhos da mesma cor."
+- id: MD-06-f4
+  frente: "O que é um **DAG** e o que ele permite?"
+  verso: "Grafo **dirigido sem ciclos**. Sempre tem **ordenação topológica** (ex.: ordem de pré-requisitos, de build)."
+- id: MD-06-f5
+  frente: "Quando um grafo conexo tem caminho ou ciclo **de Euler**?"
+  verso: "0 vértices de grau ímpar → **ciclo**; exatamente 2 → **caminho**; mais que 2 → nenhum."
+```
+
 ## Resumo
 
 - **Grafo** = vértices + arestas. Dirigido (setas) ou não; ponderado (pesos) ou não.

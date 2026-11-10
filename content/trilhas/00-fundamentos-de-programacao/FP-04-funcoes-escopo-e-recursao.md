@@ -453,6 +453,28 @@ explicacao: "A cada chamada o texto fica um caractere menor, até ficar vazio. N
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-04-f1
+  frente: "Diferença entre **parâmetro** e **argumento**?"
+  verso: "Parâmetro é o nome na **definição** (`def dobro(x)`); argumento é o valor passado na **chamada** (`dobro(5)`)."
+- id: FP-04-f2
+  frente: "Diferença entre `return` e `print` numa função?"
+  verso: "`return` **devolve** o valor para quem chamou e **encerra** a função; `print` só **mostra** na tela. Sem `return`, a função devolve `None`."
+- id: FP-04-f3
+  frente: "O que é uma variável **local**?"
+  verso: "Uma variável criada dentro da função: só existe enquanto a função roda e não é vista fora dela."
+- id: FP-04-f4
+  frente: "O que é a **pilha de chamadas**?"
+  verso: "Cada chamada de função ganha um **quadro** com suas variáveis locais, empilhado sobre o de quem chamou. O traceback é uma foto dessa pilha."
+- id: FP-04-f5
+  frente: "Quais as duas partes obrigatórias de uma função recursiva?"
+  verso: "**Caso base** (resposta direta, sem recursão) e **passo recursivo** que diminui o problema. Sem isso: `RecursionError`."
+```
+
 ## Resumo
 
 - `def` cria a função; ela só roda quando é **chamada** com `()`. Parâmetros na definição, argumentos na chamada.

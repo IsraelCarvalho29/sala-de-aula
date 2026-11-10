@@ -368,6 +368,28 @@ explicacao: "1 = 1², 1 + 3 = 2², 1 + 3 + 5 = 3²... A prova por indução: se 
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-03-f1
+  frente: "Como funciona uma prova por **contraposição**?"
+  verso: "Para provar \"se P então Q\", prova-se o equivalente **\"se não Q então não P\"**."
+- id: MD-03-f2
+  frente: "Como funciona uma prova por **contradição**?"
+  verso: "Supõe-se que a afirmação é **falsa** e chega-se a um **absurdo**; logo, ela é verdadeira."
+- id: MD-03-f3
+  frente: "Quais as partes de uma prova por **indução**?"
+  verso: "**Caso base** (vale para o primeiro n) e **passo indutivo**: se vale para k, vale para k + 1. Na indução **forte**, supõe-se todos os casos anteriores."
+- id: MD-03-f4
+  frente: "Qual a ligação entre recursão e indução?"
+  verso: "Uma função recursiva está certa se o **caso base** está certo e, supondo que **a chamada menor funciona**, a atual funciona: é uma prova por indução."
+- id: MD-03-f5
+  frente: "Muitos exemplos provam um \"para todo\"?"
+  verso: "**Não**. Exemplos não provam nada; mas **um único contraexemplo** derruba a afirmação."
+```
+
 ## Resumo
 
 - **Direta**: definições + álgebra, do que sei ao que quero.

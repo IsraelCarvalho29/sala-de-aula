@@ -322,6 +322,28 @@ explicacao: "Essa é a métrica de 'paridade demográfica', uma das mais simples
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ET-01-f1
+  frente: "Quais perguntas éticas fazer sobre todo software?"
+  verso: "**Quem é afetado** por ele e **o que acontece quando ele falha**."
+- id: ET-01-f2
+  frente: "O que os casos **Therac-25** e **737 MAX** ensinam?"
+  verso: "O custo de **pontos únicos de falha**, da pressa e de **documentação escondida** em sistemas críticos."
+- id: ET-01-f3
+  frente: "Cite princípios da **LGPD**."
+  verso: "Base legal, **finalidade**, **necessidade** (coletar o mínimo de dados), segurança e direitos do titular."
+- id: ET-01-f4
+  frente: "De onde vem o **viés** em sistemas e como detectar?"
+  verso: "De dados históricos, proxies e métricas erradas. Detecte **medindo os resultados por grupo**."
+- id: ET-01-f5
+  frente: "Código sem licença é livre para usar?"
+  verso: "**Não**: sem licença, todos os direitos são reservados. GPL é **copyleft** (derivados também precisam ser GPL)."
+```
+
 ## Resumo
 
 - Software toma decisões que afetam pessoas; pergunte sempre **quem é afetado** e **o que acontece quando falha**.
