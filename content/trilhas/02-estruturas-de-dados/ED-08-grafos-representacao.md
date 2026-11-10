@@ -101,6 +101,22 @@ Conta rápida: n = 100 mil vértices com 10 vizinhos cada. Lista: ~1 milhão de 
 
 O **transposto** Gᵀ tem as mesmas arestas com o sentido **invertido**. "Quem eu sigo" vira "quem me segue". Na matriz, é a matriz transposta (trocar linhas e colunas). É usado para achar componentes fortemente conexas (algoritmo de Kosaraju) e para responder "quem aponta para mim?" em O(grau de entrada).
 
+### Percorrendo a lista de adjacência: BFS e DFS
+
+Quase todo algoritmo de grafo é um laço "para cada vizinho de v" sobre a lista de adjacência. Os dois percursos básicos (estudados a fundo em AL-05) só mudam a estrutura que guarda quem falta visitar: a **BFS** usa uma **fila** e anda em camadas; a **DFS** usa uma **pilha** e mergulha fundo antes de voltar. Veja os dois no mesmo grafo:
+
+```visual
+tipo: bfs
+arestas: A-B, A-C, B-D, C-D, C-E, D-F, E-F
+inicio: A
+```
+
+```visual
+tipo: dfs
+arestas: A-B, A-C, B-D, C-D, C-E, D-F, E-F
+inicio: A
+```
+
 ## Código
 
 Uma classe de grafo com lista de adjacência:

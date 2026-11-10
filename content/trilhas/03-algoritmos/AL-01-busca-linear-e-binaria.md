@@ -49,6 +49,14 @@ passo 3:                       ini=5 meio=5 fim=6
                                [23  38]                23 == 23 → achou no índice 5 ✓
 ```
 
+O mesmo exemplo passo a passo. Troque o **alvo** por um valor que não está na lista (por exemplo, 40) e veja quantas comparações bastam para ter certeza:
+
+```visual
+tipo: busca-binaria
+valores: 2, 5, 8, 12, 16, 23, 38, 56, 72, 91
+alvo: 23
+```
+
 Quantos passos no pior caso? Cada passo corta o intervalo pela metade:
 
 ```
