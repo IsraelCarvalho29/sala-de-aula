@@ -65,6 +65,20 @@ DFS a partir de A (recursão, vizinhos em ordem):
   ordem: A B D E G C F
 ```
 
+Agora no mesmo grafo, um passo de cada vez. Na BFS, acompanhe a **fila** embaixo do desenho e as distâncias `d=` aparecendo camada por camada; na DFS, veja a **pilha** fazer a busca mergulhar até um beco antes de voltar. Mude as arestas (por exemplo, acrescente `D-G` para criar um ciclo) e clique em **Ver de novo**.
+
+```visual
+tipo: bfs
+arestas: A-B, A-C, B-D, B-E, C-F, E-G
+inicio: A
+```
+
+```visual
+tipo: dfs
+arestas: A-B, A-C, B-D, B-E, C-F, E-G
+inicio: A
+```
+
 ## Conceito técnico
 
 ### BFS
