@@ -137,6 +137,12 @@ export async function executar(linguagem: Linguagem, dados: DadosExecucao): Prom
 }
 
 export async function analisar(linguagem: Linguagem, codigo: string, usa: string[] = []): Promise<Analise> {
+  if (linguagem === 'shell' || linguagem === 'riscv') {
+    // sintaxe conferida na própria página: os dois interpretadores são leves
+    const a = analisarSemPython(linguagem, codigo, usa);
+    const r = linguagem === 'shell' ? await import('./shell').then((m) => m.checarSintaxeShell(codigo)) : await import('./riscv').then((m) => m.checarMontagem(codigo));
+    return { ...a, sintaxe: r };
+  }
   if (linguagem !== 'python') return analisarSemPython(linguagem, codigo, usa);
   const ex = obter(linguagem);
   await ex.carregamento;

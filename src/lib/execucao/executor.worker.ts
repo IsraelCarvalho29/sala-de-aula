@@ -6,6 +6,8 @@
  * sob demanda, na primeira execução.
  */
 import corretorPython from './corretor.py?raw';
+import { executarShell } from './shell';
+import { executarRiscv } from './riscv';
 import type { Linguagem } from './linguagens';
 import type { ErroCodigo, ResultadoExecucao } from './index';
 
@@ -257,6 +259,8 @@ function carregar(linguagem: Linguagem, base: string) {
       case 'c':
       case 'cpp': return criarC();
       case 'sql': return criarSQL(base);
+      case 'shell': return Promise.resolve({ executar: (d: Dados) => executarShell(d) });
+      case 'riscv': return Promise.resolve({ executar: (d: Dados) => executarRiscv(d) });
       default: return Promise.reject(new Error(`Linguagem sem executor: ${linguagem}`));
     }
   })();

@@ -10,6 +10,19 @@ A sala de aula é construída por uma pequena equipe, cada papel com uma frente 
 | **Designer de visualizações** | Identidade visual (cores, tipografia, tokens, tema claro e escuro, mobile) e componentes de explicação visual passo a passo | `docs/design/`, estilos e componentes visuais em `src/` |
 | **Especialista em avaliação** | Tipos de pergunta, feedback, correção automática, repetição espaçada e banco de questões | `docs/avaliacao/`, perguntas das aulas |
 
+## Frentes em andamento (a partir de 2026-11-10)
+
+Cada frente tem a própria thread no projeto e abre o próprio PR. Ninguém edita o `MEMORY.md` na sua frente: a coordenação técnica consolida no fim.
+
+| Frente | Papel | O que entrega |
+|---|---|---|
+| Revisão A | Curador pedagógico | Revisão técnica e didática das trilhas 0 a 3 e de Matemática discreta, com o validador passando |
+| Revisão B | Curador pedagógico | O mesmo para as 89 aulas novas (trilhas 4 a 18) |
+| Avaliação | Especialista em avaliação | Modo de treino com repetição espaçada, flashcards e bloqueio por pré-requisitos (≥ 80%) |
+| Visual e celular | Designer de visualizações | Componente de explicação passo a passo nas aulas-chave e PWA offline |
+| Projetos de trilha | Curador pedagógico | Páginas guiadas para os projetos do currículo, começando pelo jogo da forca |
+| Coordenação técnica | Arquiteto e dev líder | Executores de shell e RISC-V, checagem de tipos, MEMORY.md e TEAM.md |
+
 ## Como o trabalho se encaixa
 
 ```mermaid

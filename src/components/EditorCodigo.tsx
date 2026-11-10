@@ -9,6 +9,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { cpp } from '@codemirror/lang-cpp';
 import { sql, SQLite } from '@codemirror/lang-sql';
 import { html } from '@codemirror/lang-html';
+import { linguagemRiscv, linguagemShell } from '../lib/execucao/destaque';
 import type { Extension } from '@codemirror/state';
 import { linter, lintGutter, setDiagnostics, type Diagnostic } from '@codemirror/lint';
 import { tags as t } from '@lezer/highlight';
@@ -42,6 +43,8 @@ const destaque = HighlightStyle.define([
   { tag: [t.function(t.variableName), t.function(t.propertyName)], color: 'var(--cod-funcao)' },
   { tag: [t.standard(t.variableName), t.className], color: 'var(--cod-embutido)' },
   { tag: [t.operator, t.punctuation, t.bracket], color: 'var(--text-muted)' },
+  { tag: [t.labelName, t.meta], color: 'var(--cod-funcao)' },
+  { tag: t.attributeName, color: 'var(--cod-numero)' },
 ]);
 
 const tema = EditorView.theme({
@@ -82,6 +85,8 @@ const SUPORTE: Record<Linguagem, () => Extension> = {
   cpp: () => cpp(),
   sql: () => sql({ dialect: SQLite, upperCaseKeywords: true }),
   html: () => html(),
+  shell: () => linguagemShell,
+  riscv: () => linguagemRiscv,
 };
 
 /** Enquanto digita: confere sintaxe e indentação (só depois que o runtime da linguagem carregou). */
