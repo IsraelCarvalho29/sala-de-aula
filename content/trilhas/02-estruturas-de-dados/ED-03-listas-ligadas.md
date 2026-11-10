@@ -68,6 +68,14 @@ Remover o 20 (depois de achar o nó anterior, o 10): basta "pular" o 20.
              └────┴───┘
 ```
 
+Passo a passo, com os ponteiros `atual` e `anterior` andando pela lista. Repare quantos passos cada operação precisa: inserir no início é sempre 1 movimento; inserir no fim, buscar e remover precisam andar desde a cabeça.
+
+```visual
+tipo: lista-ligada
+valores: 10, 20, 30
+operacoes: inserir_inicio 5, inserir_fim 40, buscar 30, remover 20
+```
+
 Variações:
 
 ```mermaid

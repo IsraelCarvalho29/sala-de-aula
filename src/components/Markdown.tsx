@@ -7,12 +7,14 @@ import Diagrama from './Diagrama';
 import { normalizarLinguagem, type Linguagem } from '../lib/execucao/linguagens';
 
 const IdeCodigo = lazy(() => import('./IdeCodigo'));
+const BlocoVisual = lazy(() => import('./visual/BlocoVisual'));
 
 /**
  * Renderiza uma aula. Blocos de código especiais:
  *   ```quiz      -> pergunta (YAML, formato em docs/curriculo/modelo-de-aula.md)
  *   ```pergunta  -> pergunta aberta com resposta revelável (YAML)
  *   ```mermaid   -> diagrama (fluxograma, sequência, estados...)
+ *   ```visual    -> explicação passo a passo de um algoritmo (YAML, ver components/visual/BlocoVisual.tsx)
  * Blocos de linguagens executáveis (python, javascript, typescript, c, cpp, sql, html)
  * ganham o botão "Experimentar", que abre o exemplo na IDE da aula.
  */
@@ -25,6 +27,13 @@ function Codigo({ className, children }: { className?: string; children?: React.
   if (lang?.startsWith('quiz-')) return <Quiz yaml={conteudo} idPadrao={`${idAula}#${lang.slice(5)}`} />;
   if (lang === 'pergunta') return <Flashcard yaml={conteudo} />;
   if (lang === 'mermaid') return <Diagrama codigo={conteudo} />;
+  if (lang === 'visual') {
+    return (
+      <Suspense fallback={<div className="vs vs-carregando">Carregando a visualização…</div>}>
+        <BlocoVisual yaml={conteudo} />
+      </Suspense>
+    );
+  }
   if (!className) return <code>{children}</code>;
   const executavel = normalizarLinguagem(lang);
   if (executavel) return <BlocoExecutavel linguagem={executavel} lang={lang!} codigo={conteudo} />;

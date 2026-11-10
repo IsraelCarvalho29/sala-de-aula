@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { aulasDaTrilha, idAula, trilhas } from '../lib/conteudo';
 import { exportarProgresso, importarProgresso, useProgresso, zerarProgresso } from '../lib/progresso';
 import BarraProgresso from '../components/BarraProgresso';
+import { EstudarOffline } from '../components/AvisoPwa';
 
 export default function Inicio() {
   const progresso = useProgresso();
@@ -31,6 +32,8 @@ export default function Inicio() {
           );
         })}
       </div>
+
+      <EstudarOffline />
 
       <details className="ferramentas">
         <summary>Backup do progresso</summary>

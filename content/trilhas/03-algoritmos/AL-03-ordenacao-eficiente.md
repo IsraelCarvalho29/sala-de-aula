@@ -75,6 +75,20 @@ Particionamento do quick sort (pivô = último, 4):
  └─ < 4 ─┘ ↑  └── > 4 ──┘      o 4 está na posição final; repete nos dois lados
 ```
 
+Os dois em ação. No merge sort, a linha **resultado** mostra a intercalação sendo montada; no quick sort, o pivô aparece em rosa e `i` marca o fim da região dos menores.
+
+```visual
+tipo: ordenacao
+algoritmo: merge
+valores: 5, 2, 4, 7, 1, 3
+```
+
+```visual
+tipo: ordenacao
+algoritmo: quick
+valores: 7, 2, 1, 6, 8, 5, 3, 4
+```
+
 ## Conceito técnico
 
 ### Merge sort

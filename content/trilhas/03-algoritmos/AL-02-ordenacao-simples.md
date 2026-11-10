@@ -68,6 +68,26 @@ flowchart LR
   end
 ```
 
+Agora os três em ação, passo a passo. Mude os valores no campo de cima (por exemplo, um array **já ordenado** ou **ao contrário**) e compare quantas comparações cada um faz.
+
+```visual
+tipo: ordenacao
+algoritmo: bolha
+valores: 5, 2, 4, 1, 3
+```
+
+```visual
+tipo: ordenacao
+algoritmo: selecao
+valores: 5, 2, 4, 1, 3
+```
+
+```visual
+tipo: ordenacao
+algoritmo: insercao
+valores: 5, 2, 4, 1, 3
+```
+
 ## Conceito técnico
 
 ### Bubble sort

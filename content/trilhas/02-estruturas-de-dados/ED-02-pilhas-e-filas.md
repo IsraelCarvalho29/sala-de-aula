@@ -50,7 +50,19 @@ O botão "desfazer" do editor, o "voltar" do navegador e a forma como o computad
  dequeue → A: frente → [B][C] ← fim
 ```
 
-> **Para o app**: animação com botões push/pop e enqueue/dequeue, onde o aluno digita valores e vê a estrutura mudar.
+Agora veja acontecer, um passo de cada vez. Use ▶| (ou a seta → do teclado; no celular, deslize o desenho) e, quando aparecer **Antes de avançar**, tente prever o que sai. Você pode trocar as operações no campo de cima e clicar em **Ver de novo**.
+
+```visual
+tipo: pilha
+operacoes: push 1, push 2, push 3, pop, peek, push 4, pop, pop
+```
+
+A mesma ideia numa fila. Repare que a sequência de entrada é parecida, mas quem sai primeiro é o **mais antigo**:
+
+```visual
+tipo: fila
+operacoes: enqueue A, enqueue B, enqueue C, dequeue, frente, enqueue D, dequeue
+```
 
 ## Conceito técnico
 
