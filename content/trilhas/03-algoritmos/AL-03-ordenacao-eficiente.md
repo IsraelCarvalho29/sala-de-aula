@@ -493,6 +493,28 @@ explicacao: "Com um max-heap, o maior está na raiz; trocá-lo com o último lug
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: AL-03-f1
+  frente: "Complexidade e memória do **merge sort**?"
+  verso: "**O(n log n)** sempre, estável, **O(n)** de memória extra (para intercalar)."
+- id: AL-03-f2
+  frente: "Qual o pior caso do **quick sort** e como evitar?"
+  verso: "**O(n²)**, quando o pivô é sempre o menor ou o maior (ex.: lista já ordenada com pivô na ponta). Pivô **aleatório** ou do meio evita."
+- id: AL-03-f3
+  frente: "Vantagens do **heap sort**?"
+  verso: "**O(n log n)** sempre e **O(1)** de memória extra. Mas não é estável."
+- id: AL-03-f4
+  frente: "Qual o limite inferior de uma ordenação por comparação?"
+  verso: "**Ω(n log n)**: nenhuma ordenação por comparação é mais rápida no pior caso."
+- id: AL-03-f5
+  frente: "Qual o passo-chave do merge sort? E do quick sort?"
+  verso: "Merge sort: **intercalar** duas metades ordenadas. Quick sort: **particionar** em volta do pivô."
+```
+
 ## Resumo
 
 - **Merge sort**: divide ao meio, ordena as metades, **intercala**. O(n log n) sempre, estável, O(n) de memória.

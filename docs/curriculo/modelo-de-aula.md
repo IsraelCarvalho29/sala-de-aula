@@ -50,3 +50,13 @@ dificuldade: 1              # 1 a 3
 
 Para `resposta_curta`, `resposta` traz uma resposta-modelo e `palavras_chave` lista os termos que uma boa resposta deve conter.
 Para `codigo`, inclua `linguagem`, `testes` (entrada → saída esperada, com pelo menos um teste oculto), `usa` (o que o código precisa usar), `dica` e `solucao`. O formato completo está no [README](../../README.md#desafios-de-código-corrigidos-automaticamente). Blocos de código de linguagens executáveis no texto da aula ganham automaticamente o botão "Experimentar".
+
+## Flashcards
+
+No fim de **Pratique**, um subtítulo `### Flashcards` com um bloco ```flashcards: uma lista YAML de cartões com `id` estável (`<CÓDIGO>-f<n>`), `frente` e `verso` (Markdown curto). O aluno vira o cartão, se autoavalia (Errei / Difícil / Bom / Fácil) e o cartão entra na revisão espaçada do Treino. Use 4 a 6 cartões por aula, com as definições e fatos que valem decorar (os bullets do Resumo são um bom ponto de partida).
+
+```flashcards
+- id: ED-02-f1
+  frente: "**LIFO** ou **FIFO**: qual é pilha e qual é fila?"
+  verso: "Pilha = **LIFO**. Fila = **FIFO**."
+```

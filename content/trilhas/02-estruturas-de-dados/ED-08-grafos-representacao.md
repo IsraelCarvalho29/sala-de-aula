@@ -399,6 +399,28 @@ explicacao: "Em C, um vetor local não começa zerado: sem o laço de inicializa
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-08-f1
+  frente: "Memória de lista de adjacência e de matriz de adjacência?"
+  verso: "Lista: **O(n + m)**. Matriz: **O(n²)**."
+- id: ED-08-f2
+  frente: "Quando preferir **matriz** de adjacência?"
+  verso: "Grafos **pequenos e densos**, ou quando é preciso responder \"u e v estão ligados?\" em **O(1)**."
+- id: ED-08-f3
+  frente: "Qual a representação padrão para BFS, DFS e Dijkstra?"
+  verso: "**Lista de adjacência**: vizinhos de v em O(grau(v))."
+- id: ED-08-f4
+  frente: "Como fica uma aresta de grafo **não dirigido** na lista de adjacência?"
+  verso: "Nos **dois sentidos**: v na lista de u e u na lista de v. Na matriz, a matriz fica **simétrica**."
+- id: ED-08-f5
+  frente: "O que é um grafo **implícito**?"
+  verso: "Um grafo que não é guardado: uma função `vizinhos(v)` calcula os vizinhos na hora (ex.: casas de um tabuleiro)."
+```
+
 ## Resumo
 
 - **Lista de arestas**: simples, O(m); ruim para achar vizinhos.

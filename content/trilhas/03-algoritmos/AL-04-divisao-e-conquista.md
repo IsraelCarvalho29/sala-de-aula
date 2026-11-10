@@ -403,6 +403,28 @@ explicacao: "T(n) = 2T(n/2) + 1 = Θ(n): não é mais rápido que um laço. Mas 
 dificuldade: 1
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: AL-04-f1
+  frente: "Quais os três passos de **divisão e conquista**?"
+  verso: "**Dividir** o problema, **conquistar** os pedaços recursivamente e **combinar** as respostas."
+- id: AL-04-f2
+  frente: "Como usar o **Teorema Mestre** em T(n) = a·T(n/b) + Θ(nᵈ)?"
+  verso: "Compare a com bᵈ: menor → **Θ(nᵈ)**; igual → **Θ(nᵈ log n)**; maior → **Θ(n^(log_b a))**."
+- id: AL-04-f3
+  frente: "Quantas multiplicações faz a **potência rápida**?"
+  verso: "**Θ(log n)**: calcula x^(n/2) uma vez e eleva ao quadrado."
+- id: AL-04-f4
+  frente: "O que o **quickselect** resolve e com que custo?"
+  verso: "Acha o **k-ésimo menor** em **Θ(n)** na média, recursando só no lado que contém a resposta."
+- id: AL-04-f5
+  frente: "Quando divisão e conquista não é a ferramenta certa?"
+  verso: "Quando os subproblemas se **repetem**: aí é caso de **programação dinâmica**."
+```
+
 ## Resumo
 
 - **Divisão e conquista**: dividir, conquistar recursivamente, combinar.

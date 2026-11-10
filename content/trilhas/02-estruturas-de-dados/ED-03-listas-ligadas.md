@@ -576,6 +576,28 @@ explicacao: "O rápido anda o dobro, então quando ele chega ao fim o lento ando
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-03-f1
+  frente: "Do que é feita uma lista ligada?"
+  verso: "De **nós**, cada um com um **valor** e uma referência ao **próximo**. A lista em si é só a referência à **cabeça**."
+- id: ED-03-f2
+  frente: "Custo de inserir no início e de acessar a posição i numa lista ligada?"
+  verso: "Inserir no início: **O(1)**. Acessar por posição: **O(n)** (é preciso andar nó por nó)."
+- id: ED-03-f3
+  frente: "Como percorrer uma lista ligada?"
+  verso: "`atual = cabeca`; `while atual:` processa e faz `atual = atual.prox`."
+- id: ED-03-f4
+  frente: "Para que serve uma lista **duplamente** ligada?"
+  verso: "Cada nó aponta também para o **anterior**: dá para andar para trás e remover um nó conhecido em **O(1)**."
+- id: ED-03-f5
+  frente: "O que a técnica de **dois ponteiros** (lento e rápido) resolve?"
+  verso: "Acha o **meio** da lista e **detecta ciclos** numa única passada: o rápido anda 2 nós, o lento 1."
+```
+
 ## Resumo
 
 - Lista ligada = **nós** com valor + referência ao **próximo**; a lista é só a **cabeça**.

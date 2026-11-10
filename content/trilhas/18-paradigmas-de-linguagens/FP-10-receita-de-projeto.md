@@ -359,6 +359,28 @@ explicacao: "Duas funções pequenas, cada uma com um propósito de uma frase e 
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-10-f1
+  frente: "Quais os passos da **receita de projeto**?"
+  verso: "**Assinatura → propósito → esboço → exemplos → modelo → código → testes**."
+- id: FP-10-f2
+  frente: "Por que escrever **exemplos antes do código**?"
+  verso: "Para entender o problema e já ter os testes, incluindo as **bordas**: zero, vazio, exatamente no limite."
+- id: FP-10-f3
+  frente: "Como o **tipo do dado** sugere o modelo da função?"
+  verso: "Faixas → `if/elif`; enumeração → um ramo por valor; lista → `for` com acumulador."
+- id: FP-10-f4
+  frente: "Como transformar exemplos em testes?"
+  verso: "Com `assert`: `assert dobro(3) == 6`."
+- id: FP-10-f5
+  frente: "Sinal de que uma função faz coisas demais?"
+  verso: "O propósito tem um **\"e\"**: divida em duas funções, uma tarefa cada."
+```
+
 ## Resumo
 
 - Receita: **assinatura → propósito → esboço → exemplos → modelo → código → testes**.

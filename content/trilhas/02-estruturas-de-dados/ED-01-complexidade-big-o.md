@@ -331,6 +331,28 @@ explicacao: "Dividir por 2 é tirar o último bit (deslocar à direita, MD-04). 
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-01-f1
+  frente: "O que a notação **Big-O** mede?"
+  verso: "Como o custo **cresce** com o tamanho da entrada, ignorando constantes e termos menores."
+- id: ED-01-f2
+  frente: "Como combinar custos: em **sequência** e **aninhados**?"
+  verso: "Em sequência, **soma** (O(n) + O(n) = O(n)); aninhados, **multiplica** (laço dentro de laço = O(n²))."
+- id: ED-01-f3
+  frente: "Que complexidade aparece quando o problema é **dividido pela metade** a cada passo?"
+  verso: "**O(log n)**."
+- id: ED-01-f4
+  frente: "Que operações O(n) costumam se esconder dentro de laços em Python?"
+  verso: "`x in lista`, `lista.insert(0, x)`, `lista.pop(0)`, `lista.index(x)` e fatias. Dentro de um laço viram O(n²)."
+- id: ED-01-f5
+  frente: "Qual o truque mais comum para sair de O(n²)?"
+  verso: "**Trocar memória por tempo**: usar `set` ou `dict`, com busca O(1) na média."
+```
+
 ## Resumo
 
 - Big-O mede **como o custo cresce** com a entrada, ignorando constantes e termos menores.

@@ -3,6 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import { acharAula, acharModulo, idAula, linkAula, NOME_NIVEL } from '../lib/conteudo';
 import { marcarConcluida, useProgresso } from '../lib/progresso';
 import Markdown from '../components/Markdown';
+import { dominioAula, DOMINIO_MINIMO, prerequisitosPendentes } from '../lib/dominio';
+import { perguntasDaAula } from '../lib/banco';
+import { definirModoLivre } from '../lib/progresso';
 
 export default function AulaPage() {
   const { trilha = '', aula = '' } = useParams();
@@ -17,6 +20,9 @@ export default function AulaPage() {
   const id = idAula(a);
   const concluida = !!progresso.concluidas[id];
   const m = a.meta;
+  const pendentes = prerequisitosPendentes(progresso, { prerequisitos: m.prerequisitos, aula: a });
+  const dominio = dominioAula(progresso, a);
+  const nPerguntas = perguntasDaAula(id).length;
 
   return (
     <article>
@@ -45,6 +51,27 @@ export default function AulaPage() {
         </p>
       )}
 
+      {pendentes.length > 0 ? (
+        <div className="bloqueio">
+          <p className="grande">🔒 Aula bloqueada</p>
+          <p>
+            Para estudar esta aula com base, primeiro domine os pré-requisitos: acerte pelo menos {DOMINIO_MINIMO}% das
+            perguntas do quiz de cada um. Respostas certas no <Link to="/treino">Treino</Link> também contam.
+          </p>
+          <ul>
+            {pendentes.map((p) => (
+              <li key={p.codigo}>
+                <Link to={linkAula(p.aula)}>{p.codigo} {p.titulo}</Link>
+                <div className="barra"><div className="barra-cheia" style={{ width: `${p.dominio}%` }} /><span>{p.dominio}% de {DOMINIO_MINIMO}%</span></div>
+              </li>
+            ))}
+          </ul>
+          <button className="link" onClick={() => definirModoLivre(true)}>
+            Já sei esse conteúdo: ligar o modo livre (desbloqueia todas as aulas)
+          </button>
+        </div>
+      ) : (
+        <>
       {!!m.objetivos?.length && (
         <div className="objetivos">
           <strong>Ao final você vai conseguir:</strong>
@@ -68,10 +95,26 @@ export default function AulaPage() {
         </div>
       )}
 
+      {nPerguntas > 0 && (
+        <div className="dominio-aula">
+          <strong>Domínio desta aula: {dominio}%</strong>
+          <div className="barra"><div className="barra-cheia" style={{ width: `${dominio}%` }} /></div>
+          <small>
+            {dominio >= DOMINIO_MINIMO
+              ? 'Pré-requisito cumprido: as aulas que dependem desta estão liberadas.'
+              : `Acerte ${DOMINIO_MINIMO}% das ${nPerguntas} perguntas para liberar as aulas que dependem desta.`}
+          </small>
+        </div>
+      )}
+        </>
+      )}
+
       <div className="rodape-aula">
-        <button className={concluida ? 'botao ok' : 'botao primario'} onClick={() => marcarConcluida(id, !concluida)}>
-          {concluida ? '✓ Aula concluída' : 'Marcar como concluída'}
-        </button>
+        {pendentes.length === 0 && (
+          <button className={concluida ? 'botao ok' : 'botao primario'} onClick={() => marcarConcluida(id, !concluida)}>
+            {concluida ? '✓ Aula concluída' : 'Marcar como concluída'}
+          </button>
+        )}
         <div className="navegacao">
           {anterior ? <Link to={linkAula(anterior)}>← {anterior.meta.codigo} {anterior.meta.titulo}</Link> : <span />}
           {proxima && <Link to={linkAula(proxima)}>{proxima.meta.codigo} {proxima.meta.titulo} →</Link>}

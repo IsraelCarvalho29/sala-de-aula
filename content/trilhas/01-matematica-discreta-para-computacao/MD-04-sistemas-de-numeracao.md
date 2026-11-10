@@ -408,6 +408,28 @@ explicacao: "Sem sinal, o bit da esquerda vale +128; com sinal, vale −128. A d
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-04-f1
+  frente: "Quantos valores cabem em n bits sem sinal?"
+  verso: "**2ⁿ** valores, de **0 a 2ⁿ − 1**. Em 8 bits: 0 a 255."
+- id: MD-04-f2
+  frente: "Por que hexadecimal combina com binário?"
+  verso: "Cada dígito hex representa exatamente **4 bits**; um byte são 2 dígitos hex (`00` a `FF`)."
+- id: MD-04-f3
+  frente: "Quanto vale `1011` em binário?"
+  verso: "8 + 0 + 2 + 1 = **11**. Cada posição vale o dobro da posição à direita: 1, 2, 4, 8..."
+- id: MD-04-f4
+  frente: "Como negar um número em **complemento de dois**?"
+  verso: "**Inverta todos os bits e some 1**. O bit da esquerda vale −2ⁿ⁻¹."
+- id: MD-04-f5
+  frente: "Quanto dá 127 + 1 num inteiro com sinal de 8 bits?"
+  verso: "**−128**: houve **overflow**, o valor deu a volta."
+```
+
 ## Resumo
 
 - Notação posicional: em base b, cada posição vale b vezes a posição à direita. Em binário: 1, 2, 4, 8, 16...

@@ -635,6 +635,28 @@ explicacao: "O laço de dentro depende da variável do laço de fora (range(1, i
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-03-f1
+  frente: "Num `if/elif/else`, quantos blocos rodam?"
+  verso: "Só **um**: o primeiro cuja condição é verdadeira (ou o `else`). Por isso a **ordem** das condições importa."
+- id: FP-03-f2
+  frente: "Quando usar `while` em vez de `for`?"
+  verso: "Quando **não se sabe** quantas voltas o laço vai dar. Garanta que a condição fique falsa em algum momento, senão o laço é infinito."
+- id: FP-03-f3
+  frente: "Que números `range(2, 10, 3)` gera?"
+  verso: "2, 5, 8. O `range(início, fim, passo)` **exclui o fim**."
+- id: FP-03-f4
+  frente: "Diferença entre `break` e `continue`?"
+  verso: "`break` **sai** do laço; `continue` **pula** o resto desta volta e vai para a próxima."
+- id: FP-03-f5
+  frente: "O que é um **teste de mesa**?"
+  verso: "Rastrear o programa à mão, numa tabela com o valor de cada variável a cada passo. Serve para entender e achar erros de lógica em laços."
+```
+
 ## Resumo
 
 - `if/elif/else`: só **um** bloco roda, o primeiro com condição verdadeira. A **ordem** das condições importa.

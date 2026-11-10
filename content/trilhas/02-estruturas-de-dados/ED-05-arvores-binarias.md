@@ -605,6 +605,28 @@ explicacao: "A fila garante que os nós saem na ordem em que foram descobertos, 
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-05-f1
+  frente: "Qual a propriedade de uma **árvore binária de busca** (BST)?"
+  verso: "Em **toda** subárvore: valores à **esquerda < nó < direita**."
+- id: ED-05-f2
+  frente: "Que percurso de uma BST visita os valores em ordem crescente?"
+  verso: "O percurso **em ordem** (esquerda, nó, direita)."
+- id: ED-05-f3
+  frente: "Custo de buscar numa BST?"
+  verso: "**O(h)**, a altura: O(log n) se balanceada, **O(n)** se degenerada (ex.: inserção de valores já ordenados)."
+- id: ED-05-f4
+  frente: "Qual o esqueleto de uma função recursiva sobre árvore?"
+  verso: "**Caso base** `if no is None` + **combinar** o resultado da esquerda e da direita."
+- id: ED-05-f5
+  frente: "Que estrutura o percurso **por nível** usa?"
+  verso: "Uma **fila** (é uma BFS na árvore)."
+```
+
 ## Resumo
 
 - Árvore binária: cada nó tem até dois filhos; vocabulário de **raiz, folha, altura, profundidade**.

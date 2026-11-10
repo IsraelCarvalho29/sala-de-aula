@@ -45,11 +45,14 @@ scripts/gerar-trilhas.mjs   gera os _trilha.md a partir de docs/curriculo/curric
 scripts/validar-aulas.mjs   confere as aulas (npm run validar, também roda no CI)
 src/
   lib/conteudo.ts           lê content/ em tempo de build e monta trilhas e módulos
-  lib/progresso.ts          progresso no localStorage
+  lib/progresso.ts          progresso no localStorage (aulas, quiz, revisão espaçada, modo livre)
+  lib/revisao.ts            repetição espaçada em degraus de 1, 3, 7, 14 e 30 dias
+  lib/banco.ts              banco do treino: perguntas e flashcards das aulas + banco-inicial.json
+  lib/dominio.ts            domínio por aula (80% no quiz) e bloqueio por pré-requisito
   lib/execucao/             executores de código no navegador (um Web Worker por linguagem)
     corretor.py             roda o Python do aluno, simula input(), traduz erros, confere indentação
   components/               Markdown, Quiz, IdeCodigo, EditorCodigo, Diagrama, Flashcard, BarraProgresso
-  pages/                    Início, Trilha, Aula
+  pages/                    Início, Trilha, Aula, Treino
 ```
 
 ## Como escrever uma aula

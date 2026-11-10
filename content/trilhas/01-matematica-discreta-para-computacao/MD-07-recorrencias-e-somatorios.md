@@ -393,6 +393,28 @@ explicacao: "C(n) = 2·fib(n + 1) − 1 cresce como 1,618ⁿ: para n = 30 já s�
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-07-f1
+  frente: "Quanto vale 1 + 2 + ... + n?"
+  verso: "**n(n + 1)/2**, que é Θ(n²). É o custo de um laço que roda i vezes para i de 1 a n."
+- id: MD-07-f2
+  frente: "Quanto vale 1 + 2 + 4 + ... + 2ⁿ?"
+  verso: "**2ⁿ⁺¹ − 1**. Cada potência de 2 é maior que a soma de todas as anteriores."
+- id: MD-07-f3
+  frente: "A que complexidade leva **T(n) = T(n/2) + c**?"
+  verso: "**Θ(log n)** (ex.: busca binária)."
+- id: MD-07-f4
+  frente: "A que complexidade leva **T(n) = 2T(n/2) + n**?"
+  verso: "**Θ(n log n)** (ex.: merge sort): log n níveis, cada um com custo n."
+- id: MD-07-f5
+  frente: "Quais os métodos para resolver uma recorrência?"
+  verso: "**Desenrolar** (substituir até ver o padrão), **árvore de recursão** (somar por nível) e **chutar e provar** por indução."
+```
+
 ## Resumo
 
 - **Somatório** = custo de um laço. Decore: Σi = n(n+1)/2, Σ2ⁱ = 2ⁿ⁺¹ − 1, geométrica decrescente < 2, harmônica ≈ ln n.

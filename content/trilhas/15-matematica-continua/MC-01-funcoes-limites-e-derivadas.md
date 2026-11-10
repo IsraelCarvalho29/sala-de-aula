@@ -419,6 +419,28 @@ explicacao: "Com f(x) = (x − 3)², a derivada é 2(x − 3): o método caminha
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MC-01-f1
+  frente: "O que é o **limite** de f(x) quando x → a?"
+  verso: "O valor de que f(x) se **aproxima** quando x chega perto de a. Não depende de f(a)."
+- id: MC-01-f2
+  frente: "O que a **derivada** representa?"
+  verso: "A **taxa de variação instantânea**: a inclinação da reta tangente, lim (f(x + h) − f(x)) / h com h → 0."
+- id: MC-01-f3
+  frente: "Qual a derivada de xⁿ?"
+  verso: "**n·xⁿ⁻¹** (regra da potência)."
+- id: MC-01-f4
+  frente: "Para que serve a **regra da cadeia**?"
+  verso: "Derivar **funções compostas**: (f(g(x)))' = f'(g(x))·g'(x). É a base do backpropagation em redes neurais."
+- id: MC-01-f5
+  frente: "O que é a **descida do gradiente**?"
+  verso: "Andar contra a derivada (o gradiente) para achar **mínimos** de uma função. É como se treinam modelos de machine learning."
+```
+
 ## Resumo
 
 - Funções-modelo: **linear**, **quadrática**, **exponencial**, **logarítmica**; as mesmas do Big-O.

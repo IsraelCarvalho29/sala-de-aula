@@ -524,6 +524,28 @@ explicacao: "int() converte o texto digitado em número para permitir a subtraç
 dificuldade: 1
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-01-f1
+  frente: "Qual a diferença entre **compilador** e **interpretador**?"
+  verso: "O compilador traduz o programa inteiro para código de máquina antes de rodar; o interpretador traduz e executa aos poucos, linha a linha. Python é interpretado (via bytecode)."
+- id: FP-01-f2
+  frente: "Quais são os três tipos de erro de um programa?"
+  verso: "**Sintaxe** (o código não é Python válido), **execução** (quebra enquanto roda, ex.: divisão por zero) e **lógica** (roda, mas dá a resposta errada)."
+- id: FP-01-f3
+  frente: "Por onde começar a ler uma mensagem de erro do Python?"
+  verso: "Pela **última linha** (tipo e mensagem do erro); depois procure o **número da linha** indicado no traceback."
+- id: FP-01-f4
+  frente: "O que `input()` sempre devolve?"
+  verso: "Uma **str**. Para fazer contas, converta com `int()` ou `float()`: `idade = int(input())`."
+- id: FP-01-f5
+  frente: "Como o Python sabe onde começa e termina um bloco?"
+  verso: "Pela **indentação**: 4 espaços depois de uma linha que termina em `:` (if, for, def...). Voltar o recuo fecha o bloco."
+```
+
 ## Resumo
 
 - A CPU só entende **código de máquina**; linguagens de alto nível precisam de tradução.

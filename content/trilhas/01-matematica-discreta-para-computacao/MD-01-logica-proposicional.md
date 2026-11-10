@@ -394,6 +394,28 @@ explicacao: "Funções também são valores e podem ser passadas como argumento 
 dificuldade: 3
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-01-f1
+  frente: "Quantas linhas tem a tabela-verdade com n variáveis?"
+  verso: "**2ⁿ** linhas (cada variável pode ser V ou F)."
+- id: MD-01-f2
+  frente: "Quando **p → q** é falsa?"
+  verso: "**Só** quando p é V e q é F. Em todos os outros casos é verdadeira."
+- id: MD-01-f3
+  frente: "A que equivale **p → q**?"
+  verso: "A **¬p ∨ q** e à **contrapositiva ¬q → ¬p**. A recíproca (q → p) **não** é equivalente."
+- id: MD-01-f4
+  frente: "Quais são as **leis de De Morgan**?"
+  verso: "¬(p ∧ q) ≡ ¬p ∨ ¬q   e   ¬(p ∨ q) ≡ ¬p ∧ ¬q. Úteis para simplificar `if`s com `not`."
+- id: MD-01-f5
+  frente: "O que é **curto-circuito** em `and` e `or`?"
+  verso: "O Python para de avaliar assim que sabe o resultado: `False and x` não avalia x; `True or x` também não."
+```
+
 ## Resumo
 
 - Proposição: frase que é **V ou F**. Conectivos: ¬, ∧, ∨, ⊕, →, ↔.

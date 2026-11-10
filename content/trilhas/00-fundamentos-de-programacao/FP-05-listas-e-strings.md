@@ -539,6 +539,28 @@ explicacao: "for...of no JavaScript é o for...in do Python: percorre os element
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-05-f1
+  frente: "Quais índices válidos tem uma lista de tamanho n? E `lista[-1]`?"
+  verso: "De **0 a n − 1**. Índices negativos contam do fim: `lista[-1]` é o último elemento."
+- id: FP-05-f2
+  frente: "O que `s[::-1]` faz? E `s[1:4]`?"
+  verso: "`[::-1]` **inverte** a sequência. `[1:4]` pega os índices 1, 2 e 3: a fatia **exclui o fim**."
+- id: FP-05-f3
+  frente: "Custo de `append`, `insert(0, x)` e `x in lista`?"
+  verso: "`append` é **O(1)**; `insert(0, x)` e `x in lista` são **O(n)** (deslocam ou percorrem tudo)."
+- id: FP-05-f4
+  frente: "Por que `s.upper()` não muda a string `s`?"
+  verso: "Strings são **imutáveis**: os métodos devolvem uma **string nova**. Faça `s = s.upper()`."
+- id: FP-05-f5
+  frente: "Depois de `b = a` (listas), `b.append(1)` muda `a`?"
+  verso: "**Sim**: `b = a` não copia, é outro nome para a **mesma** lista. Para copiar, use `a.copy()` ou `a[:]`."
+```
+
 ## Resumo
 
 - Listas guardam sequências **mutáveis**; índices vão de **0 a n − 1**, e negativos contam do fim.

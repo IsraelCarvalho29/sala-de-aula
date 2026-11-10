@@ -551,6 +551,28 @@ explicacao: "1fr é uma fração do espaço livre: três 1fr dão três colunas 
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: WB-01-f1
+  frente: "Cite elementos de **HTML semântico**."
+  verso: "`header`, `nav`, `main`, `article`, `section`, `footer`, títulos em ordem (`h1`, `h2`...) e `button` para ações."
+- id: WB-01-f2
+  frente: "Acessibilidade mínima de uma página?"
+  verso: "`alt` nas imagens, `label` ligado a cada campo e a página **usável pelo teclado**."
+- id: WB-01-f3
+  frente: "Ordem de **especificidade** no CSS?"
+  verso: "**id > classe > tag**. Prefira classes, para não brigar com a cascata."
+- id: WB-01-f4
+  frente: "Flexbox ou Grid?"
+  verso: "**Flexbox** alinha em **uma** dimensão (`justify-content`, `align-items`); **Grid** monta **linhas e colunas** (`grid-template-columns`, `fr`, `gap`)."
+- id: WB-01-f5
+  frente: "O que é **mobile first**?"
+  verso: "Escrever o CSS para a tela pequena primeiro e ampliar com `@media (min-width: ...)`, com a meta viewport na página."
+```
+
 ## Resumo
 
 - HTML é **estrutura e significado**: use `header`, `nav`, `main`, `article`, `section`, `footer`, títulos em ordem e `button` para ações.

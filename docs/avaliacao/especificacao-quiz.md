@@ -95,6 +95,8 @@ Regras de escrita para quem cria questões:
 
 ## 5. Repetição espaçada
 
+> **No app (desde o modo de treino):** a agenda usa **degraus fixos de 1, 3, 7, 14 e 30 dias** (sistema de Leitner), implementados em `src/lib/revisao.ts`. Acertar uma questão vencida (ou nova) sobe um degrau; errar volta ao começo e a questão reaparece amanhã (e uma vez no fim da sessão atual). Na autoavaliação, "Difícil" repete o degrau atual e "Fácil" sobe dois. Acertar antes do dia marcado (refazendo o quiz da aula) só registra, sem subir. Quem acerta no degrau de 30 dias fica **dominada** e continua voltando a cada 30 dias. O estado fica no progresso do navegador (`revisao`, por id da pergunta ou do flashcard). O SM-2 abaixo continua como referência em `revisao.js`, caso se queira intervalos adaptativos depois.
+
 Algoritmo: variação do **SM-2** (o mesmo princípio do Anki), escolhida por ser simples, previsível e fácil de rodar só no navegador. Pode ser trocado pelo FSRS depois sem mudar o formato das questões, porque o estado de revisão fica separado.
 
 ### Estado por questão (guardado no `localStorage`/IndexedDB do aluno)
@@ -141,7 +143,11 @@ A implementação está em `revisao.js`.
 
 Interleaving: na revisão do dia, evitar duas questões seguidas do mesmo tópico.
 
+No app (`/treino`) estão implementados: **Revisão do dia** (vencidas + até 8 novas das aulas já estudadas, limite 20, intercaladas por aula), **Pontos fracos** (degrau 0 ou erro nas últimas 3 tentativas), **Só flashcards** e **Praticar uma aula**. Desafios de código ficam fora por padrão (opção na tela). As questões do `banco-inicial.json` entram quando o aluno estudou alguma aula da trilha correspondente; os tipos `ordenar`, `multipla_resposta` e `codigo` do banco ainda não têm tela.
+
 ## 7. Progresso e domínio
+
+**Bloqueio por pré-requisito (implementado):** uma aula fica bloqueada até que cada pré-requisito com aula escrita tenha **domínio ≥ 80%**, isto é, 80% das perguntas do quiz daquela aula com a última resposta certa (na aula ou no treino). Aula já concluída nunca é bloqueada, pré-requisito sem aula escrita não bloqueia, e o **modo livre** (em "Backup do progresso e configurações", na página inicial) desliga o bloqueio. Código em `src/lib/dominio.ts`.
 
 - **Domínio de um tópico** = média ponderada (pela dificuldade) da última nota de cada questão do tópico, em 0 a 100%. Questões nunca vistas contam como 0.
 - Níveis visuais: Iniciante (< 40%), Em progresso (40 a 69%), Proficiente (70 a 89%), Domínio (>= 90% e todas as questões com ao menos 2 repetições).

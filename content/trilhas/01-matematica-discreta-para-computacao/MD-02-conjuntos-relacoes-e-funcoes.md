@@ -371,6 +371,28 @@ explicacao: "\"Ter a mesma chave\" é sempre uma relação de equivalência (ref
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: MD-02-f1
+  frente: "Quanto vale **|A ∪ B|**?"
+  verso: "**|A| + |B| − |A ∩ B|** (princípio da inclusão-exclusão: tira o que foi contado duas vezes)."
+- id: MD-02-f2
+  frente: "Quantos elementos têm **A × B** e **P(A)**?"
+  verso: "|A × B| = **|A|·|B|** e |P(A)| = **2^|A|**. Crescem rápido: por isso JOIN sem filtro e \"testar todos os subconjuntos\" explodem."
+- id: MD-02-f3
+  frente: "Que propriedades fazem uma relação de **equivalência**?"
+  verso: "**Reflexiva + simétrica + transitiva**. Ela divide o conjunto em grupos (classes de equivalência)."
+- id: MD-02-f4
+  frente: "Diferença entre função **injetora**, **sobrejetora** e **bijetora**?"
+  verso: "Injetora: entradas diferentes → saídas diferentes. Sobrejetora: atinge todo o contradomínio. Bijetora: as duas, e por isso **tem inversa**."
+- id: MD-02-f5
+  frente: "O que diz o **princípio da casa dos pombos**?"
+  verso: "Se há mais entradas que saídas, pelo menos duas entradas caem na **mesma saída**: colisão garantida (ex.: em toda tabela hash)."
+```
+
 ## Resumo
 
 - **Conjunto**: sem ordem, sem repetição. União, interseção, diferença; `|A ∪ B| = |A| + |B| − |A ∩ B|`.

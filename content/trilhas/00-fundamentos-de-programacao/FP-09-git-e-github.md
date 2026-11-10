@@ -297,6 +297,28 @@ explicacao: "Uma linha alterada aparece como uma removida e uma adicionada, exat
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-09-f1
+  frente: "O que é um **commit** no Git?"
+  verso: "Uma **foto** do projeto num momento, com autor, mensagem, um **hash** que a identifica e um ponteiro para o commit **pai**."
+- id: FP-09-f2
+  frente: "Quais são as três áreas locais do Git?"
+  verso: "**Diretório de trabalho** → `git add` → **staging** → `git commit` → **repositório**. O remoto sincroniza com push/pull."
+- id: FP-09-f3
+  frente: "O que é um **branch**?"
+  verso: "Um **ponteiro barato** para um commit, que avança a cada novo commit. Permite trabalhar em paralelo sem mexer no principal."
+- id: FP-09-f4
+  frente: "Como resolver um **conflito** de merge?"
+  verso: "Edite o arquivo escolhendo o conteúdo certo, **tire os marcadores** `<<<<<<<`, `=======`, `>>>>>>>`, depois `git add` e `git commit`."
+- id: FP-09-f5
+  frente: "Qual o fluxo de um **pull request**?"
+  verso: "Criar branch → commits → **push** → abrir **PR** → CI e revisão → **merge**. E nunca commite senhas ou chaves."
+```
+
 ## Resumo
 
 - Git guarda **commits** (fotos do projeto, com hash e pai). `status`, `add`, `commit`, `log`, `diff` são o dia a dia.

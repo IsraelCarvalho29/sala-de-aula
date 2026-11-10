@@ -506,6 +506,28 @@ explicacao: "Os nós de índice ≥ n/2 são folhas e já são heaps sozinhos. D
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-07-f1
+  frente: "Custo das operações de um **heap** binário?"
+  verso: "Inserir e remover o topo: **O(log n)**. Ver o topo: **O(1)**."
+- id: ED-07-f2
+  frente: "Num heap guardado em array, onde ficam filhos e pai do índice i?"
+  verso: "Filhos em **2i + 1** e **2i + 2**; pai em **(i − 1) // 2**."
+- id: ED-07-f3
+  frente: "Como **inserir** e como **remover** num heap?"
+  verso: "Inserir: põe no fim e **sobe**. Remover: o último vai para a raiz e **desce**, trocando com o menor filho."
+- id: ED-07-f4
+  frente: "Quanto custa construir um heap com **heapify**?"
+  verso: "**O(n)**, menos que inserir um por um (O(n log n))."
+- id: ED-07-f5
+  frente: "Como fazer um **max-heap** com `heapq`?"
+  verso: "`heapq` é min-heap: guarde os valores **negativos** (`-x`) e inverta ao tirar."
+```
+
 ## Resumo
 
 - **Fila de prioridade**: inserir e tirar o mínimo (ou máximo). O heap faz as duas em **O(log n)** e mostra o topo em O(1).

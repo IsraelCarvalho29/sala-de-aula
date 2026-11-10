@@ -619,6 +619,28 @@ explicacao: "this em TS/JS é o self do Python, mas não aparece na lista de par
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: FP-06-f1
+  frente: "Diferença entre **classe** e **objeto**?"
+  verso: "A classe é a **planta** (o molde); o objeto é uma **instância** criada a partir dela, com seus próprios dados."
+- id: FP-06-f2
+  frente: "Para que servem `__init__` e `self`?"
+  verso: "`__init__` **inicializa** o objeto recém-criado; `self` é o **próprio objeto**, por onde se acessa e guarda seus atributos."
+- id: FP-06-f3
+  frente: "O que é **encapsulamento**?"
+  verso: "Mudar o estado do objeto só por **métodos que validam**, em vez de mexer direto nos atributos. `_atributo` sinaliza uso interno."
+- id: FP-06-f4
+  frente: "Herança ou composição: quando usar cada uma?"
+  verso: "Herança para relação **\"é um\"** (Cachorro é um Animal), com `super()`; composição para **\"tem um\"** (Carro tem um Motor). Na dúvida, composição."
+- id: FP-06-f5
+  frente: "O que é **polimorfismo**?"
+  verso: "Classes diferentes com o **mesmo método**; o código cliente chama `obj.area()` sem precisar de `if` por tipo."
+```
+
 ## Resumo
 
 - **Classe** é a planta; **objeto** é a instância. `__init__` inicializa e **`self`** é o próprio objeto.

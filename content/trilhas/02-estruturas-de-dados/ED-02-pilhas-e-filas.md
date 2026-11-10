@@ -382,6 +382,28 @@ explicacao: "A fila garante justiça: ninguém espera mais que uma volta inteira
 dificuldade: 2
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: ED-02-f1
+  frente: "**LIFO** ou **FIFO**: qual é pilha e qual é fila?"
+  verso: "Pilha = **LIFO** (último a entrar, primeiro a sair). Fila = **FIFO** (primeiro a entrar, primeiro a sair)."
+- id: ED-02-f2
+  frente: "Como implementar pilha e fila em Python?"
+  verso: "Pilha com `list` (`append`/`pop`). Fila com `collections.deque` (`append`/`popleft`), nunca `list.pop(0)`, que é O(n)."
+- id: ED-02-f3
+  frente: "Qual o custo das operações principais de pilha e fila?"
+  verso: "**O(1)** quando bem implementadas."
+- id: ED-02-f4
+  frente: "Cite usos de **pilha**."
+  verso: "Desfazer (Ctrl+Z), botão voltar do navegador, conferir parênteses, avaliar expressões e a **pilha de chamadas**."
+- id: ED-02-f5
+  frente: "Cite usos de **fila**."
+  verso: "**BFS** em grafos, buffers, fila de impressão, filas de mensagens e tarefas."
+```
+
 ## Resumo
 
 - **Pilha = LIFO** (push/pop no topo); **fila = FIFO** (entra no fim, sai da frente).

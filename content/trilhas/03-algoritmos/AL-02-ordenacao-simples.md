@@ -401,6 +401,28 @@ explicacao: "O algoritmo é idêntico ao do Python. Cuidado extra no JavaScript:
 dificuldade: 1
 ```
 
+### Flashcards
+
+Vire cada cartão, tente lembrar antes e diga como foi. Eles voltam no **Treino** em 1, 3, 7, 14 e 30 dias.
+
+```flashcards
+- id: AL-02-f1
+  frente: "Como funciona o **insertion sort**?"
+  verso: "Encaixa cada item, um por vez, na posição certa da **parte já ordenada** à esquerda."
+- id: AL-02-f2
+  frente: "Como funciona o **selection sort**?"
+  verso: "A cada passo, acha o **menor** do resto e o coloca na frente."
+- id: AL-02-f3
+  frente: "Qual ordenação simples é O(n) numa lista já ordenada?"
+  verso: "**Insertion sort** (e bubble sort com parada antecipada). Ótimos para listas pequenas ou quase ordenadas."
+- id: AL-02-f4
+  frente: "O que é uma ordenação **estável**?"
+  verso: "Elementos **iguais mantêm a ordem original** entre si. Selection sort **não** é estável."
+- id: AL-02-f5
+  frente: "Complexidade de bubble, selection e insertion no pior caso?"
+  verso: "**O(n²)**, todos no lugar (O(1) de memória extra). Na prática, use `sorted()` (Timsort, O(n log n))."
+```
+
 ## Resumo
 
 - **Bubble**: troca vizinhos; o maior borbulha para o fim. **Selection**: põe o menor do resto na frente. **Insertion**: encaixa cada item na parte já ordenada.
