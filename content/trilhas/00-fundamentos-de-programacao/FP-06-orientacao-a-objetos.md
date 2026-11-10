@@ -39,7 +39,7 @@ Uma **classe** é a **planta de uma casa**: diz quantos quartos, onde fica a por
 ```mermaid
 classDiagram
   class Conta {
-    -titular: str
+    +titular: str
     -_saldo: float
     +depositar(valor)
     +sacar(valor)

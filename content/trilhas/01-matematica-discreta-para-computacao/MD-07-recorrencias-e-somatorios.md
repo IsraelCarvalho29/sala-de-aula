@@ -131,7 +131,7 @@ Busca binária:  T(n) = T(n/2) + c
 Desenhe as chamadas, some o custo de cada **nível** e depois some os níveis. Funciona muito bem quando cada chamada gera várias outras. Vimos acima que 2T(n/2) + n dá Θ(n log n). Outro exemplo:
 
 ```text
-Hanói / Fibonacci ingênuo:  T(n) = 2T(n − 1) + c
+Torre de Hanói:  T(n) = 2T(n − 1) + c
 nível 0: 1 chamada   → c
 nível 1: 2 chamadas  → 2c
 nível 2: 4 chamadas  → 4c
@@ -159,7 +159,8 @@ Passo: T(k + 1) = 2T(k) + 1 = 2(2ᵏ − 1) + 1 = 2ᵏ⁺¹ − 1.  ✓
 | T(n) = T(n/2) + n | Θ(n) | quickselect no caso bom |
 | T(n) = 2T(n/2) + c | Θ(n) | percorrer árvore balanceada |
 | T(n) = 2T(n/2) + n | Θ(n log n) | merge sort |
-| T(n) = 2T(n − 1) + c | Θ(2ⁿ) | Hanói, Fibonacci ingênuo |
+| T(n) = 2T(n − 1) + c | Θ(2ⁿ) | Torre de Hanói |
+| T(n) = T(n − 1) + T(n − 2) + c | Θ(1,618ⁿ), que é O(2ⁿ) | Fibonacci ingênuo |
 
 A AL-04 generaliza a família T(n) = a·T(n/b) + f(n) com o **Teorema Mestre**.
 
@@ -199,6 +200,7 @@ for n in [10, 100, 1000]:
 - **Errar o número de níveis.** Dividir por 2 dá log₂ n níveis; subtrair 1 dá n níveis. Essa diferença é a distância entre O(log n) e O(n).
 - **Somar só um ramo da árvore.** Em 2T(n/2), cada nível tem o **dobro** de chamadas; o custo do nível é a soma de todas.
 - **Ignorar o custo escondido** de fatias e cópias, como `l[1:]` ou `l[:meio]`, que são O(n).
+- **Achar que o Fibonacci ingênuo é exatamente Θ(2ⁿ).** T(n) = T(n − 1) + T(n − 2) + c é limitado por cima pela recorrência de Hanói (O(2ⁿ)), mas cresce como 1,618ⁿ (a razão áurea): o segundo ramo é menor que o primeiro.
 - **Confundir 2T(n/2) com 2T(n − 1).** A primeira dá Θ(n log n) (com + n); a segunda explode em Θ(2ⁿ).
 - **Achar que 1 + 1/2 + 1/4 + ... cresce sem parar.** A série geométrica decrescente é limitada por 2.
 

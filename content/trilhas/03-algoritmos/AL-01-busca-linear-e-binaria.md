@@ -114,9 +114,10 @@ def busca_binaria(lista, x):
 ```python
 import bisect
 notas = [3, 5, 5, 5, 8, 9]
-bisect.bisect_left(notas, 5)    # 1: primeira posição onde o 5 entraria (primeira ocorrência)
-bisect.bisect_right(notas, 5)   # 4: depois do último 5
-bisect.insort(notas, 7)         # insere mantendo a ordem: [3, 5, 5, 5, 7, 8, 9]
+print(bisect.bisect_left(notas, 5))    # 1: primeira posição onde o 5 entraria (primeira ocorrência)
+print(bisect.bisect_right(notas, 5))   # 4: depois do último 5
+bisect.insort(notas, 7)                # insere mantendo a ordem
+print(notas)                           # [3, 5, 5, 5, 7, 8, 9]
 ```
 
 Quantas vezes o 5 aparece? `bisect_right - bisect_left = 3`, em O(log n).

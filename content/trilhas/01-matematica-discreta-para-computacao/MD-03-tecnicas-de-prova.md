@@ -113,7 +113,7 @@ Passo: 1 + 2 + ... + k + (k + 1)
      = (k + 1)(k + 2)/2                 ← é a fórmula com n = k + 1.  ∎
 ```
 
-Essa soma aparece em todo lugar: é o número de comparações do selection sort (AL-02).
+Essa soma aparece em todo lugar. Com n − 1 no lugar de n, ela conta as comparações do selection sort (AL-02): (n − 1) + (n − 2) + ... + 1 = n(n − 1)/2.
 
 **Indução forte**: no passo, você pode supor P(n₀), P(n₀+1), ..., P(k) **todos** verdadeiros, não só P(k). Útil quando o caso k + 1 depende de casos bem anteriores, como "todo inteiro ≥ 2 é produto de primos" (n = a·b com a, b menores que n).
 
@@ -205,7 +205,7 @@ tipo: multipla_escolha
 pergunta: "Qual é a contrapositiva de \"se um número é divisível por 6, então é par\"?"
 opcoes: ["Se um número é par, então é divisível por 6", "Se um número não é par, então não é divisível por 6", "Se um número não é divisível por 6, então não é par", "Um número é divisível por 6 e não é par"]
 resposta: 1
-explicacao: "A contrapositiva de 'se P, então Q' é 'se não Q, então não P'. Ela é equivalente à original. A opção 1 é a recíproca (falsa: 4 é par e não é divisível por 6); a opção 3 é a inversa, também falsa."
+explicacao: "A contrapositiva de 'se P, então Q' é 'se não Q, então não P'. Ela é equivalente à original. A primeira opção é a recíproca (falsa: 4 é par e não é divisível por 6); a terceira é a inversa, também falsa."
 dificuldade: 1
 ```
 

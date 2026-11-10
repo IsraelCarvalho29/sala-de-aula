@@ -129,7 +129,7 @@ Uma **função** f: A → B é uma relação em que cada a ∈ A tem **exatament
 | **Sobrejetora** | toda saída de B é atingida | imagem = B |
 | **Bijetora** | injetora e sobrejetora | tem **inversa** f⁻¹ |
 
-Se A e B são finitos e f: A → B é injetora, então |A| ≤ |B|. Ao contrário: se |A| > |B|, **alguma colisão é inevitável**. É o **princípio da casa dos pombos**, e é por isso que uma função de hash de textos (infinitos) para 64 bits (finitos) sempre tem colisões (ED-04).
+Se A e B são finitos e f: A → B é injetora, então |A| ≤ |B|. Pela contrapositiva (MD-01): se |A| > |B|, nenhuma f é injetora, ou seja, **alguma colisão é inevitável**. É o **princípio da casa dos pombos**, e é por isso que uma função de hash de textos (infinitos) para 64 bits (finitos) sempre tem colisões (ED-04).
 
 **Composição**: (g ∘ f)(x) = g(f(x)). Primeiro f, depois g.
 
