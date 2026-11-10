@@ -71,7 +71,7 @@ flowchart TD
   B -->|sim| OK[use; mantenha os avisos de copyright e licença]
   B -->|não| C{é copyleft fraco? LGPL, MPL}
   C -->|sim| W[use; mudanças na própria biblioteca ou arquivo ficam abertas]
-  C -->|não| D{GPL ou AGPL: você distribui o software ou o oferece pela rede, no caso da AGPL?}
+  C -->|não| D{"GPL ou AGPL: você distribui o software ou o oferece pela rede, no caso da AGPL?"}
   D -->|não, uso só interno| I[em geral pode usar internamente]
   D -->|sim| G[seu produto derivado também precisa sair sob GPL ou AGPL, com código-fonte]
 ```
@@ -121,7 +121,7 @@ Pontos que confundem:
 - **Copyleft só é ativado por distribuição** (ou acesso pela rede, na AGPL). Usar GPL internamente, sem distribuir, não obriga a abrir nada. Um SaaS usando GPL no servidor não distribui o software; foi para fechar essa brecha que a AGPL foi criada.
 - **Compatibilidade**: código MIT pode entrar num projeto GPL (o todo fica GPL), mas o contrário não. A Apache 2.0 é compatível com a GPL 3.0, mas **não** com a GPL 2.0 *only*. GPL 2.0 *only* e GPL 3.0 são incompatíveis entre si; "GPL 2.0 *or later*" resolve.
 - **Creative Commons** é para textos, imagens e dados, não para código (com exceção da CC0).
-- **Licença dupla**: um projeto pode oferecer AGPL para todos e uma licença comercial paga para quem não quer abrir o código (MySQL, Qt).
+- **Licença dupla**: um projeto pode oferecer uma licença copyleft (GPL ou AGPL) para todos e uma licença comercial paga para quem não quer abrir o código (MySQL e Qt fazem isso).
 
 ### Cumprindo as licenças na prática
 
@@ -300,8 +300,8 @@ linguagem: python
 pergunta: |
   **Posso incluir esta dependência?** Use esta tabela simplificada de compatibilidade para **distribuir** um programa:
 
-  - dependências `'MIT'`, `'BSD-3-Clause'` e `'LGPL-3.0'` podem entrar em qualquer projeto;
-  - `'Apache-2.0'` pode entrar em qualquer projeto, **exceto** `'GPL-2.0-only'`;
+  - dependências `'MIT'` e `'BSD-3-Clause'` podem entrar em qualquer projeto;
+  - `'Apache-2.0'` e `'LGPL-3.0'` podem entrar em qualquer projeto, **exceto** `'GPL-2.0-only'`;
   - `'GPL-3.0'` só pode entrar em projetos `'GPL-3.0'` ou `'AGPL-3.0'`;
   - `'AGPL-3.0'` só pode entrar em projetos `'AGPL-3.0'`;
   - `'GPL-2.0-only'` só pode entrar em projetos `'GPL-2.0-only'`;
@@ -336,12 +336,15 @@ testes:
   - chamada: "pode_incluir('MIT', 'WTFPL')"
     visivel: false
     saida: "False"
-dica: "Um dicionário de dependência para o conjunto de projetos que a aceitam resolve quase tudo; trate 'qualquer projeto' (e a exceção da Apache) com um if antes."
+  - chamada: "pode_incluir('GPL-2.0-only', 'LGPL-3.0')"
+    visivel: false
+    saida: "False"
+dica: "Um dicionário de dependência para o conjunto de projetos que a aceitam resolve quase tudo; trate 'qualquer projeto' (e a exceção da Apache e da LGPL) com um if antes."
 solucao: |
   def pode_incluir(projeto, dependencia):
-      if dependencia in ('MIT', 'BSD-3-Clause', 'LGPL-3.0'):
+      if dependencia in ('MIT', 'BSD-3-Clause'):
           return True
-      if dependencia == 'Apache-2.0':
+      if dependencia in ('Apache-2.0', 'LGPL-3.0'):
           return projeto != 'GPL-2.0-only'
       aceitam = {
           'GPL-3.0': {'GPL-3.0', 'AGPL-3.0'},
@@ -349,7 +352,7 @@ solucao: |
           'GPL-2.0-only': {'GPL-2.0-only'},
       }
       return projeto in aceitam.get(dependencia, set())
-explicacao: "A regra geral do copyleft: o código pode fluir de licenças menos restritivas para mais restritivas, nunca o contrário. MIT entra na GPL; GPL não entra num projeto MIT distribuído. A GPL 3.0 permite expressamente a combinação com AGPL 3.0. A tabela é simplificada (a LGPL, por exemplo, exige que o usuário possa trocar a biblioteca), mas cobre os casos que mais aparecem."
+explicacao: "A regra geral do copyleft: o código pode fluir de licenças menos restritivas para mais restritivas, nunca o contrário. MIT entra na GPL; GPL não entra num projeto MIT distribuído. A GPL 3.0 permite expressamente a combinação com AGPL 3.0. Apache 2.0 e LGPL 3.0 têm termos que a GPL 2.0 only não aceita, daí a exceção. A tabela é simplificada (a LGPL, por exemplo, exige que o usuário possa trocar a biblioteca), mas cobre os casos que mais aparecem."
 dificuldade: 2
 ```
 

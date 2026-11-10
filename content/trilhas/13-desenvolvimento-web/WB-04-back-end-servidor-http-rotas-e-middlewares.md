@@ -448,7 +448,7 @@ solucao: |
           if nome.endswith(ext):
               return (200, tipo)
       return (200, 'application/octet-stream')
-explicacao: "A normalização com pilha é a mesma do SO-07. O ponto de segurança é decidir com o caminho normalizado, nunca com o texto cru: '/css/../js/app.js' é legítimo, enquanto '/css/../../segredo.env' tenta sair da pasta pública, e um servidor ingênuo que fizesse open('public' + caminho) entregaria o arquivo. Servidores reais também decodificam %2e%2e antes de normalizar e recusam links simbólicos que apontam para fora."
+explicacao: "A normalização com pilha é a mesma do SO-07, com uma diferença: lá o .. da raiz continua na raiz; aqui, tentar sair da pasta pública é recusado com 403. O ponto de segurança é decidir com o caminho normalizado, nunca com o texto cru: '/css/../js/app.js' é legítimo, enquanto '/css/../../segredo.env' tenta sair da pasta pública, e um servidor ingênuo que fizesse open('public' + caminho) entregaria o arquivo. Servidores reais também decodificam %2e%2e antes de normalizar e recusam links simbólicos que apontam para fora."
 dificuldade: 2
 ```
 
@@ -510,7 +510,7 @@ solucao: |
     if (opcoes.sameSite) partes.push(`SameSite=${opcoes.sameSite}`);
     return partes.join('; ');
   }
-explicacao: "O último teste oculto é o logout: um cookie vazio com Max-Age=0 manda o navegador apagá-lo. Se o teste fosse if (opcoes.maxAge), o 0 seria ignorado e a sessão continuaria no navegador, um bug real e comum. Valores de tokens em base64 têm '=' no fim, por isso separar só no primeiro '='. Na prática, bibliotecas como cookie-parser fazem isso, também decodificando caracteres especiais."
+explicacao: "O teste oculto com Max-Age=0 é o logout: um cookie vazio com Max-Age=0 manda o navegador apagá-lo. Se o teste fosse if (opcoes.maxAge), o 0 seria ignorado e a sessão continuaria no navegador, um bug real e comum. Valores de tokens em base64 têm '=' no fim, por isso separar só no primeiro '='. Na prática, bibliotecas como cookie-parser fazem isso, também decodificando caracteres especiais."
 dificuldade: 2
 ```
 

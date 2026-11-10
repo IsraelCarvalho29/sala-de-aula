@@ -405,7 +405,7 @@ solucao: |
           if resposta is not None:
               linhas.append(f'    {destino}-->>{origem}: {resposta}')
       return linhas
-explicacao: "Declarar os participantes antes fixa a ordem das colunas no desenho. Ferramentas de rastreamento distribuído (SD-07) fazem algo parecido: a partir dos spans de uma requisição real, montam a linha do tempo de quem chamou quem e quanto demorou. É o diagrama de sequência gerado da produção, e não desenhado à mão."
+explicacao: "Declarar os participantes antes fixa a ordem das colunas no desenho. Ferramentas de rastreamento distribuído (SD-08) fazem algo parecido: a partir dos spans de uma requisição real, montam a linha do tempo de quem chamou quem e quanto demorou. É o diagrama de sequência gerado da produção, e não desenhado à mão."
 dificuldade: 1
 ```
 
@@ -480,4 +480,4 @@ dificuldade: 2
 
 - Desenhe no [mermaid.live](https://mermaid.live) o diagrama de classes de um projeto seu e o diagrama de sequência do fluxo principal.
 - Leia sobre o modelo C4, que será usado em Arquitetura de software.
-- **Fim da trilha de Engenharia de software.** Próxima trilha: Arquitetura de software.
+- **Fim da trilha de Engenharia de software.** Próxima trilha: Arquitetura de software. **Próximo módulo**: AS-01 Monólito, camadas e MVC.

@@ -79,7 +79,7 @@ X é **superchave** se `X⁺` contém todos os atributos. **Chave candidata** é
 | Forma | Exige | Viola quando... | Exemplo de violação |
 |---|---|---|---|
 | **1FN** | valores **atômicos**, sem grupos repetidos | uma célula guarda uma lista | `cursos = "BD, Redes"` |
-| **2FN** | 1FN + nenhum atributo não primo depende de **parte** de uma chave | chave composta e algo depende só de um pedaço | `(aluno_id, curso_id)` → mas `aluno_id → aluno_nome` |
+| **2FN** | 1FN + nenhum atributo não primo depende de **parte** de uma chave | chave composta e algo depende só de um pedaço chave `(aluno_id, curso_id)`, mas `aluno_id → aluno_nome` |
 | **3FN** | 2FN + nenhum atributo não primo depende **transitivamente** da chave (via outro não primo) | `chave → X → Y` | `curso_id → professor → sala` |
 | **FNBC** (Boyce-Codd) | para **toda** dependência não trivial `X → Y`, X é **superchave** | algum determinante não é superchave | `professor → sala`, sendo professor não superchave |
 

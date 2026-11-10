@@ -28,7 +28,7 @@ tags: [redes, tls, https, criptografia, rsa, diffie-hellman, certificados, segur
 
 ## Por que isso importa
 
-Sem TLS, qualquer pessoa no mesmo Wi-Fi do café, o provedor ou um roteador no caminho poderia ler suas senhas e alterar as páginas que você recebe. O cadeado do navegador significa três coisas bem específicas, e entender cada uma evita erros reais: desligar a verificação de certificado "só para testar" (e esquecer em produção), achar que HTTPS protege dados depois que chegam ao servidor, ou não entender um erro de `CERTIFICATE_VERIFY_FAILED`. Você vai configurar HTTPS em todo projeto que publicar, e a trilha de Segurança (SG) parte daqui.
+Sem TLS, qualquer pessoa no mesmo Wi-Fi do café, o provedor ou um roteador no caminho poderia ler suas senhas e alterar as páginas que você recebe. O cadeado do navegador significa três coisas bem específicas, e entender cada uma evita erros reais: desligar a verificação de certificado "só para testar" (e esquecer em produção), achar que HTTPS protege dados depois que chegam ao servidor, ou não entender um erro de `CERTIFICATE_VERIFY_FAILED`. Você vai configurar HTTPS em todo projeto que publicar, e a trilha de Segurança (SE) parte daqui.
 
 ## Intuição
 

@@ -93,7 +93,7 @@ Para provar que um problema novo X é NP-completo: (1) mostre que X está em NP 
 
 ### Cook-Levin e a família NP-completa
 
-O **teorema de Cook-Levin** (1971) mostrou que **SAT** é NP-completo: qualquer computação de um verificador pode ser codificada como uma fórmula booleana que é satisfazível exatamente quando existe um certificado. A partir daí, Karp (1972) reduziu SAT a 21 outros problemas, e hoje há milhares. Alguns clássicos:
+O **teorema de Cook-Levin** (1971) mostrou que **SAT** é NP-completo: qualquer computação de um verificador pode ser codificada como uma fórmula booleana que é satisfazível exatamente quando existe um certificado. A partir daí, Karp (1972) usou reduções a partir de SAT para mostrar que uma lista de 21 problemas famosos (incluindo o próprio SAT) é NP-completa, e hoje há milhares. Alguns clássicos:
 
 - **SAT** e **3-SAT**: existe atribuição de verdadeiro/falso que satisfaz a fórmula em forma normal conjuntiva (com 3 literais por cláusula)? Curiosamente, **2-SAT** está em P.
 - **Caixeiro-viajante** (decisão): há um ciclo por todas as cidades com custo ≤ k?
@@ -296,7 +296,7 @@ solucao: |
           return None
 
       return busca(1, {})
-explicacao: "No pior caso o backtracking visita 2^n atribuições, mas a poda corta ramos inteiros assim que uma cláusula fica falsa: no último teste, x4 = False já mata a cláusula [4] e metade da árvore é descartada sem olhar. SAT solvers reais (DPLL e CDCL) acrescentam propagação de cláusulas unitárias, aprendizado de cláusulas a partir dos conflitos e reinícios, e resolvem fórmulas industriais com milhões de variáveis."
+explicacao: "No pior caso o backtracking visita 2^n atribuições, mas a poda corta ramos inteiros assim que uma cláusula fica falsa: no último teste oculto, com x1 = False e x2 = False a cláusula [2, 1] já está falsa, e todas as combinações de x3 e x4 abaixo desse ponto são descartadas sem olhar. SAT solvers reais (DPLL e CDCL) acrescentam propagação de cláusulas unitárias, aprendizado de cláusulas a partir dos conflitos e reinícios, e resolvem fórmulas industriais com milhões de variáveis."
 dificuldade: 3
 ```
 

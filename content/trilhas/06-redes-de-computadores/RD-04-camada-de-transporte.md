@@ -55,27 +55,31 @@ sequenceDiagram
     C->>S: ACK (cliente fica em TIME_WAIT por um tempo)
 ```
 
-Janela de congestionamento (em segmentos) ao longo do tempo, no TCP Reno:
+Janela de congestionamento (em segmentos) ao longo do tempo, no TCP Reno, com `ssthresh = 16` e uma perda no fim do RTT 7:
 
 ```text
 cwnd
- 20 |                         *
- 18 |                      *
- 16 |              *  *  *        perda (3 ACKs duplicados):
- 12 |                                cwnd cai pela metade
-  9 |                            *  *  *  ← cresce +1 por RTT (AIMD)
-  8 |           *
-  4 |       *
-  2 |   *            slow start: dobra por RTT até ssthresh
+ 19 |                      *                  ← perda (3 ACKs duplicados): cwnd cai pela metade
+ 18 |                   *
+ 17 |                *                        ← acima de ssthresh: +1 por RTT (AIMD)
+ 16 |             *                           ← atingiu ssthresh
+ 12 |                                  *
+ 11 |                               *
+ 10 |                            *            ← volta a crescer +1 por RTT
+  9 |                         *
+  8 |          *
+  4 |       *                                 ← slow start: dobra por RTT
+  2 |    *
   1 | *
-    +----------------------------------------- RTT
+    +-------------------------------------- RTT
+      0  1  2  3  4  5  6  7  8  9 10 11
 ```
 
 ## Conceito técnico
 
 ### Portas e demultiplexação
 
-Uma **porta** (16 bits, 0 a 65535) identifica o processo dentro da máquina. Portas abaixo de 1024 são as "bem conhecidas" (80 HTTP, 443 HTTPS, 22 SSH, 53 DNS, 5432 PostgreSQL). O cliente usa uma porta **efêmera** aleatória (por exemplo, 51834).
+Uma **porta** (16 bits, 0 a 65535) identifica o processo dentro da máquina. Portas abaixo de 1024 são as "bem conhecidas" (80 HTTP, 443 HTTPS, 22 SSH, 53 DNS); serviços comuns também têm portas padrão acima disso (5432 PostgreSQL, 3306 MySQL). O cliente usa uma porta **efêmera** aleatória (por exemplo, 51834).
 
 Como o SO decide para qual *socket* entregar:
 

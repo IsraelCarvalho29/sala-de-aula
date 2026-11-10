@@ -133,7 +133,7 @@ ROLLBACK;                       -- desfaz a transação inteira
 SELECT titular, saldo FROM contas;    -- Ana 70, Bruno 80
 ```
 
-Tente trocar o primeiro `- 30` por `- 300`: o `CHECK (saldo >= 0)` falha e nada da transação é aplicado.
+Tente trocar o primeiro `- 30` por `- 300`: o `CHECK (saldo >= 0)` falha e o banco recusa esse `UPDATE` com um erro. Atenção a um detalhe: no SQLite, só a instrução que falhou é desfeita, e a transação continua aberta. Se o programa ignorasse o erro e seguisse até o `COMMIT`, o crédito do Bruno seria gravado sem o débito da Ana. Por isso a aplicação, ao receber o erro, manda `ROLLBACK` (as bibliotecas de acesso ao banco costumam fazer isso por você). No PostgreSQL, um erro já marca a transação inteira como abortada, e o `COMMIT` vira `ROLLBACK`.
 
 ## Erros comuns
 

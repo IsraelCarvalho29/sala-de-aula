@@ -25,7 +25,7 @@ tags: [arquitetura, cpu, ula, ciclo-de-instrucao, von-neumann, registradores, si
 
 ## Por que isso importa
 
-Com as portas (AC-01) e a memória (AC-02), já dá para montar um processador. Esta aula mostra como: uma CPU é uma máquina que repete, bilhões de vezes por segundo, três passos simples: **buscar** uma instrução na memória, **decodificar** o que ela pede e **executar**. Entender esse ciclo explica o que é um "bug de estouro de buffer" (dados sobrescrevendo código), por que um `if` dentro de um laço quente pode deixar o programa lento (AC-06), o que um interpretador como o do Python faz (ele próprio é um ciclo busca-decodifica-executa em software) e como emuladores de videogame funcionam.
+Com as portas (AC-01) e a memória (AC-02), já dá para montar um processador. Esta aula mostra como: uma CPU é uma máquina que repete, bilhões de vezes por segundo, três passos simples: **buscar** uma instrução na memória, **decodificar** o que ela pede e **executar**. Entender esse ciclo explica por que um "estouro de buffer" é tão perigoso (dados escritos fora do lugar podem mudar o endereço para onde o PC vai saltar), por que um `if` dentro de um laço quente pode deixar o programa lento (AC-06), o que um interpretador como o do Python faz (ele próprio é um ciclo busca-decodifica-executa em software) e como emuladores de videogame funcionam.
 
 ## Intuição
 
@@ -154,7 +154,7 @@ programa = [
     ("HALT", None),
 ]
 acc, mem, passos = executar(programa)
-print(mem["soma"], passos)   # 15 e o número de instruções executadas
+print(mem["soma"], passos)   # 15 50 (50 instruções executadas)
 ```
 
 ## Erros comuns

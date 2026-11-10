@@ -418,3 +418,4 @@ dificuldade: 2
 - Leia o guia da ANPD de segurança da informação para agentes de pequeno porte: é curto e prático.
 - Implemente, num projeto seu, um endpoint "baixar meus dados" e um "excluir minha conta" que apaguem de verdade, e escreva os testes.
 - Este é o último módulo da trilha de ética. Para continuar, siga a parte de ética do OSSU e acompanhe as publicações da ANPD.
+- **Próximo módulo**: FP-10 Projeto sistemático de funções (receita de projeto), que abre a trilha de paradigmas de linguagens.

@@ -191,7 +191,7 @@ for k in range(1, 7):
     _, inercia = kmeans(clientes, k)
     print(f"  k = {k}: {inercia:8.1f}  {'#' * int(inercia / 30)}")
 
-# ---------- 2) sobreajuste: k-NN com k = 1 e k = 15, validação cruzada em 5 partes ----------
+# ---------- 2) sobreajuste: k-NN com k = 1, 15 e 101, validação cruzada em 5 partes ----------
 dados = []
 for _ in range(200):
     x, y = random.uniform(0, 10), random.uniform(0, 10)
@@ -438,4 +438,5 @@ dificuldade: 2
 - Refaça o exemplo com `KMeans`, `cross_val_score` e `classification_report` do scikit-learn.
 - Compare k-means e DBSCAN nos conjuntos `make_moons` e `make_blobs` do scikit-learn e veja onde cada um falha.
 - Pegue um classificador seu e desenhe a curva de precisão-revocação; escolha o limiar a partir de um custo que você definir para FP e FN.
-- Este é o último módulo da trilha de IA. Para continuar, faça o curso completo de Andrew Ng e depois o fast.ai, e leia o capítulo de ética da IA em ET-01.
+- Este é o último módulo da trilha de IA. Para continuar, faça o curso completo de Andrew Ng e depois o fast.ai.
+- **Próximo módulo**: ET-01 Ética em tecnologia e engenharia, que discute vieses e responsabilidade de sistemas de IA.

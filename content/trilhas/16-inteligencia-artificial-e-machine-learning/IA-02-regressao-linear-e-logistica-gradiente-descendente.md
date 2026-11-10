@@ -431,7 +431,7 @@ dificuldade: 3
 
 ## Para ir além
 
-- Faça a semana 1 a 3 do curso de Andrew Ng e compare com o que você implementou aqui.
+- Faça as semanas 1 a 3 do curso de Andrew Ng e compare com o que você implementou aqui.
 - Treine o exemplo das horas de estudo com `LogisticRegression` do scikit-learn e confira se w e b ficam parecidos (o scikit-learn aplica regularização L2 por padrão, então haverá diferença).
 - Implemente o gradiente descendente estocástico (um exemplo por passo, em ordem aleatória) e compare a curva da perda com a da versão batch.
 - **Próximo módulo**: IA-03 Redes neurais.

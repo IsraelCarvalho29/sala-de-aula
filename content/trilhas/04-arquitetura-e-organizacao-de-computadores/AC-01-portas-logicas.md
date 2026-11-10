@@ -124,7 +124,7 @@ Os operadores de bits do Python fazem as portas sobre **todos os bits de um núm
 | AND | `a & b` | `0b1100 & 0b1010 == 0b1000` |
 | OR | `a \| b` | `0b1100 \| 0b1010 == 0b1110` |
 | XOR | `a ^ b` | `0b1100 ^ 0b1010 == 0b0110` |
-| NOT (k bits) | `~a & (2**k − 1)` | `~0b1100 & 0b1111 == 0b0011` |
+| NOT (k bits) | `~a & (2**k - 1)` | `~0b1100 & 0b1111 == 0b0011` |
 | deslocar | `a << 1`, `a >> 1` | multiplica / divide por 2 |
 
 (O `~` do Python sozinho dá −a − 1, porque os inteiros do Python não têm tamanho fixo. Aplique uma máscara.)
@@ -175,7 +175,7 @@ tabela(lambda a, b, s: (a & (1 - s)) | (b & s), 3)   # um multiplexador
 - **Esquecer o vai-um que chega** e montar um somador de n bits com meios somadores.
 - **Achar que XOR é "OU"**: 1 XOR 1 = 0.
 - **Ignorar o vai-um final.** Em n bits, ele indica que o resultado não coube (overflow sem sinal).
-- **Precedência**: em Python, `a & b == c` é `a & (b == c)`. Use parênteses: `(a & b) == c`.
+- **Precedência em C**: em C (e em Java, JavaScript), `a & b == c` é lido como `a & (b == c)`, porque lá `==` tem precedência maior que `&`. Em Python é o contrário: `a & b == c` é `(a & b) == c`. Na dúvida, use parênteses: `(a & b) == c`.
 
 ## Pratique
 

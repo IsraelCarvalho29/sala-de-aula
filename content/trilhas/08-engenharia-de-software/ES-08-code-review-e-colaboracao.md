@@ -130,7 +130,7 @@ O cálculo agora usa o subtotal antes do desconto.
 BREAKING CHANGE: calcular_frete agora exige o CEP.
 ```
 
-Formato: `tipo(escopo opcional): descrição`, em que o tipo é `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci` ou `chore`. Um `!` depois do tipo (`feat!:`) ou um rodapé `BREAKING CHANGE:` indicam uma mudança incompatível. Ferramentas geram changelogs e decidem a próxima versão (semver) a partir disso. Boas práticas: título no imperativo e curto (até cerca de 72 caracteres), linha em branco antes do corpo, e o corpo explicando o **porquê**.
+Formato: `tipo(escopo opcional): descrição`, em que o tipo é `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci` ou `chore`. Um `!` depois do tipo (`feat!:`) ou um rodapé `BREAKING CHANGE:` indicam uma mudança incompatível. Ferramentas geram changelogs e decidem a próxima versão (semver) a partir disso. Boas práticas: título curto (até cerca de 72 caracteres) dizendo o que o commit faz (em inglês se usa o imperativo, como `add`; em português, muitos times usam o presente, como `aplica` e `corrige`), linha em branco antes do corpo, e o corpo explicando o **porquê**.
 
 ### CODEOWNERS e programação em par
 

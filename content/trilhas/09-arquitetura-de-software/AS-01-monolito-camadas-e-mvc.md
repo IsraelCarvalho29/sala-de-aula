@@ -41,7 +41,7 @@ Isso é uma **arquitetura em camadas**: apresentação (salão), domínio ou reg
 
 ## Visual
 
-Camadas e a regra de dependência (cada uma só conhece a de baixo):
+Camadas e a direção das dependências (cada seta quer dizer "depende de"; ninguém depende da apresentação, e o domínio não depende de ninguém):
 
 ```mermaid
 flowchart TB
@@ -102,6 +102,8 @@ O problema raramente é ser monólito; é ser um monólito **desorganizado**. A 
 
 A **regra de dependência**: uma camada só chama a camada abaixo dela. Em camadas **estritas**, só a imediatamente abaixo; em camadas **relaxadas**, qualquer uma abaixo. **Nunca para cima**: o domínio não importa nada de apresentação, e o banco não sabe que existe HTTP.
 
+Há dois jeitos comuns de posicionar a infraestrutura. No **clássico**, ela é a camada mais baixa de todas, e o domínio chama o repositório diretamente (é a ordem usada no primeiro desafio de código desta aula). Na **variante** do diagrama do Visual, o **domínio** fica no fundo e a infraestrutura depende dele (ela usa as entidades para salvar e ler), então o domínio não depende de nada. Essa variante é o primeiro passo para a arquitetura hexagonal (AS-02).
+
 Benefícios: trocar a apresentação (de HTML para API JSON) sem mexer nas regras; testar o domínio sem banco; cada pessoa sabe onde procurar cada coisa. Armadilha comum: a camada de domínio **anêmica**, só com getters e setters, e todas as regras espalhadas nos controllers.
 
 ### MVC
@@ -152,17 +154,18 @@ modulos = {
     "dominio.desconto":         ["apresentacao.formatos"],     # proibido!
 }
 
-def nivel(modulo):
-    camada = modulo.split(".")[0]
-    return len(CAMADAS) if camada == INFRA else CAMADAS.index(camada)
+def nivel(camada):
+    return CAMADAS.index(camada)
 
 for modulo, imports in modulos.items():
     for importado in imports:
         de, para = modulo.split(".")[0], importado.split(".")[0]
-        if de == INFRA or para == INFRA:
-            proibido = de == "dominio" and para == INFRA
+        if de == INFRA:
+            proibido = para not in ("dominio", INFRA)   # infra só usa o domínio
+        elif para == INFRA:
+            proibido = de == "dominio"                  # o domínio não usa a infra
         else:
-            proibido = nivel(importado) < nivel(modulo)
+            proibido = nivel(para) < nivel(de)          # ninguém importa para cima
         if proibido:
             print(f"VIOLAÇÃO: {modulo} importa {importado}")
 print("verificação concluída")

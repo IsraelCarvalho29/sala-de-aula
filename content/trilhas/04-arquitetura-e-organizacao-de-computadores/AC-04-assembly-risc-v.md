@@ -130,7 +130,7 @@ O compilador inverte a condição: salta **para fora** do bloco quando ela é fa
 2. A função usa a **pilha** para guardar o que precisa preservar: `addi sp, sp, -8` (abre espaço; a pilha cresce para baixo), `sw ra, 4(sp)`, `sw s0, 0(sp)`.
 3. Coloca o resultado em `a0`, restaura os registradores salvos, `addi sp, sp, 8` e `jalr x0, 0(ra)`.
 
-Cada chamada empilha um **quadro** (stack frame). Uma recursão infinita esgota a pilha: é o **stack overflow**. E escrever além de um vetor local pode sobrescrever o `ra` salvo: é o **estouro de buffer** clássico, que permite a um atacante desviar o programa (SG-02).
+Cada chamada empilha um **quadro** (stack frame). Uma recursão infinita esgota a pilha: é o **stack overflow**. E escrever além de um vetor local pode sobrescrever o `ra` salvo: é o **estouro de buffer** clássico, que permite a um atacante desviar o programa para onde quiser.
 
 ### Formato das instruções
 

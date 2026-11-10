@@ -96,8 +96,8 @@ classDiagram
 - **Linguagem ubíqua**: um vocabulário comum, construído **com** os especialistas, usado nas conversas, nos documentos, nos testes e no código. Se uma palavra muda na conversa, muda no código.
 - **Contexto delimitado** (*bounded context*): a fronteira dentro da qual um modelo e sua linguagem são consistentes. "Cliente" pode significar coisas diferentes em contextos diferentes, e está tudo bem. Em geral, um contexto corresponde a **um time** e é um bom candidato a módulo ou serviço.
 - **Mapa de contextos**: como os contextos se relacionam. Alguns padrões:
-  - **Cliente-fornecedor**: o contexto de cima atende às necessidades do de baixo;
-  - **Conformista**: o de baixo simplesmente aceita o modelo do de cima;
+  - **Cliente-fornecedor**: o contexto que fornece os dados (o "de cima", *upstream*) planeja suas mudanças levando em conta as necessidades de quem consome (o "de baixo", *downstream*);
+  - **Conformista**: o de baixo simplesmente aceita o modelo do de cima, sem traduzir;
   - **Camada anticorrupção** (ACL): um tradutor que protege o seu modelo do modelo de outro sistema (o adaptador da AS-02);
   - **Linguagem publicada / serviço aberto**: um contrato estável e documentado para vários consumidores;
   - **Kernel compartilhado**: um pedaço pequeno de modelo dividido por dois times (com muito cuidado).
@@ -520,4 +520,4 @@ dificuldade: 2
 
 - Leia o "Domain-Driven Design Reference" (gratuito) do Eric Evans.
 - Faça um *Event Storming* de 1 hora com amigos sobre um negócio conhecido (uma pizzaria): post-its laranja para eventos, azuis para comandos.
-- **Fim da trilha de Arquitetura de software.** Próxima trilha: Sistemas distribuídos, cloud e DevOps.
+- **Fim da trilha de Arquitetura de software.** Próxima trilha: Sistemas distribuídos, cloud e DevOps. **Próximo módulo**: SD-01 Fundamentos: latência, falhas parciais, teorema CAP.

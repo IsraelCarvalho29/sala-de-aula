@@ -414,4 +414,5 @@ dificuldade: 2
 - Reescreva o seu currículo com o formato desta aula e peça a duas pessoas da área para revisá-lo.
 - Escolha seu melhor projeto e leve-o até o fim: deploy, testes no CI, README completo. Depois fixe-o.
 - Faça uma contribuição de código aberto este mês, mesmo que seja na documentação.
-- Este é o último módulo da trilha de carreira, e o último da grade. Volte ao mapa das trilhas, revise os módulos que ficaram com dúvidas e continue construindo: o melhor portfólio é o que você aprendeu aplicado em algo real.
+- Este é o último módulo da trilha de carreira. Volte ao mapa das trilhas, revise os módulos que ficaram com dúvidas e continue construindo: o melhor portfólio é o que você aprendeu aplicado em algo real.
+- **Próximo módulo**: MC-01 Funções, limites e derivadas, que abre a trilha de matemática contínua.

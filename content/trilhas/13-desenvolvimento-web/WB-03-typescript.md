@@ -375,7 +375,7 @@ solucao: |
     }
     return grupos;
   }
-explicacao: "Graças ao T, quem chama agrupar com uma lista de Produto recebe Record<string, Produto[]>, e o editor completa os campos dentro de cada grupo. Com any no lugar de T, essa informação se perderia. A versão nativa disso chegou ao JavaScript como Object.groupBy, e o TypeScript a tipa exatamente assim."
+explicacao: "Graças ao T, quem chama agrupar com uma lista de Produto recebe Record<string, Produto[]>, e o editor completa os campos dentro de cada grupo. Com any no lugar de T, essa informação se perderia. A versão nativa disso chegou ao JavaScript como Object.groupBy, e o TypeScript a tipa de forma parecida (Partial<Record<K, T[]>>, porque nem toda chave possível tem um grupo)."
 dificuldade: 2
 ```
 

@@ -106,7 +106,7 @@ ln(1 + x) = x - x²/2 + x³/3 - ...                        -1 < x ≤ 1
 
 O **erro** ao parar no termo de grau n é da ordem do próximo termo: f⁽ⁿ⁺¹⁾(c)·(x - a)ⁿ⁺¹/(n + 1)! para algum c entre a e x (resto de Lagrange). Por isso as bibliotecas primeiro **reduzem o argumento** (sen(100) vira o seno de um ângulo pequeno usando a periodicidade) e só então somam poucos termos.
 
-Usos: aproximações rápidas (sen x ≈ x para ângulos pequenos, no pêndulo e em física de jogos), o **método de Newton** (MC-01) é Taylor de grau 1, e a **fórmula de Euler** eⁱθ = cos θ + i·sen θ sai de comparar as três séries.
+Usos: aproximações rápidas (sen x ≈ x para ângulos pequenos, no pêndulo e em física de jogos), o **método de Newton** (MC-01) é Taylor de grau 1, e a **fórmula de Euler** e^(iθ) = cos θ + i·sen θ sai de comparar as três séries.
 
 ### Somando séries no computador
 
@@ -122,7 +122,7 @@ Um ponto é (r, θ): distância à origem e ângulo a partir do eixo x.
 - Cartesiano → polar: r = √(x² + y²), θ = **atan2(y, x)** (que acerta o quadrante; atan(y/x) não acerta e falha em x = 0).
 - Curvas ficam simples: o círculo r = 2, a espiral r = θ, a rosa r = cos(3θ), a cardioide r = 1 + cos θ.
 - Área em polares: ½ ∫ r² dθ.
-- **Números complexos** são pontos do plano: z = x + iy = r·eⁱθ. Multiplicar complexos multiplica os módulos e **soma os ângulos**: multiplicar por eⁱφ é girar por φ. É assim que se rotaciona em 2D e que a FFT funciona.
+- **Números complexos** são pontos do plano: z = x + iy = r·e^(iθ). Multiplicar complexos multiplica os módulos e **soma os ângulos**: multiplicar por e^(iφ) é girar por φ. É assim que se rotaciona em 2D e que a FFT funciona.
 
 ### Curvas paramétricas
 

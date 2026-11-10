@@ -66,12 +66,16 @@ erDiagram
 
 Como fica em tabelas (o N:N vira uma tabela de ligação):
 
-| professor | | curso | | | matricula | |
-|---|---|---|---|---|---|---|
-| **id** | nome | **id** | titulo | *professor_id* | *aluno_id* | *curso_id* |
-| 1 | Ada | 10 | Banco de Dados | 1 | 100 | 10 |
-| 2 | Alan | 11 | Redes | 2 | 100 | 11 |
-| | | | | | 101 | 10 |
+```text
+professor           curso                                  matricula
+id | nome           id | titulo         | professor_id     aluno_id | curso_id
+---+------          ---+----------------+-------------     ---------+---------
+ 1 | Ada            10 | Banco de Dados |  1                  100   |   10
+ 2 | Alan           11 | Redes          |  2                  100   |   11
+                                                              101   |   10
+```
+
+Cada curso aponta para **um** professor (`professor_id`, a FK do 1:N). Cada linha de `matricula` liga **um** aluno a **um** curso: o aluno 100 faz os dois cursos, e o curso 10 tem dois alunos.
 
 ## Conceito técnico
 
@@ -135,7 +139,7 @@ As consultas SQL são traduzidas para operações sobre conjuntos:
 | Junção | ⋈ | combina linhas de duas tabelas que casam | `JOIN ... ON` |
 | União, diferença | ∪, − | operações de conjunto | `UNION`, `EXCEPT` |
 
-Por exemplo, "títulos dos livros de autores brasileiros" é π_titulo(σ_pais='Brasil'(livro ⋈ autor)). O otimizador do banco reordena essas operações para executar mais rápido (BD-04).
+Por exemplo, "títulos dos livros de autores brasileiros" é π_titulo(σ_pais='Brasil'(livro ⋈_livro.autor_id=autor.id autor)): junte cada livro ao seu autor, fique com as linhas de autores do Brasil e mostre só o título. A condição da junção vem escrita junto do ⋈; sem ela, a junção natural casaria as colunas de mesmo nome (aqui, `id` com `id`), o que não faz sentido. O otimizador do banco reordena essas operações para executar mais rápido (BD-04).
 
 ## Código
 

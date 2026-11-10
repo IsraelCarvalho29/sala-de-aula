@@ -137,6 +137,7 @@ resource "aws_db_instance" "principal" {
   engine         = "postgres"
   engine_version = "17"
   instance_class = "db.t4g.medium"
+  # num arquivo real também vão tamanho do disco e credenciais (lidas de um cofre de segredos)
 }
 ```
 
@@ -144,7 +145,7 @@ resource "aws_db_instance" "principal" {
 - **plan**: compara o código com o **estado** registrado e com a nuvem, e mostra o que vai **criar**, **alterar** e **destruir**. Revise o plan no PR como se fosse código, porque é.
 - **apply**: executa o plano.
 - **Estado** (state): o mapa entre os recursos do código e os reais. Guarde num backend remoto com trava, nunca no Git (pode conter segredos).
-- **Drift**: alguém mudou algo no console e a realidade divergiu do código. O próximo plan mostra (e desfaz). Regra: mudança só pelo código.
+- **Drift**: alguém mudou algo no console e a realidade divergiu do código. O próximo plan mostra a diferença, e o apply a desfaz. Regra: mudança só pelo código.
 - Ferramentas: **Terraform/OpenTofu** e **Pulumi** para provisionar; **Ansible** para configurar máquinas; **Helm** e **Kustomize** para manifestos do Kubernetes. **GitOps** (Argo CD, Flux) leva a ideia ao fim: o cluster se reconcilia sozinho com o que está no Git.
 
 ### Medindo

@@ -320,7 +320,7 @@ solucao: |
               contagem[chave] = 1
           ultimo_uso[chave] = instante
       return total
-explicacao: "No segundo e no terceiro testes, a chave a foi muito usada no começo: o LFU a protege, e por isso b e c ficam disputando a única vaga restante, errando sem parar (3 acertos contra 4 do LRU). É a fraqueza do LFU: itens que foram populares no passado ocupam espaço para sempre, e implementações reais envelhecem as contagens com o tempo. No último teste oculto acontece o contrário: depois de a e b serem usados duas vezes, a chegada de c não expulsa o mais útil no LFU, que ganha. No teste com x, y, z e capacidade 2, o LRU erra todos: cada chave sai logo antes de ser pedida de novo. Redis oferece as duas políticas (allkeys-lru e allkeys-lfu), e a escolha depende do padrão de acesso real."
+explicacao: "No segundo e no terceiro testes, a chave a foi muito usada no começo: o LFU a protege, e por isso b e c ficam disputando a única vaga restante, errando sem parar (3 acertos contra 4 do LRU). É a fraqueza do LFU: itens que foram populares no passado ocupam espaço para sempre, e implementações reais envelhecem as contagens com o tempo. No último teste oculto acontece o contrário: a e b são usados duas vezes e c entra; quando a volta, o LFU expulsa c (usado uma vez só) e preserva b, que é pedido em seguida, enquanto o LRU expulsa b e erra de novo. No teste com x, y, z e capacidade 2, o LRU erra todos: cada chave sai logo antes de ser pedida de novo. Redis oferece as duas políticas (allkeys-lru e allkeys-lfu), e a escolha depende do padrão de acesso real."
 dificuldade: 2
 ```
 
@@ -423,7 +423,7 @@ solucao: |
     if (idade < maxAge + swr) return 'stale-ok';
     return 'expirado';
   }
-explicacao: "A ordem importa: no-store e no-cache vencem o max-age (último teste visível). O stale-while-revalidate é uma ótima ferramenta: o usuário recebe a resposta na hora, e a atualização acontece em segundo plano. Repare em 'max-age=60' com idade exatamente 60: já está expirado, porque o limite é estrito; erros de borda como esse causam caches que duram um segundo a mais ou a menos."
+explicacao: "A ordem importa: no-store e no-cache vencem o max-age (veja o teste com 'private, no-cache, max-age=600'). O stale-while-revalidate é uma ótima ferramenta: o usuário recebe a resposta na hora, e a atualização acontece em segundo plano. Repare em 'max-age=60' com idade exatamente 60: já está expirado, porque o limite é estrito; erros de borda como esse causam caches que duram um segundo a mais ou a menos."
 dificuldade: 2
 ```
 

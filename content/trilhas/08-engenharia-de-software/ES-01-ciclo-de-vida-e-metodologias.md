@@ -107,7 +107,7 @@ O **Manifesto Ágil** (2001) valoriza: indivíduos e interações acima de proce
 | Evento | **Revisão** | mostrar o incremento aos interessados e colher feedback |
 | Evento | **Retrospectiva** | melhorar o próprio processo do time |
 | Artefato | **Backlog do produto** | lista ordenada de tudo que pode ser feito |
-| Artefato | **Backlog da sprint** | o que o time se comprometeu a fazer na sprint |
+| Artefato | **Backlog da sprint** | o objetivo da sprint, os itens escolhidos e o plano dos desenvolvedores para entregá-los |
 | Artefato | **Incremento** | trabalho que atende à **Definição de Pronto** |
 
 **Estimativas**: muitos times estimam em **pontos de história** (esforço relativo, em geral na sequência 1, 2, 3, 5, 8, 13). A **velocidade** é a soma dos pontos concluídos por sprint; a média das últimas sprints ajuda a prever quantas sprints o backlog restante vai levar. Ela serve para **o time planejar**, não para comparar times.

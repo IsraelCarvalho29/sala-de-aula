@@ -178,7 +178,7 @@ print("por coluna:", simular_direta(por_coluna, linhas=64, bloco=64))   # 4096 f
 - **Confundir localidade temporal (o mesmo dado de novo) com espacial (dados vizinhos).**
 - **Errar a divisão do endereço**: o deslocamento usa os bits **de baixo**, depois vem o índice, e a tag é o resto.
 - **Esquecer o bit de validade**: uma linha vazia não pode dar acerto, mesmo que a tag "lixo" coincida.
-- **Percorrer matrizes por coluna** em linguagens row-major (C, Python, NumPy padrão). Em Fortran e MATLAB, a ordem é a contrária.
+- **Percorrer matrizes por coluna** em linguagens row-major (C, C++, NumPy padrão). Em Fortran e MATLAB, a ordem é a contrária.
 - **Achar que o Big-O conta tudo**: duas soluções O(n) podem diferir 10× por causa da cache.
 
 ## Pratique

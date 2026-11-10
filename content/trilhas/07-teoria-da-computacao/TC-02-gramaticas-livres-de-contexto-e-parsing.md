@@ -108,7 +108,7 @@ O modelo de máquina das GLCs é o **autômato com pilha**: um autômato finito 
 - **Descendente recursivo** (top-down, LL): uma função por variável da gramática; cada função olha o próximo token e decide qual regra seguir. É simples, rápido e dá ótimas mensagens de erro: GCC, Clang, V8, Go e Rust usam parsers escritos à mão assim. Ele **não aceita recursão à esquerda** (`expr → expr + termo` viraria uma chamada infinita): reescreva como laço, `expr → termo (('+' | '-') termo)*`.
 - **Precedence climbing / Pratt**: variação do descendente recursivo que trata operadores com uma tabela de precedências.
 - **Shunting-yard** (Dijkstra): usa uma pilha de operadores para converter expressões infixas em notação polonesa reversa (pós-fixa), fácil de avaliar com outra pilha.
-- **Ascendente** (bottom-up, LR, LALR): lê tokens e os "reduz" usando uma tabela gerada a partir da gramática. Ferramentas como yacc, Bison e o antigo parser do Python geram esses parsers.
+- **Ascendente** (bottom-up, LR, LALR): lê tokens e os "reduz" usando uma tabela gerada a partir da gramática. Ferramentas como yacc e Bison geram esses parsers. (O antigo parser do Python, usado até a versão 3.8, não era LR: era um LL(1) gerado a partir da gramática.)
 - **CYK** e **Earley**: algoritmos gerais (O(n³)) que aceitam qualquer GLC, inclusive ambíguas; usados em processamento de linguagem natural.
 - **PEG** (parsing expression grammars): escolha ordenada no lugar de alternativas, sem ambiguidade por construção; o Python usa um parser PEG desde a versão 3.9.
 

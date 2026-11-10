@@ -359,4 +359,4 @@ dificuldade: 2
 
 - Leia os capítulos 40 e 42 do OSTEP e faça o lab de file system do MIT 6.1810 (arquivos grandes com indireto duplo e links simbólicos no xv6).
 - Experimente `stat`, `ls -i`, `ln`, `ln -s`, `df -i` e `du` versus `ls -l` no seu terminal.
-- **Com isso a trilha de Sistemas operacionais está completa.** Próximas trilhas: Redes de computadores (RD-01) e Banco de dados (BD-01).
+- **Próximo módulo**: se ainda não fez, SO-08 Linha de comando Linux e shell scripting (um módulo básico, que muitos fazem logo no começo do curso), onde você pratica no terminal os comandos desta aula. Depois, as próximas trilhas são Redes de computadores (RD-01) e Banco de dados (BD-01).

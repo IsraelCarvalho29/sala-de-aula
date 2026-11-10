@@ -101,7 +101,7 @@ Um sistema como 2x + y = 5, x - y = 1 é **Ax = b**. A **eliminação de Gauss**
 
 - O **determinante** é o fator pelo qual a transformação multiplica **áreas** (2D) ou volumes (3D). det = 0 quer dizer que o espaço foi achatado numa dimensão menor: a transformação perde informação. Negativo: inverte a orientação (espelho). Para 2×2: ad - bc.
 - A **inversa** A⁻¹ desfaz A: A⁻¹A = I. Existe se e só se det ≠ 0. Para resolver Ax = b, quase nunca calcule a inversa: elimine.
-- O **posto** é a dimensão do espaço de saída (quantas colunas independentes). Vetores são **linearmente independentes** se nenhum é combinação dos outros.
+- O **posto** é a dimensão do conjunto de vetores que a transformação de fato alcança (a sua imagem): é o número de colunas independentes. Uma matriz 3×3 que achata o espaço num plano tem posto 2. Vetores são **linearmente independentes** se nenhum é combinação dos outros.
 
 ### Coordenadas homogêneas
 

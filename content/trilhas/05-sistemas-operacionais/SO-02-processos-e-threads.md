@@ -75,7 +75,7 @@ O kernel guarda tudo isso num **PCB** (*process control block*, a `struct task_s
 
 Num núcleo, só **um** processo está **executando** por vez. Os outros estão **prontos** (esperando a vez) ou **bloqueados** (esperando algo: o disco, a rede, o teclado). Um processo bloqueado não ocupa a CPU: quando a E/S termina, uma interrupção o devolve para **pronto**.
 
-A **troca de contexto** é o kernel salvar os registradores do processo atual no PCB dele e carregar os de outro. Custa alguns microssegundos (e esvazia caches e o TLB), então trocar demais também desperdiça tempo.
+A **troca de contexto** é o kernel salvar os registradores do processo atual no PCB dele e carregar os de outro. Custa alguns microssegundos, e o processo que entra encontra as caches e o TLB cheios de dados do anterior (muitas faltas logo depois da troca), então trocar demais também desperdiça tempo.
 
 ### A API de processos do Unix
 

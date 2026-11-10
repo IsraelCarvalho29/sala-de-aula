@@ -150,7 +150,7 @@ for p in embutidos:
 print([p["_id"] for p in posts if "desempenho" in p["tags"]])
 ```
 
-Em MongoDB, a mesma consulta e um índice nela seriam:
+Em MongoDB, a mesma consulta (agora também filtrando pelo campo aninhado `autor.nome`, que só existe nos posts embutidos) e um índice nela seriam:
 
 ```text
 db.posts.find({ tags: "desempenho", "autor.nome": "Ana" })

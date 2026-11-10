@@ -368,7 +368,7 @@ solucao: |
       canal = CanalMemoria()
       enviados = Notificador(canal).avisar_atrasos(pedidos, hoje)
       return enviados, canal.enviadas
-explicacao: "A regra de negócio não mudou uma linha: só a origem do canal. Em produção, o código de inicialização do sistema (o main ou um contêiner de injeção) faz Notificador(SmtpReal()); nos testes, Notificador(CanalMemoria()). O CanalMemoria é um dublê de teste do tipo fake, assunto da ES-06."
+explicacao: "A regra de negócio não mudou uma linha: só a origem do canal. Em produção, o código de inicialização do sistema (o main ou um contêiner de injeção) faz Notificador(SmtpReal()); nos testes, Notificador(CanalMemoria()). O CanalMemoria é um dublê de teste do tipo spy (registra as chamadas para o teste conferir depois), assunto da ES-06."
 dificuldade: 1
 ```
 

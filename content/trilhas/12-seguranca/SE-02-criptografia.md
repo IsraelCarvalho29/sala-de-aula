@@ -77,11 +77,13 @@ Base64 só troca a representação. `c2VuaGExMjM=` é `senha123` para qualquer p
 
 ### Hash criptográfico
 
-Uma função que transforma qualquer entrada num resumo de tamanho fixo (SHA-256: 256 bits), com três propriedades:
+Uma função que transforma qualquer entrada num resumo de tamanho fixo (SHA-256: 256 bits), com três propriedades de segurança:
 
 - **Resistência à pré-imagem**: dado o hash, não dá para achar uma entrada que o gere.
-- **Resistência à segunda pré-imagem** e **a colisões**: não dá para achar duas entradas com o mesmo hash.
-- **Efeito avalanche**: mudar um bit na entrada muda cerca de metade dos bits do hash.
+- **Resistência à segunda pré-imagem**: dada uma entrada, não dá para achar **outra** com o mesmo hash.
+- **Resistência a colisões**: não dá para achar **nenhum** par de entradas com o mesmo hash.
+
+("Não dá" quer dizer: levaria um tempo impraticável, mesmo com muitos computadores.) Além disso, vale o **efeito avalanche**: mudar um bit na entrada muda cerca de metade dos bits do hash.
 
 Usos: conferir integridade de downloads, deduplicar arquivos, endereçar conteúdo (o Git identifica commits por hash), e como base de HMAC e assinaturas. **MD5 e SHA-1 estão quebrados** para colisões: não os use em segurança.
 
@@ -303,7 +305,7 @@ solucao: |
   def conferir(senha, guardado):
       sal, n, _ = guardado.split('$')
       return hmac.compare_digest(guardar(senha, sal, int(n)), guardado)
-explicacao: "Você acabou de montar a estrutura de um hash de senha moderno: sal por usuário (o terceiro teste mostra a mesma senha com hashes diferentes), custo ajustável guardado junto e comparação em tempo constante. Strings do bcrypt e do Argon2 têm o mesmo formato, como $argon2id$v=19$m=65536,t=3,p=4$sal$hash. A diferença é que essas funções também gastam muita memória, o que tira a vantagem das GPUs, e por isso é delas que você deve usar em produção."
+explicacao: "Você acabou de montar a estrutura de um hash de senha moderno: sal por usuário (o terceiro teste mostra a mesma senha com hashes diferentes), custo ajustável guardado junto e comparação em tempo constante. Strings do bcrypt e do Argon2 têm o mesmo formato, como $argon2id$v=19$m=65536,t=3,p=4$sal$hash. A diferença é que essas funções também gastam muita memória, o que tira a vantagem das GPUs, e por isso são elas que você deve usar em produção."
 dificuldade: 2
 ```
 

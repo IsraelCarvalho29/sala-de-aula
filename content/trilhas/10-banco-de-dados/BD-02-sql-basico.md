@@ -55,7 +55,7 @@ flowchart LR
     O --> L["7. LIMIT<br/>corta"]
 ```
 
-Por isso o `WHERE` não enxerga apelidos criados no `SELECT`, e não pode usar `SUM(...)` (os grupos ainda nem existem): para filtrar por agregado, use `HAVING`.
+Por isso, no SQL padrão, o `WHERE` não enxerga apelidos criados no `SELECT` (o SQLite aceita como extensão, mas o PostgreSQL dá erro; não conte com isso), e não pode usar `SUM(...)` (os grupos ainda nem existem): para filtrar por agregado, use `HAVING`.
 
 O banco de exemplo desta aula (já carregado nos desafios):
 
@@ -153,7 +153,7 @@ SELECT COUNT(*) AS linhas, COUNT(cidade) AS com_cidade FROM clientes;
 - **Usar INNER JOIN quando queria manter quem não tem par.** Clientes sem pedidos somem; use LEFT JOIN.
 - **`UPDATE` ou `DELETE` sem `WHERE`.**
 - **Somar depois de juntar com várias tabelas "muitos"** sem perceber que as linhas se multiplicaram. Use `COUNT(DISTINCT ...)` quando precisar.
-- **Montar SQL concatenando texto do usuário** (`"... WHERE nome = '" + nome + "'"`): é a porta para SQL injection (SG). Use parâmetros (`?`).
+- **Montar SQL concatenando texto do usuário** (`"... WHERE nome = '" + nome + "'"`): é a porta para SQL injection (SE-04). Use parâmetros (`?`).
 
 ## Pratique
 
