@@ -180,12 +180,16 @@ while n > 0:
 print(digitos)       # 4
 ```
 
-Laço aninhado: um triângulo de asteriscos.
+Laço aninhado: um triângulo de asteriscos. Para cada linha (laço de fora), o laço de dentro imprime um `*` por coluna até o número da linha:
 
 ```python
 for linha in range(1, 5):
-    print("*" * linha)
+    for coluna in range(linha):
+        print("*", end="")   # end="" não pula de linha
+    print()                  # fim da linha: agora sim pula
 ```
+
+(Em Python dá para encurtar o laço de dentro com `print("*" * linha)`, mas a versão aninhada mostra o que acontece por baixo.)
 
 `continue` para pular os múltiplos de 3:
 

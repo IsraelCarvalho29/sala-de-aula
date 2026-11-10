@@ -79,7 +79,7 @@ Se o grafo não for conexo, não há árvore geradora; o melhor possível é uma
 
 Divida os vértices em dois grupos quaisquer (um **corte**). A aresta **mais leve** que atravessa o corte pertence a alguma MST.
 
-Por quê? Se uma MST não usasse essa aresta e, adicionarmos a aresta, formaria um ciclo que atravessa o corte em outro ponto, por uma aresta mais pesada (ou igual). Trocar a pesada pela leve dá uma árvore geradora com custo menor ou igual. Essa propriedade é o que justifica os dois algoritmos:
+Por quê? Suponha uma MST que não usa essa aresta. Adicionando-a, forma-se um ciclo, e esse ciclo precisa atravessar o corte em outro ponto, por uma aresta mais pesada (ou de mesmo peso). Trocar a pesada pela leve dá uma árvore geradora com custo menor ou igual, então existe uma MST que usa a aresta leve. Essa propriedade é o que justifica os dois algoritmos:
 
 - No **Prim**, o corte é "árvore atual × resto". Ele sempre pega a aresta mais leve desse corte.
 - No **Kruskal**, quando uma aresta liga dois grupos diferentes, ela é a mais leve que sai de qualquer um deles (as mais leves já foram consideradas).

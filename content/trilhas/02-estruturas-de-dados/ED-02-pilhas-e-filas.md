@@ -141,8 +141,9 @@ def balanceado(texto):
                 return False
     return not pilha   # sobrou abertura sem fechamento?
 
-balanceado("{[()()]}")  # True
-balanceado("([)]")      # False
+print(balanceado("{[()()]}"))  # True
+print(balanceado("([)]"))      # False
+print(balanceado("(("))        # False: sobrou abertura
 ```
 
 ## Erros comuns
@@ -189,7 +190,7 @@ tipo: multipla_escolha
 pergunta: "A busca em largura (BFS) em um grafo visita os vizinhos nível por nível. Qual estrutura ela usa para guardar os próximos vértices?"
 opcoes: ["Pilha", "Fila", "Árvore", "Conjunto ordenado"]
 resposta: 1
-explicacao: "BFS processa os vértices na ordem em que foram descobertos (FIFO), o que garante a visita por níveis. Trocar a fila por uma pilha transforma a busca em profundidade (DFS)."
+explicacao: "BFS processa os vértices na ordem em que foram descobertos (FIFO), o que garante a visita por níveis. Trocar a fila por uma pilha transforma a BFS numa busca em profundidade (DFS)."
 dificuldade: 2
 ```
 
@@ -391,6 +392,6 @@ dificuldade: 2
 
 ## Para ir além
 
-- Desafio extra: avalie expressões em notação polonesa reversa (`"3 4 + 2 *"` → 14) usando uma pilha.
+- Desafio extra: converta uma expressão comum como `(3 + 4) * 2` para a notação polonesa reversa (`3 4 + 2 *`) com o algoritmo *shunting-yard* de Dijkstra, que usa uma pilha para os operadores. Depois avalie o resultado com a sua `calcular` do desafio acima.
 - *Estruturas de Dados e Algoritmos em Python* (Goodrich, Tamassia, Goldwasser), cap. 6.
 - **Próximos módulos**: ED-03 Listas ligadas e AL-05 BFS e DFS.

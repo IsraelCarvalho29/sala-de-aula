@@ -167,7 +167,7 @@ dificuldade: 2
 
 ```quiz
 id: ED-01-q4
-tipo: prever_saida
+tipo: multipla_escolha
 pergunta: |
   Qual a complexidade de tempo desta função?
   ```python
@@ -176,7 +176,8 @@ pergunta: |
       while i > 1:
           i = i // 2
   ```
-resposta: "O(log n)"
+opcoes: ["O(1)", "O(log n)", "O(n)", "O(n²)"]
+resposta: 1
 explicacao: "i é dividido por 2 a cada volta; o número de voltas é quantas vezes dá para dividir n por 2 até chegar a 1, que é log₂ n."
 dificuldade: 2
 ```
@@ -193,7 +194,7 @@ dificuldade: 2
 
 ```quiz
 id: ED-01-q6
-tipo: prever_saida
+tipo: multipla_escolha
 pergunta: |
   Qual a complexidade de tempo?
   ```python
@@ -204,7 +205,8 @@ pergunta: |
               resultado.append(x)
       return resultado
   ```
-resposta: "O(n²)"
+opcoes: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"]
+resposta: 2
 explicacao: "`x not in resultado` percorre a lista `resultado`, que pode ter até n itens. Esse O(n) escondido dentro do laço O(n) gera O(n²). Trocar `resultado` por um set (mantendo a ordem em uma lista separada) baixa para O(n)."
 dificuldade: 3
 ```

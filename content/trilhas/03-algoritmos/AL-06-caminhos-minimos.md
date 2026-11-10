@@ -65,7 +65,7 @@ A BFS diria "A → B → D" (2 arestas), que custa 4 + 1 = 5.
 
 A operação central dos dois algoritmos:
 
-```python
+```text
 # aresta u → v com peso w
 if dist[u] + w < dist[v]:
     dist[v] = dist[u] + w      # achei um caminho melhor até v, passando por u
