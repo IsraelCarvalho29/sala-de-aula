@@ -26,7 +26,7 @@ tags: [estruturas-de-dados, lifo, fifo]
 
 1. **Por que isso importa**: um problema real que o conceito resolve (2-4 frases).
 2. **Intuição**: analogia do dia a dia, sem jargão.
-3. **Visual**: diagrama (ASCII/Mermaid). O app deve animar quando houver passo a passo.
+3. **Visual**: diagrama (ASCII/Mermaid). Quando houver passo a passo (algoritmo, estrutura mudando), use um bloco ` ```visual ` (formato no README, seção "Explicações passo a passo").
 4. **Conceito técnico**: definição precisa, operações, complexidade.
 5. **Código**: implementação comentada (Python por padrão).
 6. **Erros comuns**: 3-5 equívocos frequentes.

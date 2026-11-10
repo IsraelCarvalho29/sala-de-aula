@@ -10,6 +10,8 @@ Uma sala de aula web para estudar **Ciência da Computação, Engenharia de Soft
 - **IDE no navegador**: desafios de código com editor de verdade (números de linha, destaque de sintaxe, indentação automática, erros marcados na linha) e execução real, sem servidor, em **Python, JavaScript, TypeScript, C/C++, SQL e HTML/CSS**. A correção roda testes, confere a indentação e mostra o erro explicado em português. Todo exemplo de código da aula tem o botão **▶ Experimentar**.
 - **Diagramas** em [Mermaid](https://mermaid.js.org/) escritos direto no texto da aula.
 - **Progresso local**: aulas concluídas e perguntas acertadas ficam no `localStorage`, com exportação e importação em JSON para backup.
+- **Explicações passo a passo**: blocos ` ```visual ` mostram algoritmos e estruturas (pilha, fila, lista ligada, ordenações, busca binária, BFS, DFS) um passo de cada vez, com pseudocódigo, variáveis, perguntas de previsão e dados que o aluno pode trocar.
+- **Funciona offline (PWA)**: depois da primeira visita, as aulas abrem sem internet e o site pode ser instalado no celular. Python e SQL ficam offline depois de usados uma vez ou pelo botão "Baixar Python e SQL" da página inicial.
 - **Responsivo**: layout próprio para telas pequenas, alvos de toque de 44 a 48 px, tema claro e escuro conforme o sistema.
 
 ## Como rodar
@@ -27,6 +29,8 @@ npm run validar   # confere as aulas e roda a solução de cada desafio contra o
 Para estudar no celular com o servidor de desenvolvimento, rode `npm run dev -- --host` e abra no celular o endereço de rede que aparece no terminal (os dois aparelhos precisam estar na mesma rede Wi-Fi).
 
 ## Publicar
+
+O modo offline só existe no build (`npm run build` gera `dist/sw.js` a partir de [`pwa/sw.js`](pwa/sw.js)); para testá-lo localmente use `npm run build && npm run preview`. Cada build muda a versão do cache, e o app mostra "Há uma versão nova" com o botão Atualizar.
 
 O workflow [`deploy.yml`](.github/workflows/deploy.yml) publica o site no GitHub Pages a cada push na `main`. Para ativar, vá em **Settings → Pages** do repositório e escolha **Source: GitHub Actions**. O app usa rotas com `#` e caminhos relativos, então funciona em qualquer subpasta sem configuração extra.
 
@@ -48,7 +52,12 @@ src/
   lib/progresso.ts          progresso no localStorage
   lib/execucao/             executores de código no navegador (um Web Worker por linguagem)
     corretor.py             roda o Python do aluno, simula input(), traduz erros, confere indentação
-  components/               Markdown, Quiz, IdeCodigo, EditorCodigo, Diagrama, Flashcard, BarraProgresso
+  components/               Markdown, Quiz, IdeCodigo, EditorCodigo, Diagrama, Flashcard, BarraProgresso, AvisoPwa
+  components/visual/        VisualStep (motor passo a passo), Palco (desenhos) e BlocoVisual (bloco ```visual)
+  lib/visual/passos.ts      geradores de passos de cada algoritmo (também usados pelo validador)
+  lib/pwa.ts                registro do service worker, aviso de atualização, download dos runtimes
+pwa/sw.js                   modelo do service worker (o build preenche a lista de arquivos)
+public/                     manifest.webmanifest e ícones do app
   pages/                    Início, Trilha, Aula
 ```
 
@@ -136,6 +145,30 @@ flowchart LR
   B -->|não| D[Busca linear]
 ```
 ````
+
+### Explicações passo a passo
+
+Um bloco ` ```visual ` em YAML vira uma animação controlada pelo aluno (⏮ ◀ ▶ ▶| ⏭, setas do teclado, deslizar no celular), com o pseudocódigo da linha atual, as variáveis e perguntas "Antes de avançar" que travam o avanço até o aluno acertar. O aluno pode mudar os dados no cabeçalho e clicar em **Ver de novo** (desligue com `editavel: false`).
+
+````markdown
+```visual
+tipo: ordenacao              # veja a tabela abaixo
+algoritmo: insercao
+valores: 5, 2, 4, 1, 3
+titulo: "Opcional: troca o título"
+```
+````
+
+| `tipo` | Campos | Exemplo |
+|---|---|---|
+| `pilha` | `operacoes`: push, pop, peek, vazia | `push 1, push 2, pop` |
+| `fila` | `operacoes`: enqueue, dequeue, frente, vazia | `enqueue A, enqueue B, dequeue` |
+| `lista-ligada` | `valores` (lista inicial) e `operacoes`: inserir_inicio, inserir_fim, buscar, remover | `inserir_inicio 5, remover 20` |
+| `ordenacao` | `algoritmo`: bolha, selecao, insercao, merge, quick; `valores` (2 a 10 números) | `valores: 5, 2, 4, 1, 3` |
+| `busca-binaria` | `valores` (em ordem crescente) e `alvo` | `alvo: 23` |
+| `bfs`, `dfs` | `arestas` (`A-B` não dirigida, `A->B` dirigida) e `inicio` | `arestas: A-B, A-C, B-D` |
+
+Para um algoritmo novo, escreva uma função geradora em `src/lib/visual/passos.ts` (roda o algoritmo uma vez e devolve a lista de passos) e, se precisar de um desenho novo, um palco em `src/components/visual/Palco.tsx`. `npm run validar` gera todos os blocos ` ```visual ` das aulas e acusa erro de dados.
 
 ### Novas trilhas ou módulos no currículo
 

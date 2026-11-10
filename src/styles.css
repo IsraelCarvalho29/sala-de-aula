@@ -364,3 +364,10 @@ textarea.resposta-aluno { width: 100%; padding: var(--sp-3); border-radius: var(
   .vs-form-botoes { width: 100%; }
   .vs-form-botoes button { flex: 1; min-height: var(--toque); }
 }
+
+/* ---------- modo offline (PWA) ---------- */
+.aviso-pwa { display: flex; align-items: center; justify-content: center; gap: var(--sp-3); flex-wrap: wrap; padding: var(--sp-2) var(--sp-4); background: var(--brand-soft); border-bottom: 1px solid var(--brand); font-size: .9rem; text-align: center; }
+.aviso-pwa .botao { min-height: 36px; }
+.aviso-pwa.offline { background: color-mix(in srgb, var(--st-active) 16%, transparent); border-bottom-color: var(--st-active); }
+.selo-offline { margin-left: var(--sp-2); font-size: .8rem; color: var(--st-success); }
+.ferramentas p { color: var(--text); font-size: .95rem; }

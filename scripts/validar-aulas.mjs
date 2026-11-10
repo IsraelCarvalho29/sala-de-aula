@@ -122,6 +122,30 @@ for (const a of aulas) {
   }
 }
 
+/* ------------------------------------------------------------ explicações visuais */
+
+// ```visual: o mesmo gerador do app (src/lib/visual/passos.ts) precisa montar os passos sem erro
+const { gerarVisual } = await import('../src/lib/visual/passos.ts');
+let nVisuais = 0;
+for (const a of aulas) {
+  if (filtro && !a.caminho.includes(filtro)) continue;
+  let atual = null;
+  a.corpo.split('\n').forEach((l, i) => {
+    if (!atual && /^```visual\s*$/.test(l)) atual = { linha: i + 1, linhas: [] };
+    else if (atual && /^```\s*$/.test(l)) {
+      const onde = `${a.caminho}:${atual.linha} (visual)`;
+      nVisuais++;
+      try {
+        const v = gerarVisual(parseYaml(atual.linhas.join('\n')) ?? {});
+        if (v.passos.length < 2) falhar(onde, 'a visualização tem menos de 2 passos');
+      } catch (e) {
+        falhar(onde, e.message);
+      }
+      atual = null;
+    } else if (atual) atual.linhas.push(l);
+  });
+}
+
 /* ------------------------------------------------------------ executores */
 
 function rodarPython(lote) {
@@ -313,5 +337,5 @@ await navegador?.close();
 const nAulas = aulas.filter((a) => !filtro || a.caminho.includes(filtro)).length;
 avisos.forEach((a) => console.log(`aviso  ${a}`));
 erros.forEach((e) => console.log(`ERRO   ${e}`));
-console.log(`\n${nAulas} aula(s), ${ids.size} pergunta(s), ${desafios.length} desafio(s) de código, ${erros.length} erro(s).`);
+console.log(`\n${nAulas} aula(s), ${ids.size} pergunta(s), ${desafios.length} desafio(s) de código, ${nVisuais} visual(is), ${erros.length} erro(s).`);
 process.exit(erros.length ? 1 : 0);
