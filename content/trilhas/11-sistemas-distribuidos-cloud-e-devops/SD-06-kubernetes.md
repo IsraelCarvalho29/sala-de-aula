@@ -307,7 +307,7 @@ solucao: |
           if diff != 0:
               resultado[app] = diff
       return resultado
-explicacao: "É a comparação no meio do laço observar, comparar, agir. O último teste oculto mostra por que pods Failed não contam: eles existem como objeto, mas não servem tráfego. No Kubernetes de verdade, o ReplicaSet também ignora pods sendo apagados e os que não batem com o seletor, e cria ou remove em lotes para não sobrecarregar o API server."
+explicacao: "É a comparação no meio do laço observar, comparar, agir. O terceiro teste e o segundo teste oculto mostram por que pods Failed não contam: eles existem como objeto, mas não servem tráfego. No Kubernetes de verdade, o ReplicaSet também ignora pods sendo apagados e os que não batem com o seletor, e cria ou remove em lotes para não sobrecarregar o API server."
 dificuldade: 2
 ```
 

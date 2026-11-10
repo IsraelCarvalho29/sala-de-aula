@@ -115,7 +115,7 @@ Compiladores tentam esconder essa bolha **reordenando**: colocam entre o `lw` e 
 ### Predição de desvio
 
 - **Estática**: "sempre não tomado", ou "desvios para trás (laços) são tomados".
-- **Dinâmica de 1 bit**: lembra o que o desvio fez da última vez. Num laço, erra **duas** vezes por execução: na saída e na volta.
+- **Dinâmica de 1 bit**: lembra o que o desvio fez da última vez. Num laço, erra **duas** vezes por execução: na saída do laço e na primeira volta da execução seguinte (porque lembrou do "não tomado" da saída).
 - **Dinâmica de 2 bits** (contador saturado): 4 estados, 0 e 1 preveem "não tomado", 2 e 3 preveem "tomado". Tomado soma 1 (até 3), não tomado subtrai 1 (até 0). Precisa errar **duas vezes seguidas** para mudar de ideia, então a saída de um laço não estraga a previsão da próxima execução.
 
 ```mermaid

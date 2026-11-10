@@ -130,6 +130,7 @@ Criado pelo Google. O contrato fica num arquivo **`.proto`** (Protocol Buffers),
 syntax = "proto3";
 message BuscarRequest { int64 id = 1; }
 message Usuario { int64 id = 1; string nome = 2; string email = 3; }
+message Pedido { int64 id = 1; double total = 2; }
 service Usuarios {
   rpc Buscar (BuscarRequest) returns (Usuario);
   rpc AcompanharPedidos (BuscarRequest) returns (stream Pedido);
@@ -248,7 +249,7 @@ dificuldade: 1
 id: AS-03-q4
 tipo: resposta_curta
 pergunta: "Por que a paginação por cursor costuma ser melhor que a por offset num feed com milhões de itens que recebe itens novos o tempo todo?"
-resposta: "Porque o cursor usa o índice (WHERE id > cursor ORDER BY id LIMIT n), com custo constante, enquanto o offset obriga o banco a pular todas as linhas anteriores. E o cursor é estável: itens inseridos durante a navegação não fazem o cliente ver repetidos nem pular itens, o que acontece com offset."
+resposta: "Porque o cursor usa o índice (WHERE id > cursor ORDER BY id LIMIT n), com um custo que não cresce conforme o cliente avança nas páginas, enquanto o offset obriga o banco a pular todas as linhas anteriores. E o cursor é estável: itens inseridos durante a navegação não fazem o cliente ver repetidos nem pular itens, o que acontece com offset."
 palavras_chave: ["índice", "pular", "estável", "repetidos"]
 dificuldade: 2
 ```

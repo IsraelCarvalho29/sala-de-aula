@@ -150,13 +150,13 @@ async function carregarProdutos() {
   }
 }
 
-// em paralelo, não um depois do outro:
+// em paralelo, não um depois do outro (dentro de uma função async ou de um módulo):
 const [usuario, pedidos] = await Promise.all([buscarUsuario(), buscarPedidos()]);
 ```
 
 - Uma **Promise** representa um valor futuro: pendente, realizada ou rejeitada.
 - `fetch` só rejeita em falha de **rede**; um 404 ou 500 chega como resposta normal: confira `resposta.ok`.
-- `Promise.all` falha se qualquer uma falhar; `Promise.allSettled` espera todas; `Promise.race`/`any` ficam com a primeira.
+- `Promise.all` falha se qualquer uma falhar; `Promise.allSettled` espera todas; `Promise.race` fica com a primeira que terminar (com sucesso ou erro) e `Promise.any` com a primeira que der certo.
 - Esquecer o `await` é o bug clássico: você recebe uma `Promise` em vez do valor.
 - Use `AbortController` para cancelar buscas que não importam mais (o usuário digitou outra letra).
 

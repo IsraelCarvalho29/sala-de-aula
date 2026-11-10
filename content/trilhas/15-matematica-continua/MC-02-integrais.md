@@ -77,7 +77,7 @@ Para f em [a, b], divida o intervalo em n pedaços de largura Δx = (b - a)/n e 
 
 - É uma **área com sinal**: partes abaixo do eixo x contam negativo. ∫ de sen(x) entre 0 e 2π é 0.
 - **Linearidade**: ∫(f + g) = ∫f + ∫g e ∫c·f = c·∫f.
-- **Aditividade**: ∫ₐᶜ = ∫ₐᵇ + ∫ᵦᶜ.
+- **Aditividade**: a integral de a até c é a integral de a até b mais a de b até c (vale até com b fora do intervalo, lembrando que inverter os limites troca o sinal).
 - **Média** de f em [a, b]: (1/(b - a)) ∫ₐᵇ f(x) dx.
 
 ### Primitivas e o teorema fundamental

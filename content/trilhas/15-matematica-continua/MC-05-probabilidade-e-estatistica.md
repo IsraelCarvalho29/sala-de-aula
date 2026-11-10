@@ -144,7 +144,8 @@ def histograma(valores, minimo, maximo, faixas=12, largura=40):
 for n in [1, 2, 10, 50]:
     medias = [statistics.mean(random.randint(1, 6) for _ in range(n)) for _ in range(5000)]
     print(f"média de {n} dados: média {statistics.mean(medias):.3f}, desvio {statistics.stdev(medias):.3f} (teórico {1.708 / n ** 0.5:.3f})")
-    histograma(medias, 0.5, 6.5, faixas=6 if n == 1 else 15)
+    faixas = {1: 6, 2: 11}.get(n, 15)   # com 1 e 2 dados, uma faixa por valor possível da média
+    histograma(medias, 0.5, 6.5, faixas)
 ```
 
 Com 1 dado a distribuição é plana; com 10, já é um sino; e o desvio cai como 1/√n, como o TCL prevê (1,708 é o desvio de um único dado).
@@ -358,3 +359,4 @@ dificuldade: 2
 - Leia os capítulos de inferência do OpenIntro Statistics.
 - Calcule com uma calculadora de tamanho de amostra quantos visitantes um teste A/B do seu projeto precisaria para detectar uma melhora de 10%.
 - **Fim da trilha.** Com cálculo, álgebra linear e probabilidade, você tem a base matemática da trilha de IA e aprendizado de máquina.
+- **Próximo módulo**: IA-01 O que é aprendizado de máquina: supervisionado × não supervisionado.

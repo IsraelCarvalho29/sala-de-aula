@@ -88,7 +88,7 @@ Serve para **tolerar falhas**, **escalar leituras** e **reduzir latência** (uma
 |---|---|---|---|
 | **Líder único** | escritas só no líder, que envia as mudanças (o log) aos seguidores; leituras em qualquer um | PostgreSQL, MySQL, MongoDB | o líder é o gargalo de escrita; failover |
 | **Múltiplos líderes** | cada datacenter tem um líder que aceita escritas e sincroniza com os outros | bancos geo-distribuídos, apps offline (cada celular é um "líder") | **conflitos** de escrita concorrente |
-| **Sem líder** | o cliente escreve e lê em várias réplicas, com quóruns `W + R > N` (BD-06) | Cassandra, DynamoDB, Riak | conflitos; reparo na leitura e anti-entropia |
+| **Sem líder** | o cliente escreve e lê em várias réplicas, com quóruns `W + R > N` (BD-06) | Cassandra, Riak, o Dynamo original da Amazon | conflitos; reparo na leitura e anti-entropia |
 
 **Síncrona ou assíncrona**: na síncrona, o líder espera o seguidor confirmar antes de responder (sem perda, porém mais lento e travado se o seguidor cair). Na assíncrona, responde na hora (rápido, mas um failover pode **perder** escritas confirmadas). É comum um meio-termo: um seguidor síncrono e os outros assíncronos.
 
@@ -121,7 +121,7 @@ Cada registro pertence a **uma** partição, escolhida pela **chave de partiçã
 
 ### Consenso
 
-O problema: vários nós precisam **concordar com um valor** de modo que todos os que decidem decidam o mesmo (**segurança**), que o valor tenha sido proposto por alguém, e que, com a maioria funcionando e a rede se comportando, uma decisão acabe saindo (**progresso**). O resultado FLP mostra que, num sistema totalmente assíncrono, nenhum algoritmo garante progresso com uma única falha; na prática, usa-se timeouts para contornar.
+O problema: vários nós precisam **concordar com um valor** de modo que todos os que decidem decidam o mesmo (**segurança**), que o valor tenha sido proposto por alguém, e que, com a maioria funcionando e a rede se comportando, uma decisão acabe saindo (**progresso**). O resultado FLP mostra que, num sistema totalmente assíncrono, nenhum algoritmo determinístico garante progresso se um único nó puder falhar; na prática, usa-se timeouts para contornar.
 
 **Raft** (2014), desenhado para ser entendido:
 

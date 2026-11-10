@@ -79,7 +79,7 @@ sequenceDiagram
 
 | Padrão | Problema | Ideia | Em Python |
 |---|---|---|---|
-| **Factory Method** | o código não deveria saber qual classe concreta instanciar | uma função ou método decide e devolve o objeto | uma função `criar_exportador(formato)` com um dicionário `{"csv": ExportadorCSV, ...}` |
+| **Factory Method** | o código não deveria saber qual classe concreta instanciar | um método de criação decide e devolve o objeto (no GoF, cada subclasse sobrescreve esse método) | a versão simplificada, às vezes chamada de *simple factory*: uma função `criar_exportador(formato)` com um dicionário `{"csv": ExportadorCSV, ...}` |
 | **Abstract Factory** | criar **famílias** de objetos que combinam (tema claro: botão claro, menu claro) | um objeto fábrica por família | classes de fábrica ou módulos |
 | **Builder** | objeto com muitos parâmetros opcionais, montado em passos | um construtor fluente `.com_x().com_y().construir()` | muitas vezes basta argumentos nomeados ou `dataclass` |
 | **Singleton** | garantir uma única instância global | a classe controla a própria criação | um **módulo** já é único; prefira injetar a dependência |

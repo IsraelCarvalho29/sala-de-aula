@@ -111,7 +111,7 @@ TypeScript e o Python com anotações misturam os dois mundos: você anota onde 
 Escrever todos os tipos é cansativo, e o compilador consegue deduzir boa parte:
 
 - **Inferência local** (Java `var`, C++ `auto`, Go `:=`, TypeScript, Kotlin): o tipo da variável vem da expressão à direita. `const n = 3` é `number`.
-- **Inferência global, Hindley-Milner** (Haskell, OCaml, F#, a base do Rust): deduz até os tipos dos parâmetros de funções pelo **uso**. Em OCaml, `let soma x y = x + y` é inferida como `int -> int -> int` porque `+` só existe para inteiros. A ideia é gerar **equações** entre tipos ("o tipo de x é igual ao do primeiro argumento de +") e resolvê-las por **unificação**.
+- **Inferência global, Hindley-Milner** (Haskell, OCaml, F#; o Rust usa uma versão dela só dentro do corpo das funções, exigindo tipos nas assinaturas): deduz até os tipos dos parâmetros de funções pelo **uso**. Em OCaml, `let soma x y = x + y` é inferida como `int -> int -> int` porque `+` só existe para inteiros. A ideia é gerar **equações** entre tipos ("o tipo de x é igual ao do primeiro argumento de +") e resolvê-las por **unificação**.
 - **Polimorfismo e genéricos**: `let primeiro (a, b) = a` vira `'a * 'b -> 'a`: funciona para quaisquer tipos. Em TypeScript, `function primeiro<A, B>(p: [A, B]): A`.
 
 Como um verificador funciona por dentro (o desafio desta aula): percorre a árvore da expressão de baixo para cima; o tipo de cada nó é calculado a partir do tipo dos filhos e de uma regra. Para `a + b`: se `a` e `b` são números, o resultado é número, senão erro. Para `if c then x else y`: `c` precisa ser booleano, e `x` e `y` precisam ter o **mesmo** tipo, que é o tipo do `if`.

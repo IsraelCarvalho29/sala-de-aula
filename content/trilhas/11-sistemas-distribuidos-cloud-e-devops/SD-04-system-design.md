@@ -305,7 +305,7 @@ testes:
   - chamada: "len(codificar(62 ** 7 - 1))"
     visivel: false
     saida: "7"
-dica: "É a mesma conversão de base da MD-01: divida por 62 repetidamente, guardando os restos, e inverta. Para decodificar, acumule valor = valor * 62 + ALFABETO.index(c)."
+dica: "É a mesma conversão de base da MD-04: divida por 62 repetidamente, guardando os restos, e inverta. Para decodificar, acumule valor = valor * 62 + ALFABETO.index(c)."
 solucao: |
   ALFABETO = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 

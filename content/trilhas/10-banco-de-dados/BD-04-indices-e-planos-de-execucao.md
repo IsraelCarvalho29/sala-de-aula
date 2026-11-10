@@ -53,7 +53,7 @@ flowchart TB
     N1 --> F3["folhas 120..199"]
     F1 -. "próxima folha" .-> F2
     F2 -. "próxima folha" .-> F3
-    F2 --> L["cliente_id = 42 → linhas 42, 542, 1042 ..."]
+    F1 --> L["cliente_id = 42 → linhas 42, 542, 1042 ..."]
 ```
 
 Custo aproximado para achar um valor numa tabela de 10 milhões de linhas:

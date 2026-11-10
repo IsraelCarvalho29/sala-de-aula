@@ -34,7 +34,7 @@ tags: [seguranca, autenticacao, autorizacao, sessao, jwt, oauth, oidc, rbac, mfa
 
 ## Por que isso importa
 
-Quase todo sistema tem login, e o login é a porta mais atacada: robôs testam milhões de senhas vazadas (credential stuffing), roubam sessões e procuram rotas que esquecem de checar permissão. **Quebra de controle de acesso** é o primeiro item do OWASP Top 10, e falhas de autenticação aparecem logo depois. Saber como funcionam sessões, JWT e o "Entrar com Google" é obrigatório para quem faz back-end, e ajuda o front-end a não guardar tokens no lugar errado.
+Quase todo sistema tem login, e o login é a porta mais atacada: robôs testam milhões de senhas vazadas (credential stuffing), roubam sessões e procuram rotas que esquecem de checar permissão. **Quebra de controle de acesso** é o primeiro item do OWASP Top 10, e falhas de autenticação também estão na lista. Saber como funcionam sessões, JWT e o "Entrar com Google" é obrigatório para quem faz back-end, e ajuda o front-end a não guardar tokens no lugar errado.
 
 ## Intuição
 
@@ -94,7 +94,7 @@ sequenceDiagram
 - Atributos do cookie:
   - `HttpOnly`: o JavaScript não lê o cookie (um XSS não rouba a sessão).
   - `Secure`: só trafega por HTTPS.
-  - `SameSite=Lax` (ou `Strict`): o navegador não envia o cookie em requisições vindas de outros sites, a principal defesa moderna contra CSRF (SE-04).
+  - `SameSite=Lax` (ou `Strict`): o navegador não envia o cookie em requisições disparadas por outros sites (com `Lax`, a exceção é a navegação comum por link, com GET), a principal defesa moderna contra CSRF (SE-04).
   - Expiração por inatividade e absoluta.
 - Vantagens: revogação imediata, nada sensível no cliente. Desvantagem: o servidor guarda estado (normalmente no Redis, SD-03).
 

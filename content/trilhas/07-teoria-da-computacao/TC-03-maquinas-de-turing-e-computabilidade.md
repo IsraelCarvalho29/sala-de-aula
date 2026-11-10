@@ -60,7 +60,7 @@ flowchart TD
   R[Regulares: autômato finito] --> L[Livres de contexto: autômato com pilha]
   L --> D[Decidíveis: máquina de Turing que sempre para]
   D --> RE[Reconhecíveis: máquina de Turing que para quando a resposta é sim]
-  RE --> N[Não reconhecíveis: nenhuma máquina]
+  RE --> N[Todas as linguagens: inclui as não reconhecíveis, que nenhuma máquina reconhece]
 ```
 
 Cada nível contém o anterior: aⁿbⁿ é livre de contexto mas não regular; aⁿbⁿcⁿ é decidível mas não livre de contexto; o problema da parada é reconhecível mas não decidível; o complemento dele nem reconhecível é.

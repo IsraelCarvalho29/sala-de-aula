@@ -39,9 +39,9 @@ O sinal de clock e um flip-flop D:
 
 ```text
 clock:   _|‾|_|‾|_|‾|_|‾|_|‾|_
-           ↑   ↑   ↑   ↑   ↑      bordas de subida: é aqui que Q copia D
-D:       ‾‾‾‾‾|___________|‾‾‾‾
-Q:       ‾‾‾‾‾‾‾|_______|‾‾‾‾‾‾   Q só muda nas bordas, mesmo que D mude no meio
+          ↑   ↑   ↑   ↑   ↑       bordas de subida: é aqui que Q copia D
+D:       ‾‾‾|_______|‾‾‾‾‾‾‾‾‾    D muda no meio de um ciclo
+Q:       ‾‾‾‾‾|_______|‾‾‾‾‾‾‾    Q só muda na borda seguinte
 ```
 
 Máquina de estados que detecta a sequência **101** num fluxo de bits:
@@ -122,7 +122,7 @@ Muitos registradores + um **decodificador** de endereço (AC-01) para escolher q
 
 Um conjunto de **estados**, um estado inicial, e uma **função de transição** `(estado, entrada) → próximo estado` (mais uma função de saída). Em hardware: um registrador guarda o estado e um circuito combinacional calcula o próximo. Em software: um `dict` ou um `match`.
 
-Usos: semáforos, catracas, protocolo TCP (estados LISTEN, ESTABLISHED, CLOSE_WAIT...), analisadores léxicos de compiladores, expressões regulares (TC-02), personagens de jogos.
+Usos: semáforos, catracas, protocolo TCP (estados LISTEN, ESTABLISHED, CLOSE_WAIT...), analisadores léxicos de compiladores, expressões regulares (TC-01), personagens de jogos.
 
 ### Período do clock
 
@@ -242,7 +242,7 @@ id: AC-02-q6
 tipo: codigo
 linguagem: python
 pergunta: |
-  **Contador de programa.** Escreva `simular_pc(bits, sinais)` que simula um contador de `bits` bits começando em 0. `sinais` é uma lista com um dict por borda de clock, com as chaves opcionais `reset`, `load`, `entrada` e `inc` (todas valem 0 se ausentes, exceto `entrada`). Prioridade: reset > load > inc > manter. Devolva a lista dos valores **depois** de cada borda.
+  **Contador de programa.** Escreva `simular_pc(bits, sinais)` que simula um contador de `bits` bits começando em 0. `sinais` é uma lista com um dict por borda de clock, com as chaves opcionais `reset`, `load`, `entrada` e `inc` (todas valem 0 se ausentes, exceto `entrada`). Prioridade: reset > load > inc > manter. O registrador só guarda `bits` bits: ao passar de `2 ** bits - 1` o contador dá a volta, e um valor carregado com `load` maior que isso fica só com os `bits` bits de baixo (use `% 2 ** bits`). Devolva a lista dos valores **depois** de cada borda.
 codigo_inicial: |
   def simular_pc(bits, sinais):
       valor = 0
@@ -330,7 +330,7 @@ solucao: |
               achados.append(i)
               estado = recuar(lido, len(padrao) - 1)
       return achados
-explicacao: "Em '10101', depois de achar o primeiro 101 a máquina não volta ao início: o '1' final já é o começo de um novo padrão, então ela recua para o estado 'vi 1'. Essa ideia de recuar para o maior prefixo que também é sufixo é o coração do algoritmo KMP de busca em texto e dos autômatos de expressões regulares (TC-02)."
+explicacao: "Em '10101', depois de achar o primeiro 101 a máquina não volta ao início: o '1' final já é o começo de um novo padrão, então ela recua para o estado 'vi 1'. Essa ideia de recuar para o maior prefixo que também é sufixo é o coração do algoritmo KMP de busca em texto e dos autômatos de expressões regulares (TC-01)."
 dificuldade: 3
 ```
 

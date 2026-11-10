@@ -102,6 +102,8 @@ EXPOSE 8000                           # documenta a porta
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
 ```
 
+Os comentários no fim das linhas acima são só explicação para você. Num Dockerfile de verdade, um comentário precisa ficar numa linha própria, começando com `#`; um `#` depois da instrução vira parte dela e quebra o build.
+
 Cada instrução gera uma **camada**. O Docker **reaproveita** camadas cujas entradas não mudaram; quando uma muda, **ela e todas as seguintes** são refeitas. Por isso a ordem importa: copiar só o `requirements.txt` e instalar **antes** de copiar o código faz uma mudança no código não reinstalar todas as dependências. Um arquivo **`.dockerignore`** (como o `.gitignore`) evita mandar `.git`, `node_modules` e segredos para o build.
 
 **Build em múltiplos estágios**: um estágio com o compilador e as ferramentas de build, e um estágio final só com o resultado. A imagem final fica pequena e com menos superfície de ataque.
@@ -109,7 +111,7 @@ Cada instrução gera uma **camada**. O Docker **reaproveita** camadas cujas ent
 ```text
 FROM node:22 AS build
 WORKDIR /src
-COPY package*.json .
+COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build

@@ -353,7 +353,7 @@ solucao: |
       fabricante: partes.slice(0, 3).join(':').toUpperCase(),
     };
   }
-explicacao: "O broadcast é um caso especial de multicast (todos os bits ligados). O endereço 01:00:5E:... é o prefixo de multicast IPv4 (o oculto é o do mDNS, usado para achar impressoras e Chromecasts na rede). Máscaras de bits (& 1, & 2) são a forma padrão de ler campos de protocolos, como você viu na AC-05."
+explicacao: "O broadcast é um caso especial de multicast (todos os bits ligados). O endereço 01:00:5E:... é o prefixo de multicast IPv4 (o oculto é o do mDNS, usado para achar impressoras e Chromecasts na rede). Máscaras de bits (& 1, & 2) são a forma padrão de ler campos de protocolos, como você viu em MD-04 e AC-05."
 dificuldade: 2
 ```
 

@@ -121,7 +121,7 @@ Cuidado: otimizações só podem mudar o que o programa **não observa**. Em C, 
 
 - Para uma **máquina de pilha**: percorra a AST em pós-ordem; folhas viram `PUSH`/`LOAD`, operadores viram a instrução depois dos filhos (como a notação pós-fixa do TC-02).
 - Para **registradores** (RISC-V, x86, ARM): **seleção de instruções** (escolher as instruções da máquina para cada padrão da IR), **alocação de registradores** (que valores ficam em registradores e quais vão para a memória; vira um problema de coloração de grafos, TC-04) e **escalonamento** de instruções para o pipeline (AC-06).
-- **Convenções de chamada**: onde ficam argumentos, retorno e endereço de volta (a pilha de chamadas do SO-01 e AC-04).
+- **Convenções de chamada**: onde ficam argumentos, retorno e endereço de volta (a pilha de chamadas da AC-04).
 
 ### Compilador, interpretador e JIT
 
@@ -482,3 +482,4 @@ dificuldade: 2
 - Cole funções pequenas no Compiler Explorer e compare -O0 com -O2.
 - Estenda o compilador do exemplo com `se`/`enquanto` gerando instruções de desvio (`JMP`, `JZ`).
 - **Fim da trilha.** Do autômato ao compilador, você viu os limites do que é computável e como as linguagens funcionam por dentro.
+- **Próximo módulo**: LP-03 Avaliação, escopo léxico e como um interpretador funciona, que constrói um interpretador de verdade em cima do que você viu aqui.

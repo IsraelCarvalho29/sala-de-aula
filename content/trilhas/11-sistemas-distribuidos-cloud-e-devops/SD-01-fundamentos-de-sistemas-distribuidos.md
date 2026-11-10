@@ -265,7 +265,7 @@ solucao: |
 
   def prob_lenta(p_servidor, n):
       return round(1 - (1 - p_servidor) ** n, 4)
-explicacao: "No segundo e no quarto testes, a média seria 103,8 ms, um número que não descreve ninguém: 9 requisições levaram cerca de 12 ms e uma levou 900. O p90 (15) mostra a experiência típica, e o p99 (900) mostra o problema. Painéis de monitoramento (SD-08) mostram p50, p95 e p99 lado a lado justamente por isso."
+explicacao: "No segundo e no quarto testes, a média seria 100,8 ms, um número que não descreve ninguém: 9 requisições levaram cerca de 12 ms e uma levou 900. O p90 (15) mostra a experiência típica, e o p99 (900) mostra o problema. Painéis de monitoramento (SD-08) mostram p50, p95 e p99 lado a lado justamente por isso."
 dificuldade: 1
 ```
 
