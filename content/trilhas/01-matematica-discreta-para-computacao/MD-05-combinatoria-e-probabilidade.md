@@ -168,7 +168,7 @@ for n in [10, 23, 50]:
 - **Somar probabilidades de eventos que se sobrepõem.** P(A ou B) precisa subtrair P(A e B).
 - **Multiplicar probabilidades de eventos dependentes** como se fossem independentes. Tirar duas cartas sem reposição muda a segunda chance.
 - **Falácia do apostador**: depois de 5 caras seguidas, a próxima moeda continua 50%. Moedas não têm memória.
-- **Calcular `factorial(n) // factorial(k)` com floats** para n grande: perde precisão. Use inteiros (`math.comb`) ou frações (`fractions.Fraction`).
+- **Dividir fatoriais com `/`** (`factorial(n) / factorial(k)`) para n grande: o resultado vira float e perde precisão (ou estoura). Use divisão inteira `//`, `math.comb` ou frações (`fractions.Fraction`).
 
 ## Pratique
 
@@ -366,4 +366,4 @@ dificuldade: 3
 ## Para ir além
 
 - Os capítulos 17 a 19 do MIT 6.042J têm ótimos problemas de probabilidade "contraintuitiva" (Monty Hall incluído).
-- **Próximo módulo**: com isto, a trilha de Matemática discreta está completa. Ela volta na Teoria da computação (TC) e em IA/ML.
+- **Próximo módulo**: MD-06 Teoria dos grafos. Depois, MD-07 Recorrências e somatórios fecha a trilha de Matemática discreta, que volta na Teoria da computação (TC) e em IA/ML.

@@ -60,12 +60,12 @@ Union-Find: juntando grupos.
 
 ```text
 início:      0  1  2  3  4      cada um é seu próprio chefe
-unir(0, 1):  1←0                0 passa a apontar para 1
-unir(2, 3):  3←2
-unir(1, 3):  3←1←0              o chefe do grupo de 1 aponta para o chefe do grupo de 3
-             3←2
-achar(0):    0 → 1 → 3          chefe de 0 é 3
-             depois da compressão de caminho: 0 → 3 direto
+unir(0, 1):  0←1                1 passa a apontar para 0 (empate de tamanho: o segundo vai para baixo)
+unir(2, 3):  2←3
+unir(1, 3):  0←1                chefe de 1 é 0, chefe de 3 é 2: o 2 passa a apontar para o 0
+             0←2←3
+achar(3):    3 → 2 → 0          chefe de 3 é 0
+             depois da compressão de caminho: 3 → 0 direto
 grupos: {0, 1, 2, 3} e {4}
 ```
 

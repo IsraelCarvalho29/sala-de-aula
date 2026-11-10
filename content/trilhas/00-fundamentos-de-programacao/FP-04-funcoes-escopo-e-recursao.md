@@ -141,7 +141,7 @@ Se você **atribuir** a um nome dentro da função, ele vira local, mesmo que ex
 
 ### A pilha de chamadas
 
-Cada chamada ganha um **quadro (frame)** na pilha de chamadas, com seus parâmetros e variáveis locais. Quando a função retorna, o quadro sai da pilha e a execução volta exatamente para onde parou. É a pilha (LIFO) que você viu em ED-02, usada pelo próprio Python. Quando acontece um erro, o *traceback* é uma foto dessa pilha.
+Cada chamada ganha um **quadro (frame)** na pilha de chamadas, com seus parâmetros e variáveis locais. Quando a função retorna, o quadro sai da pilha e a execução volta exatamente para onde parou. É uma **pilha** (o último a entrar é o primeiro a sair), estrutura que você vai estudar em ED-02, usada pelo próprio Python. Quando acontece um erro, o *traceback* é uma foto dessa pilha.
 
 ### Recursão
 

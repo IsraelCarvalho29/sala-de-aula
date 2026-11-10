@@ -77,7 +77,7 @@ primeira solução:          . Q . .
 
 ### O molde
 
-```python
+```text
 def backtrack(estado):
     if estado é uma solução completa:
         registre a solução
@@ -344,7 +344,7 @@ id: AL-10-q8
 tipo: codigo
 linguagem: python
 pergunta: |
-  **Formas de pagar.** Escreva `formas(notas, valor)` que devolve todas as combinações de notas (cada nota pode ser usada **várias vezes**) que somam exatamente `valor`. Cada combinação em ordem crescente, sem repetir combinações, e a lista final ordenada. Os valores das notas são positivos e distintos. Pode com `break` quando passar do valor.
+  **Formas de pagar.** Escreva `formas(notas, valor)` que devolve todas as combinações de notas (cada nota pode ser usada **várias vezes**) que somam exatamente `valor`. Cada combinação em ordem crescente, sem repetir combinações, e a lista final ordenada. Os valores das notas são positivos e distintos. Ordene as notas e use `break` quando a soma passar do valor.
 codigo_inicial: |
   def formas(notas, valor):
       return []

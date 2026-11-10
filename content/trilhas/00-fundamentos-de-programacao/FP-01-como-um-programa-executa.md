@@ -54,7 +54,7 @@ INTERPRETADO (Python, JavaScript)
 - **Linguagem de alto nível** (Python, Java, JavaScript): feita para humanos lerem e escreverem.
 - **Compilador**: traduz o programa inteiro para código de máquina antes de executar. Erros de sintaxe aparecem já na compilação. Costuma gerar programas mais rápidos.
 - **Interpretador**: lê e executa o código aos poucos. Mais fácil de testar e experimentar, geralmente mais lento.
-- **Na prática há mistura**: o Python compila seu código para um *bytecode* intermediário e o interpretador executa esse bytecode; Java compila para bytecode que roda na JVM.
+- **Na prática há mistura**: o Python compila seu código para um *bytecode* intermediário e o interpretador executa esse bytecode; Java compila para bytecode que roda na JVM. Por causa desse passo de compilação, em Python um **erro de sintaxe** em qualquer linha impede o programa inteiro de começar; já um erro de execução (como dividir por zero) só aparece quando a linha é alcançada.
 
 **Tipos de erro que você vai encontrar:**
 

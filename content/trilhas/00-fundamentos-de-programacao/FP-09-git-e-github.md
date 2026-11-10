@@ -52,9 +52,12 @@ flowchart LR
 Histórico com uma branch e um merge (cada `o` é um commit; o tempo anda para a direita):
 
 ```
-main:          o───o───o─────────────o      ← commit de merge (junta as duas linhas)
-                        \           /
-feature/login:           o───o───o          ← commits feitos na branch
+main:          o───o───o───────o─────o      ← o último é o commit de merge (junta as duas linhas)
+                        \            /
+feature/login:           o───o───o──┘        ← commits feitos na branch
+
+A main também andou (o commit do meio), por isso o Git cria um commit de merge com dois pais.
+Se a main não tivesse andado, seria um fast-forward (explicado abaixo).
 ```
 
 ```mermaid
