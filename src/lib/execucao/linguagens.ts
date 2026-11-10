@@ -6,8 +6,10 @@
  *   c / cpp     JSCPP (interpretador de C/C++ em JavaScript, subconjunto didático)
  *   sql         SQLite compilado para WebAssembly (sql.js)
  *   html        página renderizada num iframe (HTML, CSS e o JavaScript da página)
+ *   shell       Bash didático sobre um sistema de arquivos em memória (shell.ts)
+ *   riscv       montador e simulador RV32IM no estilo do RARS (riscv.ts)
  */
-export type Linguagem = 'python' | 'javascript' | 'typescript' | 'c' | 'cpp' | 'sql' | 'html';
+export type Linguagem = 'python' | 'javascript' | 'typescript' | 'c' | 'cpp' | 'sql' | 'html' | 'shell' | 'riscv';
 
 export interface InfoLinguagem {
   nome: string;
@@ -27,6 +29,8 @@ export const LINGUAGENS: Record<Linguagem, InfoLinguagem> = {
   cpp: { nome: 'C++', arquivo: 'main.cpp', recuo: 4, leitura: 'cin', comentario: '//' },
   sql: { nome: 'SQL (SQLite)', arquivo: 'consulta.sql', recuo: 0, comentario: '--' },
   html: { nome: 'HTML/CSS', arquivo: 'index.html', recuo: 0, comentario: '<!--' },
+  shell: { nome: 'Shell (Bash)', arquivo: 'script.sh', recuo: 0, leitura: 'read', comentario: '#' },
+  riscv: { nome: 'Assembly RISC-V', arquivo: 'main.s', recuo: 0, leitura: 'ecall 5 (ler inteiro)', comentario: '#' },
 };
 
 const APELIDOS: Record<string, Linguagem> = {
@@ -36,6 +40,8 @@ const APELIDOS: Record<string, Linguagem> = {
   c: 'c', cpp: 'cpp', 'c++': 'cpp',
   sql: 'sql', sqlite: 'sql',
   html: 'html',
+  shell: 'shell', bash: 'shell', sh: 'shell',
+  riscv: 'riscv', 'risc-v': 'riscv', riscvasm: 'riscv',
 };
 
 /** Como reconhecer, no código, que o programa lê a entrada (para mostrar o campo de entradas só quando precisa). */
@@ -45,13 +51,15 @@ const LE_ENTRADA: Partial<Record<Linguagem, RegExp>> = {
   typescript: /\bprompt\s*\(/,
   c: /\b(scanf|getchar|fgets|gets)\s*\(/,
   cpp: /\bcin\b|\b(scanf|getline|getchar)\s*\(/,
+  shell: /(^|[;&|\s])read\b/m,
+  riscv: /\bli\s+a7\s*,\s*(5|8|12)\b/,
 };
 
 export const codigoLeEntrada = (linguagem: Linguagem, codigo: string) => !!LE_ENTRADA[linguagem]?.test(codigo);
 
 /** O texto do campo de entradas parece código (ex.: o aluno escreveu o programa no lugar errado)? */
 export function pareceCodigo(texto: string) {
-  return /\b(print|input|console\.log|printf|scanf|def|return|import|SELECT)\b|\w+\s*\(.*\)|^\s*\w+\s*=[^=]/im.test(texto);
+  return /\b(print|input|console\.log|printf|scanf|def|return|import|SELECT|echo|ecall)\b|\w+\s*\(.*\)|^\s*\w+\s*=[^=]/im.test(texto);
 }
 
 export function normalizarLinguagem(nome?: string): Linguagem | undefined {
@@ -142,3 +150,4 @@ export function analisarSemPython(linguagem: Linguagem, codigo: string, usa: str
   });
   return { indentacao, sintaxe: null, faltando };
 }
+

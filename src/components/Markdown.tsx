@@ -1,4 +1,4 @@
-import { createContext, lazy, Suspense, useContext, useState } from 'react';
+import { createContext, isValidElement, lazy, Suspense, useContext, useEffect, useState } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Quiz from './Quiz';
@@ -38,6 +38,14 @@ function Codigo({ className, children }: { className?: string; children?: React.
 
 function BlocoExecutavel({ linguagem, lang, codigo }: { linguagem: Linguagem; lang: string; codigo: string }) {
   const [aberto, setAberto] = useState(false);
+  // shell: só oferece executar quando todos os comandos existem no shell didático (git, apt... ficam só para ler)
+  const [roda, setRoda] = useState(linguagem !== 'shell');
+  useEffect(() => {
+    if (linguagem !== 'shell') return;
+    let vivo = true;
+    import('../lib/execucao/shell').then((m) => vivo && setRoda(m.shellExecutavel(codigo)), () => {});
+    return () => { vivo = false; };
+  }, [linguagem, codigo]);
   if (aberto) {
     return (
       <Suspense fallback={<p className="dica">Carregando o editor…</p>}>
@@ -51,7 +59,7 @@ function BlocoExecutavel({ linguagem, lang, codigo }: { linguagem: Linguagem; la
   return (
     <pre className="bloco-codigo">
       <span className="lang">{lang}</span>
-      <button className="experimentar" onClick={() => setAberto(true)} title="Abrir este código no editor e executar">▶ Experimentar</button>
+      {roda && <button className="experimentar" onClick={() => setAberto(true)} title="Abrir este código no editor e executar">▶ Experimentar</button>}
       <code>{codigo}</code>
     </pre>
   );
@@ -60,7 +68,14 @@ function BlocoExecutavel({ linguagem, lang, codigo }: { linguagem: Linguagem; la
 // Definido fora do componente: se fosse recriado a cada render, o React
 // remontaria os quizzes e perderia a resposta escolhida.
 const componentes: Components = {
-  pre: ({ children }) => <>{children}</>,
+  // bloco sem linguagem (```): vira um bloco de verdade, com as quebras de linha; os com linguagem vão para o Codigo
+  pre: ({ children }) => {
+    const filho = children as React.ReactElement<{ className?: string; children?: React.ReactNode }>;
+    if (isValidElement(filho) && !filho.props.className) {
+      return <pre className="bloco-codigo"><code>{String(filho.props.children ?? '').replace(/\n$/, '')}</code></pre>;
+    }
+    return <>{children}</>;
+  },
   code: Codigo,
 };
 

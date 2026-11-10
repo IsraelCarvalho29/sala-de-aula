@@ -29,8 +29,8 @@ const avisos = [];
 const falhar = (onde, msg) => erros.push(`${onde}: ${msg}`);
 
 const TIPOS = ['multipla_escolha', 'verdadeiro_falso', 'resposta_curta', 'prever_saida', 'codigo'];
-const LINGS = { python: 'python', py: 'python', javascript: 'javascript', js: 'javascript', typescript: 'typescript', ts: 'typescript', c: 'c', cpp: 'cpp', 'c++': 'cpp', sql: 'sql', sqlite: 'sql', html: 'html' };
-const RECUO = { python: 4, javascript: 2, typescript: 2, c: 4, cpp: 4, sql: 0, html: 0 };
+const LINGS = { python: 'python', py: 'python', javascript: 'javascript', js: 'javascript', typescript: 'typescript', ts: 'typescript', c: 'c', cpp: 'cpp', 'c++': 'cpp', sql: 'sql', sqlite: 'sql', html: 'html', shell: 'shell', bash: 'shell', sh: 'shell', riscv: 'riscv', 'risc-v': 'riscv' };
+const RECUO = { python: 4, javascript: 2, typescript: 2, c: 4, cpp: 4, sql: 0, html: 0, shell: 0, riscv: 0 };
 
 const normalizar = (s) => s.replace(/\r\n/g, '\n').split('\n').map((l) => l.trimEnd()).join('\n').replace(/\n+$/, '');
 
@@ -225,6 +225,17 @@ function rodarC(codigo, t) {
 /* ----------------------------------------------------------- correção */
 
 const linguagensTs = await import(join(raiz, 'src/lib/execucao/linguagens.ts'));
+const { executarShell, checarSintaxeShell } = await import(join(raiz, 'src/lib/execucao/shell.ts'));
+const { executarRiscv, checarMontagem } = await import(join(raiz, 'src/lib/execucao/riscv.ts'));
+
+/** Shell e RISC-V: os mesmos interpretadores do app. Erro do programa vira exceção, como nos outros executores. */
+async function rodarInterpretado(ling, codigo, t, preparo) {
+  const r = ling === 'shell'
+    ? await executarShell({ codigo, entradas: t.entradas, chamada: t.chamada, preparo })
+    : executarRiscv({ codigo, entradas: t.entradas, chamada: t.chamada });
+  if (r.erro) throw new Error(`${r.erro.tipo}: ${r.erro.mensagem}${r.erro.linha ? ` (linha ${r.erro.linha})` : ''}`);
+  return r;
+}
 
 const py = desafios.filter((d) => d.ling === 'python');
 const pedidos = py.flatMap((d) => [
@@ -266,7 +277,12 @@ for (const d of desafios.filter((x) => x.ling !== 'python')) {
         if (!ok) falhar(d.ref, `teste ${i + 1}: verifica falhou: ${t.verifica}`);
         continue;
       }
+      if (i === 0 && (d.ling === 'shell' || d.ling === 'riscv')) {
+        const s = d.ling === 'shell' ? checarSintaxeShell(d.q.solucao) : checarMontagem(d.q.solucao);
+        if (s) falhar(d.ref, `solução com erro de sintaxe na linha ${s.linha}: ${s.mensagem}`);
+      }
       const r = d.ling === 'sql' ? await rodarSQL(d.q.solucao, d.q.preparo)
+        : d.ling === 'shell' || d.ling === 'riscv' ? await rodarInterpretado(d.ling, d.q.solucao, t, d.q.preparo)
         : d.ling === 'c' || d.ling === 'cpp' ? rodarC(d.q.solucao, t)
         : await rodarJS(d.q.solucao, t, d.ling === 'typescript');
       const obtido = t.chamada ? r.retorno ?? '' : r.saida;
@@ -297,6 +313,7 @@ for (const d of comInicial) {
         await pg.close();
       } else {
         const r = d.ling === 'sql' ? await rodarSQL(d.q.codigo_inicial, d.q.preparo)
+          : d.ling === 'shell' || d.ling === 'riscv' ? await rodarInterpretado(d.ling, d.q.codigo_inicial, t, d.q.preparo)
           : d.ling === 'c' || d.ling === 'cpp' ? rodarC(d.q.codigo_inicial, t)
           : await rodarJS(d.q.codigo_inicial, t, d.ling === 'typescript');
         ok = normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);

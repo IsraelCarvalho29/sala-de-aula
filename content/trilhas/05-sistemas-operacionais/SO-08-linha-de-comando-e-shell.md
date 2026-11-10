@@ -218,7 +218,7 @@ grep "ERRO" app.log | cut -d " " -f 3 | sort | uniq -c | sort -rn | head -n 3
 
 Leia da esquerda para a direita: filtra as linhas com ERRO, pega a 3ª palavra de cada linha (o tipo do erro), ordena, conta os repetidos, ordena pela contagem do maior para o menor e mostra os 3 primeiros.
 
-> **Ainda sem executor de shell no app**: rode estes exemplos num terminal de verdade (Linux, macOS, WSL ou Codespaces). O desafio de código no fim usa Python para treinar a conversão de permissões.
+> **Shell no navegador**: os desafios de shell no fim da aula rodam num shell didático dentro do app, com uma pasta só sua (`/home/aluno`) que começa vazia a cada execução. Ele entende os comandos desta aula (`ls`, `cd`, `mkdir`, `cat`, `grep`, `sort`, `uniq`, `cut`, `wc`, `head`, pipes, `>`/`>>`, variáveis, `if`, `for`, `while`, `read`). Programas de fora, como `python3`, `git` ou `apt`, só funcionam num terminal de verdade (Linux, macOS, WSL ou Codespaces).
 
 ## Erros comuns
 
@@ -355,6 +355,133 @@ solucao: |
   outros = TRIOS[int(octal[2])]
   print(dono + grupo + outros)
 explicacao: "Cada dígito octal são 3 bits (r=4, w=2, x=1), e a lista TRIOS já tem os 8 padrões possíveis na ordem de 0 a 7. 5 = 101 em binário = r-x."
+dificuldade: 2
+```
+
+```quiz
+id: SO-08-q10
+tipo: codigo
+linguagem: shell
+pergunta: |
+  **Pastas e arquivos.** Leia o nome de uma pasta com `read`, crie essa pasta e, dentro dela, o arquivo `notas.txt` com duas linhas: `linha 1` e `linha 2` (use `>` para a primeira e `>>` para a segunda). No fim, liste o conteúdo da pasta com `ls` e mostre quantas linhas o arquivo tem com `wc -l < arquivo`. Para a entrada `estudos`, a saída é:
+
+  ```
+  notas.txt
+  2
+  ```
+codigo_inicial: |
+  read pasta
+  # crie a pasta e o arquivo aqui
+usa: [read, mkdir, ">>", ls, wc]
+testes:
+  - entrada: "estudos"
+    saida: |
+      notas.txt
+      2
+  - entrada: "python"
+    visivel: false
+    saida: |
+      notas.txt
+      2
+dica: 'Depois do read, a variável é usada com $: mkdir "$pasta". Para escrever no arquivo dentro da pasta: echo "linha 1" > "$pasta/notas.txt". O wc -l < arquivo imprime só o número, sem o nome do arquivo.'
+solucao: |
+  read pasta
+  mkdir "$pasta"
+  echo "linha 1" > "$pasta/notas.txt"
+  echo "linha 2" >> "$pasta/notas.txt"
+  ls "$pasta"
+  wc -l < "$pasta/notas.txt"
+explicacao: "O > cria (ou apaga e recria) o arquivo; o >> acrescenta no fim. Com < o wc lê o arquivo pela entrada padrão e, por isso, não imprime o nome dele. As aspas em \"$pasta\" protegem nomes com espaço."
+dificuldade: 1
+```
+
+```quiz
+id: SO-08-q11
+tipo: codigo
+linguagem: shell
+pergunta: |
+  **Contando no log.** A pasta já tem o arquivo `app.log`, com uma linha por evento, como `2026-11-10 08:00:01 ERRO conexao`. Leia um nível (`ERRO`, `AVISO` ou `INFO`) com `read` e imprima **quantas linhas** do `app.log` têm esse nível. Use `grep` (com um pipe para o `wc -l`, ou a opção `-c`). Experimente antes `cat app.log` para ver o arquivo.
+preparo: |
+  printf '%s\n' \
+    "2026-11-10 08:00:01 INFO inicio" \
+    "2026-11-10 08:00:05 ERRO conexao" \
+    "2026-11-10 08:01:10 AVISO memoria" \
+    "2026-11-10 08:02:00 ERRO timeout" \
+    "2026-11-10 08:02:30 INFO requisicao" \
+    "2026-11-10 08:03:00 ERRO conexao" \
+    "2026-11-10 08:04:12 AVISO disco" \
+    "2026-11-10 08:05:00 ERRO conexao" \
+    "2026-11-10 08:06:00 INFO fim" > app.log
+codigo_inicial: |
+  read nivel
+  # conte as linhas de app.log que têm o nível lido
+usa: [read, grep]
+testes:
+  - entrada: "ERRO"
+    saida: "4"
+  - entrada: "AVISO"
+    saida: "2"
+  - entrada: "INFO"
+    visivel: false
+    saida: "3"
+dica: 'grep "$nivel" app.log mostra as linhas; grep -c "$nivel" app.log só conta. Outra forma: grep "$nivel" app.log | wc -l.'
+solucao: |
+  read nivel
+  grep -c "$nivel" app.log
+explicacao: "O grep filtra as linhas que contêm o padrão e o -c troca as linhas pela contagem. É o primeiro passo do pipeline da aula: depois dá para cortar a coluna do tipo (cut -d \" \" -f 4), ordenar e contar (sort | uniq -c)."
+dificuldade: 2
+```
+
+```quiz
+id: SO-08-q12
+tipo: codigo
+linguagem: shell
+pergunta: |
+  **Contagem regressiva.** Leia um número `n` com `read`. Se ele for menor que 1, imprima `Número inválido`. Senão, imprima os números de `n` até 1, um por linha, e depois `Fogo!`. Para `3`:
+
+  ```
+  3
+  2
+  1
+  Fogo!
+  ```
+codigo_inicial: |
+  read n
+usa: [read, if]
+testes:
+  - entrada: "3"
+    saida: |
+      3
+      2
+      1
+      Fogo!
+  - entrada: "0"
+    saida: "Número inválido"
+  - entrada: "5"
+    visivel: false
+    saida: |
+      5
+      4
+      3
+      2
+      1
+      Fogo!
+  - entrada: "-2"
+    visivel: false
+    saida: "Número inválido"
+dica: 'Compare números com -lt dentro do [ ] (com espaços!): if [ "$n" -lt 1 ]; then ... else ... fi. Para repetir: while [ "$n" -ge 1 ]; do echo "$n"; n=$((n - 1)); done'
+solucao: |
+  read n
+  if [ "$n" -lt 1 ]; then
+    echo "Número inválido"
+  else
+    while [ "$n" -ge 1 ]; do
+      echo "$n"
+      n=$((n - 1))
+    done
+    echo "Fogo!"
+  fi
+explicacao: "No [ ], os números se comparam com -lt, -le, -gt, -ge, -eq e -ne (o < seria redirecionamento). $(( )) faz a conta e o while repete enquanto a condição do [ ] der certo (código de saída 0)."
 dificuldade: 2
 ```
 

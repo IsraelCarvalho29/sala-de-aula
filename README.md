@@ -7,7 +7,7 @@ Uma sala de aula web para estudar **Ciência da Computação, Engenharia de Soft
 - **19 trilhas e mais de 120 módulos** planejados, de Fundamentos de programação até Sistemas distribuídos, Segurança e Carreira ([currículo completo](docs/curriculo/curriculo.md)).
 - **Aulas em Markdown**: cada módulo é um arquivo `.md` com seções fixas (por que importa, intuição, visual, conceito, código, erros comuns, prática, resumo).
 - **Perguntas dentro da aula**: múltipla escolha, verdadeiro ou falso, resposta curta, prever a saída e desafio de código, com explicação depois de responder.
-- **IDE no navegador**: desafios de código com editor de verdade (números de linha, destaque de sintaxe, indentação automática, erros marcados na linha) e execução real, sem servidor, em **Python, JavaScript, TypeScript, C/C++, SQL e HTML/CSS**. A correção roda testes, confere a indentação e mostra o erro explicado em português. Todo exemplo de código da aula tem o botão **▶ Experimentar**.
+- **IDE no navegador**: desafios de código com editor de verdade (números de linha, destaque de sintaxe, indentação automática, erros marcados na linha) e execução real, sem servidor, em **Python, JavaScript, TypeScript, C/C++, SQL, HTML/CSS, shell (Bash) e assembly RISC-V**. A correção roda testes, confere a indentação e mostra o erro explicado em português. Todo exemplo de código da aula tem o botão **▶ Experimentar**.
 - **Diagramas** em [Mermaid](https://mermaid.js.org/) escritos direto no texto da aula.
 - **Progresso local**: aulas concluídas e perguntas acertadas ficam no `localStorage`, com exportação e importação em JSON para backup.
 - **Responsivo**: layout próprio para telas pequenas, alvos de toque de 44 a 48 px, tema claro e escuro conforme o sistema.
@@ -48,6 +48,7 @@ src/
   lib/progresso.ts          progresso no localStorage
   lib/execucao/             executores de código no navegador (um Web Worker por linguagem)
     corretor.py             roda o Python do aluno, simula input(), traduz erros, confere indentação
+    shell.ts, riscv.ts      interpretadores de shell (Bash didático) e de assembly RISC-V
   components/               Markdown, Quiz, IdeCodigo, EditorCodigo, Diagrama, Flashcard, BarraProgresso
   pages/                    Início, Trilha, Aula
 ```
@@ -102,7 +103,7 @@ Uma pergunta `tipo: codigo` com `testes` abre a IDE da aula. O aluno escreve, ex
 ```yaml
 id: FP-01-q10
 tipo: codigo
-linguagem: python          # python | javascript | typescript | c | cpp | sql | html
+linguagem: python          # python | javascript | typescript | c | cpp | sql | html | shell | riscv
 pergunta: "Leia a idade e imprima ..."
 codigo_inicial: |          # opcional: o que já aparece no editor
   # escreva aqui
@@ -118,6 +119,8 @@ testes:
   # para funções: chamada: "dobro(3)" e saida: "6" (valor no formato da linguagem, repr no Python)
   # em SQL: preparo (no nível da pergunta) cria as tabelas; a saida é "coluna | coluna" e uma linha por registro
   # em HTML: verifica: "document.querySelector('h1') !== null" e descricao: "tem um título"
+  # em shell: preparo (no nível da pergunta) é um script que cria os arquivos antes; entrada alimenta o read
+  # em RISC-V: entrada alimenta o ecall 5; chamada: "a0" compara o valor final do registrador
 dica: "..."
 solucao: |                 # liberada depois de 2 tentativas ou do acerto
   ...
@@ -125,6 +128,11 @@ explicacao: "..."
 ```
 
 Indentação exigida: 4 espaços em Python e C/C++, 2 em JavaScript/TypeScript, nunca TAB (desligue com `indentacao: false`). O programa é interrompido depois de 5 segundos (laço sem fim). Os runtimes (Pyodide ~12 MB, SQLite ~1 MB, C ~0,4 MB) são publicados junto com o site e só são baixados quando uma aula precisa deles.
+
+**Shell e RISC-V** rodam em interpretadores próprios, leves, escritos para o app ([`shell.ts`](src/lib/execucao/shell.ts) e [`riscv.ts`](src/lib/execucao/riscv.ts)):
+
+- **Shell**: um Bash didático sobre um sistema de arquivos em memória (a pasta `/home/aluno` começa vazia a cada execução). Tem variáveis, aspas, `$(...)`, `$((...))`, globs, pipes, `&&`/`||`, redirecionamentos, `if`, `for`, `while`, `case`, funções, `[ ]`/`[[ ]]`, `read` e cerca de 50 comandos (`ls`, `cd`, `cat`, `grep`, `sort`, `uniq`, `cut`, `tr`, `sed s///`, `find`, `wc`, `head`, `tail`...). O `ls` lista um nome por linha, como quando a saída vai para um arquivo ou pipe. Exemplos ```` ```bash ```` da aula só ganham o botão Experimentar se todos os comandos existirem nele (exemplos com `git`, `apt` etc. ficam só para ler).
+- **RISC-V**: montador e simulador RV32IM no estilo do RARS (`.data`/`.text`, `.word`, `.asciz`, pseudo-instruções como `li`, `la`, `mv`, `call`, `ret`, e os `ecall` 1, 4, 5, 8, 10, 11, 93). Blocos ```` ```riscv ```` ganham o Experimentar. Ao terminar, o terminal mostra os registradores que mudaram.
 
 ### Diagramas
 
