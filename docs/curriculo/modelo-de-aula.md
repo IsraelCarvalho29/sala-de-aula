@@ -50,3 +50,15 @@ dificuldade: 1              # 1 a 3
 
 Para `resposta_curta`, `resposta` traz uma resposta-modelo e `palavras_chave` lista os termos que uma boa resposta deve conter.
 Para `codigo`, inclua `linguagem`, `testes` (entrada → saída esperada, com pelo menos um teste oculto), `usa` (o que o código precisa usar), `dica` e `solucao`. O formato completo está no [README](../../README.md#desafios-de-código-corrigidos-automaticamente). Blocos de código de linguagens executáveis no texto da aula ganham automaticamente o botão "Experimentar".
+
+## Projetos de trilha
+
+Um projeto guiado (`codigo: PJ-NN`, `tipo: projeto`) usa o mesmo front matter e troca as seções por:
+
+1. **O que você vai construir**: o resultado final, com um exemplo do programa funcionando.
+2. **Como o projeto funciona**: diagrama das etapas e o que já vem pronto.
+3. **Etapas**: cada uma com uma explicação curta e um desafio de código; o que as etapas anteriores construíram vem pronto no `codigo_inicial` ("não mude").
+4. **Montando tudo no seu computador**: o projeto fora do app, com estrutura de pastas e como publicar no GitHub.
+5. **Ideias para ir além**, **Resumo** e **Para ir além**.
+
+Os ids das perguntas começam com o código do projeto (`PJ-01-e1`, `PJ-01-q1`), porque é assim que o app conta as etapas resolvidas.
