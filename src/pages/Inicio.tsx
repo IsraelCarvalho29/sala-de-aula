@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { aulasDaTrilha, idAula, trilhas } from '../lib/conteudo';
+import { aulasDaTrilha, idAula, linkAula, projetos, trilhas } from '../lib/conteudo';
 import { exportarProgresso, importarProgresso, useProgresso, zerarProgresso } from '../lib/progresso';
 import BarraProgresso from '../components/BarraProgresso';
 
@@ -31,6 +31,31 @@ export default function Inicio() {
           );
         })}
       </div>
+
+      <section className="projetos">
+        <h2>🛠️ Projetos de trilha</h2>
+        <p className="desc">Ao terminar uma trilha, junte tudo num projeto de verdade, construído em etapas com desafios na IDE.</p>
+        <ol className="lista-modulos">
+          {projetos.map(({ trilha: t, modulo: m }) => {
+            const feito = m.aula && progresso.concluidas[idAula(m.aula)];
+            const conteudo = (
+              <>
+                <span className="codigo">{feito ? '✓' : m.codigo}</span>
+                <span className="titulo-modulo">
+                  {m.titulo}
+                  <small>fim da trilha {t.meta.titulo}{m.carga ? ` · ${m.carga}` : ''}</small>
+                </span>
+                {!m.aula && <span className="em-breve">em breve</span>}
+              </>
+            );
+            return (
+              <li key={m.codigo} className={['projeto', feito ? 'feita' : m.aula ? '' : 'pendente'].filter(Boolean).join(' ')}>
+                {m.aula ? <Link to={linkAula(m.aula)}>{conteudo}</Link> : <div>{conteudo}</div>}
+              </li>
+            );
+          })}
+        </ol>
+      </section>
 
       <details className="ferramentas">
         <summary>Backup do progresso</summary>

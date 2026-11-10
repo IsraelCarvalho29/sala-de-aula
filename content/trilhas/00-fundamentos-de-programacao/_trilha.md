@@ -12,4 +12,5 @@ modulos:
   - { codigo: FP-07, titulo: "Programação funcional: funções puras, map/filter/reduce, imutabilidade", nivel: intermediario, prerequisitos: [FP-04], carga: "4h" }
   - { codigo: FP-08, titulo: "Tratamento de erros, depuração e leitura de stack traces", nivel: basico, prerequisitos: [FP-04], carga: "3h" }
   - { codigo: FP-09, titulo: "Git e GitHub: commits, branches, merge, pull requests", nivel: basico, prerequisitos: [], carga: "4h" }
+  - { codigo: PJ-01, titulo: "Jogo da forca no terminal", tipo: projeto, prerequisitos: [FP-04, FP-05, FP-08], carga: "4h" }
 ---

@@ -20,6 +20,8 @@ export interface Teste {
   chamada?: string;
   /** HTML: expressão JavaScript que precisa dar verdadeiro na página, ex.: document.querySelector('h1') !== null */
   verifica?: string;
+  /** SQL: dados extras só deste teste (rodados depois do preparo da pergunta) */
+  preparo?: string;
   descricao?: string;
   visivel: boolean;
 }
@@ -124,10 +126,11 @@ export default function IdeCodigo({ linguagem, codigoInicial, chaveRascunho, pre
     });
   }
 
-  async function rodar(entradas: string[], chamada?: string): Promise<ResultadoExecucao> {
+  async function rodar(entradas: string[], chamada?: string, preparoTeste?: string): Promise<ResultadoExecucao> {
     if (linguagem === 'html') return rodarHtml(codigo);
     try {
-      return await executar(linguagem, { codigo, entradas, chamada, preparo });
+      const tudo = [preparo, preparoTeste].filter(Boolean).join('\n') || undefined;
+      return await executar(linguagem, { codigo, entradas, chamada, preparo: tudo });
     } catch (e) {
       const msg = (e as Error).message;
       const erro: ErroCodigo = { tipo: (e as Error).name === 'TempoEsgotado' ? 'Tempo esgotado' : 'Falha', mensagem: msg, linha: null, explicacao: '', dica: null, traceback: msg };
@@ -159,7 +162,7 @@ export default function IdeCodigo({ linguagem, codigoInicial, chaveRascunho, pre
     const testes: Verificacao['testes'] = [];
     const execucoes: ResultadoExecucao[] = [];
     for (const teste of desafio.testes) {
-      const r = await rodar(teste.entradas, teste.chamada);
+      const r = await rodar(teste.entradas, teste.chamada, teste.preparo);
       let obtido = teste.chamada ? r.retorno ?? '' : r.saida;
       let ok: boolean;
       if (teste.verifica) {

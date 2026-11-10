@@ -224,14 +224,19 @@ async function criarSQL(base: string): Promise<Runtime> {
       const db = new SQL.Database();
       try {
         if (d.preparo) db.run(d.preparo);
-        const resultados = db.exec(d.codigo);
-        const tabelas = resultados.map((r) => ({
-          colunas: r.columns,
-          linhas: r.values.map((l) => l.map((v) => (v === null ? 'NULL' : v instanceof Uint8Array ? '<blob>' : String(v)))),
-        }));
-        const saida = tabelas.map((t) => [t.colunas.join(' | '), ...t.linhas.map((l) => l.join(' | '))].join('\n') + '\n').join('\n');
+        const formatar = (resultados: ReturnType<typeof db.exec>) => {
+          const tabelas = resultados.map((r) => ({
+            colunas: r.columns,
+            linhas: r.values.map((l) => l.map((v) => (v === null ? 'NULL' : v instanceof Uint8Array ? '<blob>' : String(v)))),
+          }));
+          const texto = tabelas.map((t) => [t.colunas.join(' | '), ...t.linhas.map((l) => l.join(' | '))].join('\n') + '\n').join('\n');
+          return { tabelas, texto };
+        };
+        const { tabelas, texto: saida } = formatar(db.exec(d.codigo));
+        // chamada no SQL: consulta de conferência rodada depois do código do aluno (ex.: ver o que ficou numa tabela)
+        const retorno = d.chamada ? formatar(db.exec(d.chamada)).texto : null;
         const terminal = saida || 'Comando executado (nenhuma linha retornada).\n';
-        return { saida, terminal, erro: null, retorno: null, tabelas };
+        return { saida, terminal, erro: null, retorno, tabelas };
       } catch (e) {
         const msg = (e as Error).message;
         const explicacao = EXPLICACAO_SQL.find(([re]) => re.test(msg))?.[1] ?? '';

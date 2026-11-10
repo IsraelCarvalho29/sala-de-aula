@@ -10,4 +10,5 @@ modulos:
   - { codigo: RD-05, titulo: "Camada de aplicação: DNS, HTTP/1.1, HTTP/2, HTTP/3", nivel: intermediario, prerequisitos: [RD-04], carga: "4h" }
   - { codigo: RD-06, titulo: "TLS e HTTPS", nivel: intermediario, prerequisitos: [RD-05], carga: "3h" }
   - { codigo: RD-07, titulo: "Ferramentas: ping, traceroute, curl, Wireshark", nivel: basico, prerequisitos: [RD-03], carga: "2h" }
+  - { codigo: PJ-04, titulo: "Capturar e explicar um acesso HTTPS no Wireshark", tipo: projeto, prerequisitos: [RD-04, RD-06, RD-07], carga: "4h" }
 ---

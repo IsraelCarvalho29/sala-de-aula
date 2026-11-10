@@ -9,4 +9,5 @@ modulos:
   - { codigo: AC-04, titulo: "Conjunto de instruções e assembly (RISC-V)", nivel: intermediario, prerequisitos: [AC-03], carga: "5h" }
   - { codigo: AC-05, titulo: "Hierarquia de memória e cache", nivel: intermediario, prerequisitos: [AC-03], carga: "4h" }
   - { codigo: AC-06, titulo: "Pipeline e paralelismo em nível de instrução", nivel: avancado, prerequisitos: [AC-04], carga: "4h" }
+  - { codigo: PJ-03, titulo: "Das portas lógicas a uma CPU simples", tipo: projeto, prerequisitos: [AC-01, AC-03], carga: "8h" }
 ---

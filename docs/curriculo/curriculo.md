@@ -275,14 +275,16 @@
 
 ## Projetos de trilha
 
-| Ao terminar | Projeto | Inspirado em |
-|---|---|---|
-| Trilha 0 | Jogo da forca ou agenda no terminal | MIT 6.0001 (problem sets) |
-| Trilhas 2-3 | Implementar e visualizar 5 estruturas e 5 algoritmos | Algorithms Illuminated |
-| Trilha 4 | Construir portas lógicas até uma CPU simples | Nand to Tetris |
-| Trilha 6 | Capturar e explicar um acesso HTTPS no Wireshark | Kurose & Ross, Wireshark Labs |
-| Trilha 10 | Modelar e consultar o banco de um sistema real | Stanford Databases |
-| Trilha 13 | Aplicação full stack publicada | Fullstack Open |
+Cada projeto é uma página guiada no app, em etapas, com desafios corrigidos na IDE do navegador. Ele aparece no fim da trilha indicada (o código `PJ-` é a chave de progresso, como nos módulos).
+
+| Código | Ao terminar | Projeto | Pré-requisitos | Carga | Inspirado em |
+|---|---|---|---|---|---|
+| PJ-01 | Trilha 0 | Jogo da forca no terminal | FP-04, FP-05, FP-08 | 4h | MIT 6.0001 (problem sets) |
+| PJ-02 | Trilhas 2-3 | Implementar e visualizar 5 estruturas e 5 algoritmos | ED-05, ED-07, AL-03 | 8h | Algorithms Illuminated |
+| PJ-03 | Trilha 4 | Das portas lógicas a uma CPU simples | AC-01, AC-03 | 8h | Nand to Tetris |
+| PJ-04 | Trilha 6 | Capturar e explicar um acesso HTTPS no Wireshark | RD-04, RD-06, RD-07 | 4h | Kurose & Ross, Wireshark Labs |
+| PJ-05 | Trilha 10 | Modelar e consultar o banco de um sistema real | BD-01, BD-02, BD-03 | 6h | Stanford Databases |
+| PJ-06 | Trilha 13 | Aplicação full stack publicada | WB-02, WB-04, WB-05 | 12h | Fullstack Open |
 
 ---
 
