@@ -19,6 +19,8 @@ export type Nivel = 'basico' | 'intermediario' | 'avancado';
 export interface ModuloPlanejado {
   codigo: string;
   titulo: string;
+  /** "projeto": projeto guiado de fim de trilha (código PJ-, ver "Projetos de trilha" no currículo) */
+  tipo?: 'projeto';
   nivel?: Nivel;
   prerequisitos?: string[];
   carga?: string;
@@ -35,6 +37,7 @@ export interface MetaTrilha {
 export interface MetaAula {
   codigo?: string;
   titulo: string;
+  tipo?: 'projeto';
   nivel?: Nivel;
   prerequisitos?: string[];
   duracao_min?: number;
@@ -123,6 +126,14 @@ export function acharAula(trilha: string, slug: string) {
   if (i < 0) return undefined;
   return { trilha: t, aula: todas[i], anterior: todas[i - 1], proxima: todas[i + 1] };
 }
+
+/** Projetos guiados de fim de trilha, na ordem das trilhas. */
+export const projetos = trilhas.flatMap((t) =>
+  t.modulos.filter((m) => m.tipo === 'projeto' || m.aula?.meta.tipo === 'projeto').map((modulo) => ({ trilha: t, modulo })),
+);
+
+/** Quantas perguntas a aula tem (blocos ```quiz), para o progresso por etapa dos projetos. */
+export const contarPerguntas = (a: Aula) => (a.corpo.match(/^```quiz\s*$/gm) ?? []).length;
 
 /** Procura um módulo pelo código em qualquer trilha (para links de pré-requisitos). */
 export function acharModulo(codigo: string) {

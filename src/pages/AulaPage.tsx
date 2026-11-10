@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { acharAula, acharModulo, idAula, linkAula, NOME_NIVEL } from '../lib/conteudo';
+import { acharAula, acharModulo, contarPerguntas, idAula, linkAula, NOME_NIVEL } from '../lib/conteudo';
 import { marcarConcluida, useProgresso } from '../lib/progresso';
 import Markdown from '../components/Markdown';
+import BarraProgresso from '../components/BarraProgresso';
 
 export default function AulaPage() {
   const { trilha = '', aula = '' } = useParams();
@@ -17,6 +18,12 @@ export default function AulaPage() {
   const id = idAula(a);
   const concluida = !!progresso.concluidas[id];
   const m = a.meta;
+  const projeto = m.tipo === 'projeto';
+  // nos projetos, cada pergunta é uma etapa: conta as que já foram acertadas (ids começam com o código)
+  const etapas = projeto ? contarPerguntas(a) : 0;
+  const etapasFeitas = projeto
+    ? Object.entries(progresso.quiz).filter(([k, v]) => v.acertou && k.startsWith(`${id}-`)).length
+    : 0;
 
   return (
     <article>
@@ -25,8 +32,14 @@ export default function AulaPage() {
       </nav>
       <h1>{m.titulo}</h1>
       <p className="meta">
-        {[m.codigo, m.nivel && NOME_NIVEL[m.nivel], m.duracao_min && `${m.duracao_min} min`].filter(Boolean).join(' · ')}
+        {[m.codigo, projeto ? '🛠️ projeto guiado' : m.nivel && NOME_NIVEL[m.nivel], m.duracao_min && `${m.duracao_min} min`].filter(Boolean).join(' · ')}
       </p>
+      {projeto && etapas > 0 && (
+        <div className="progresso-projeto">
+          <small>{Math.min(etapasFeitas, etapas)} de {etapas} etapas resolvidas</small>
+          <BarraProgresso feitas={Math.min(etapasFeitas, etapas)} total={etapas} unidade="etapas" />
+        </div>
+      )}
 
       {!!m.prerequisitos?.length && (
         <p className="prereq">
@@ -70,7 +83,7 @@ export default function AulaPage() {
 
       <div className="rodape-aula">
         <button className={concluida ? 'botao ok' : 'botao primario'} onClick={() => marcarConcluida(id, !concluida)}>
-          {concluida ? '✓ Aula concluída' : 'Marcar como concluída'}
+          {concluida ? (projeto ? '✓ Projeto concluído' : '✓ Aula concluída') : 'Marcar como concluída'}
         </button>
         <div className="navegacao">
           {anterior ? <Link to={linkAula(anterior)}>← {anterior.meta.codigo} {anterior.meta.titulo}</Link> : <span />}

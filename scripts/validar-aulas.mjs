@@ -115,6 +115,7 @@ for (const a of aulas) {
           esperado: String(t.esperado ?? t.saida ?? ''),
           chamada: t.chamada,
           verifica: t.verifica,
+          preparo: t.preparo,
         };
       });
       desafios.push({ ref, ling, q, testes });
@@ -199,16 +200,17 @@ async function rodarJS(codigo, t, ts) {
 }
 
 let SQL;
-async function rodarSQL(codigo, preparo) {
+async function rodarSQL(codigo, preparo, t) {
   SQL ??= await require('sql.js')();
   const db = new SQL.Database();
+  const formatar = (res) => res
+    .map((r) => [r.columns.join(' | '), ...r.values.map((l) => l.map((v) => (v === null ? 'NULL' : String(v))).join(' | '))].join('\n') + '\n')
+    .join('\n');
   try {
-    if (preparo) db.run(preparo);
-    const res = db.exec(codigo);
-    const saida = res
-      .map((r) => [r.columns.join(' | '), ...r.values.map((l) => l.map((v) => (v === null ? 'NULL' : String(v))).join(' | '))].join('\n') + '\n')
-      .join('\n');
-    return { saida, retorno: null };
+    const tudo = [preparo, t?.preparo].filter(Boolean).join('\n');
+    if (tudo) db.run(tudo);
+    const saida = formatar(db.exec(codigo));
+    return { saida, retorno: t?.chamada ? formatar(db.exec(t.chamada)) : null };
   } finally {
     db.close();
   }
@@ -266,7 +268,7 @@ for (const d of desafios.filter((x) => x.ling !== 'python')) {
         if (!ok) falhar(d.ref, `teste ${i + 1}: verifica falhou: ${t.verifica}`);
         continue;
       }
-      const r = d.ling === 'sql' ? await rodarSQL(d.q.solucao, d.q.preparo)
+      const r = d.ling === 'sql' ? await rodarSQL(d.q.solucao, d.q.preparo, t)
         : d.ling === 'c' || d.ling === 'cpp' ? rodarC(d.q.solucao, t)
         : await rodarJS(d.q.solucao, t, d.ling === 'typescript');
       const obtido = t.chamada ? r.retorno ?? '' : r.saida;
@@ -296,7 +298,7 @@ for (const d of comInicial) {
         ok = await pg.evaluate((exp) => { try { return !!(0, eval)(exp); } catch { return false; } }, t.verifica);
         await pg.close();
       } else {
-        const r = d.ling === 'sql' ? await rodarSQL(d.q.codigo_inicial, d.q.preparo)
+        const r = d.ling === 'sql' ? await rodarSQL(d.q.codigo_inicial, d.q.preparo, t)
           : d.ling === 'c' || d.ling === 'cpp' ? rodarC(d.q.codigo_inicial, t)
           : await rodarJS(d.q.codigo_inicial, t, d.ling === 'typescript');
         ok = normalizar(t.chamada ? r.retorno ?? '' : r.saida) === normalizar(t.esperado);

@@ -10,4 +10,5 @@ modulos:
   - { codigo: BD-05, titulo: "Transações, ACID e níveis de isolamento", nivel: avancado, prerequisitos: [BD-02, SO-04], carga: "4h" }
   - { codigo: BD-06, titulo: "NoSQL: documento, chave-valor, coluna, grafo", nivel: intermediario, prerequisitos: [BD-01], carga: "3h" }
   - { codigo: BD-07, titulo: "ORMs e migrações", nivel: basico, prerequisitos: [BD-02, FP-06], carga: "2h" }
+  - { codigo: PJ-05, titulo: "Modelar e consultar o banco de um sistema real", tipo: projeto, prerequisitos: [BD-01, BD-02, BD-03], carga: "6h" }
 ---

@@ -76,6 +76,11 @@ h1 { font-size: 30px; line-height: 1.2; margin: 0 0 var(--sp-2); }
 .lista-modulos .titulo-modulo { flex: 1; display: flex; flex-direction: column; }
 .lista-modulos .titulo-modulo small { font-size: .8rem; }
 .lista-modulos li.pendente { opacity: .55; }
+.lista-modulos li.projeto .codigo { background: color-mix(in srgb, var(--st-active) 18%, transparent); color: var(--st-active); }
+.lista-modulos li.projeto.feita .codigo { background: color-mix(in srgb, var(--st-success) 18%, transparent); color: var(--st-success); }
+.lista-modulos li.projeto > a, .lista-modulos li.projeto > div { border-left: 3px solid var(--st-active); }
+.projetos h2 { font-size: 1.25rem; margin: var(--sp-6) 0 var(--sp-1); }
+.progresso-projeto { margin: var(--sp-2) 0 var(--sp-4); }
 .em-breve { font-size: .75rem; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
 
 /* ---------- aula ---------- */

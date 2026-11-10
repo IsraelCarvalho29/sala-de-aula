@@ -22,6 +22,8 @@ interface TesteYaml {
   esperado?: string | number;
   chamada?: string;
   verifica?: string;
+  /** SQL: dados extras deste teste, rodados depois do preparo da pergunta */
+  preparo?: string;
   descricao?: string;
   visivel?: boolean;
 }
@@ -130,6 +132,7 @@ function converterTeste(t: TesteYaml): Teste {
     esperado: String(t.esperado ?? t.saida ?? ''),
     chamada: t.chamada,
     verifica: t.verifica,
+    preparo: t.preparo,
     descricao: t.descricao,
     visivel: t.visivel !== false,
   };

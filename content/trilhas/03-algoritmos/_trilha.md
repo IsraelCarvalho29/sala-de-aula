@@ -14,4 +14,5 @@ modulos:
   - { codigo: AL-09, titulo: "Programação dinâmica", nivel: avancado, prerequisitos: [AL-04], carga: "6h" }
   - { codigo: AL-10, titulo: "Backtracking", nivel: intermediario, prerequisitos: [AL-04], carga: "3h" }
   - { codigo: AL-11, titulo: "Padrões de problemas: two pointers, sliding window, prefix sum", nivel: intermediario, prerequisitos: [AL-01], carga: "4h" }
+  - { codigo: PJ-02, titulo: "Implementar e visualizar 5 estruturas e 5 algoritmos", tipo: projeto, prerequisitos: [ED-05, ED-07, AL-03], carga: "8h" }
 ---

@@ -49,7 +49,7 @@ src/
   lib/execucao/             executores de código no navegador (um Web Worker por linguagem)
     corretor.py             roda o Python do aluno, simula input(), traduz erros, confere indentação
   components/               Markdown, Quiz, IdeCodigo, EditorCodigo, Diagrama, Flashcard, BarraProgresso
-  pages/                    Início, Trilha, Aula
+  pages/                    Início (com os projetos de trilha), Trilha, Aula
 ```
 
 ## Como escrever uma aula
@@ -125,6 +125,12 @@ explicacao: "..."
 ```
 
 Indentação exigida: 4 espaços em Python e C/C++, 2 em JavaScript/TypeScript, nunca TAB (desligue com `indentacao: false`). O programa é interrompido depois de 5 segundos (laço sem fim). Os runtimes (Pyodide ~12 MB, SQLite ~1 MB, C ~0,4 MB) são publicados junto com o site e só são baixados quando uma aula precisa deles.
+
+### Projetos de trilha
+
+Os projetos guiados de fim de trilha (`PJ-01` a `PJ-06`, ver [Projetos de trilha](docs/curriculo/curriculo.md#projetos-de-trilha)) são aulas com `tipo: projeto` no front matter, na pasta da trilha em que terminam. Cada etapa é um desafio de código; o app mostra quantas etapas já foram resolvidas e lista os projetos na página inicial. O `gerar-trilhas.mjs` lê a tabela do currículo e coloca cada projeto como último módulo da trilha.
+
+Em desafios SQL, um teste pode ter o próprio `preparo` (rodado depois do `preparo` da pergunta, para testar a consulta com outros dados) e uma `chamada`, que é uma consulta de conferência rodada depois do código do aluno (útil quando o aluno cria tabelas ou insere dados).
 
 ### Diagramas
 

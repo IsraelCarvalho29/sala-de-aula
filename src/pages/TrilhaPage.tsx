@@ -20,7 +20,8 @@ export default function TrilhaPage() {
       <ol className="lista-modulos">
         {t.modulos.map((m) => {
           const feita = m.aula && progresso.concluidas[idAula(m.aula)];
-          const detalhes = [m.nivel && NOME_NIVEL[m.nivel], m.carga, m.prerequisitos?.length ? `pré-req.: ${m.prerequisitos.join(', ')}` : '']
+          const projeto = m.tipo === 'projeto' || m.aula?.meta.tipo === 'projeto';
+          const detalhes = [projeto ? '🛠️ projeto guiado' : m.nivel && NOME_NIVEL[m.nivel], m.carga, m.prerequisitos?.length ? `pré-req.: ${m.prerequisitos.join(', ')}` : '']
             .filter(Boolean).join(' · ');
           const conteudo = (
             <>
@@ -33,7 +34,7 @@ export default function TrilhaPage() {
             </>
           );
           return (
-            <li key={m.codigo} className={feita ? 'feita' : m.aula ? '' : 'pendente'}>
+            <li key={m.codigo} className={[feita ? 'feita' : m.aula ? '' : 'pendente', projeto ? 'projeto' : ''].filter(Boolean).join(' ')}>
               {m.aula ? <Link to={linkAula(m.aula)}>{conteudo}</Link> : <div>{conteudo}</div>}
             </li>
           );
